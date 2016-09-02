@@ -84,11 +84,15 @@ p {
 }
 
 .syntaxhighlighter { 
-    font-size:17px !important; padding:10px;
+    font-size:17px !important; padding:10px 10px 10px 0;
 }
 
 .syntaxhighlighter table td.gutter {
     vertical-align: middle !important;
+}
+
+.syntaxhighlighter table td.gutter .line {
+    padding-left: 0 !important;
 }
 
 code {
