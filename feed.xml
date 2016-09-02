@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Progur!</title>
+    <description>Daily programming tutorials, tips, and news.</description>
+    <link>http://progur.com/</link>
+    <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 01 Sep 2016 23:06:44 +0530</pubDate>
+    <lastBuildDate>Thu, 01 Sep 2016 23:06:44 +0530</lastBuildDate>
+    <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>How to Create a Material Design Jekyll Theme</title>
+        <description>&lt;p&gt;In my opinion, Jekyll has the potential to become as popular as WordPress. The only thing holding it back is the fact that there aren’t enough themes for it. Indeed, you can count the good ones on your finger tips. Thankfully, creating themes for Jekyll is extremely easy. If you are comfortable with HTML, and are familiar with a good CSS framework, it won’t take you very long either. In this tutorial, I’m going to show you how to create a responsive, material design Jekyll theme from scratch. We’ll be using &lt;a href=&quot;http://materializecss.com/&quot;&gt;Materialize&lt;/a&gt; as the CSS framework. This will be a theme you can immediately start using for a blog. And, with a little more polish and customizations, you can even aspire to sell it!&lt;/p&gt;
+
+&lt;h3 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h3&gt;
+
+&lt;p&gt;In order to follow this tutorial, you must obviously have Jekyll installed and configured on your computer. You must also have a basic understanding of HTML and CSS.&lt;/p&gt;
+
+&lt;h3 id=&quot;create-a-new-jekyll-theme&quot;&gt;Create a New Jekyll Theme&lt;/h3&gt;
+
+&lt;p&gt;To create a new Jekyll theme, you must use the &lt;code class=&quot;highlighter-rouge&quot;&gt;new-theme&lt;/code&gt; command of Jekyll’s CLI.&lt;/p&gt;
+
+&lt;pre class=&quot;brush: ruby&quot;&gt;
+jekyll new-theme my-material-theme
+&lt;/pre&gt;
+
+&lt;p&gt;You will now have a new directory called &lt;strong&gt;my-material-theme&lt;/strong&gt;. All your theme’s files will be inside this directory. Enter it using &lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;create-includes&quot;&gt;Create Includes&lt;/h3&gt;
+
+&lt;p&gt;Ideally, your theme must have includes for a header and a footer. They are not always necessary, but, by having them, you can make your theme more flexible. Let’s create the header first by creating a new file called &lt;strong&gt;header.html&lt;/strong&gt; inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes&lt;/code&gt; directory. Open it using any code editor. I prefer Brackets.&lt;/p&gt;
+
+&lt;p&gt;The header must contain the doctype, &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;head&amp;gt;&lt;/code&gt; tags. Inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;head&amp;gt;&lt;/code&gt; tag, you must add all your CSS requirements, and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;meta&amp;gt;&lt;/code&gt; tags. Accordingly, add the following code to the file:&lt;/p&gt;
+
+&lt;pre class=&quot;brush: html&quot;&gt;
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+    &amp;lt;head&amp;gt;
+      &amp;lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&amp;gt;
+      &amp;lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&amp;gt;
+      &amp;lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css&quot;&amp;gt;
+    &amp;lt;/head&amp;gt;
+    &amp;lt;body&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;As you can see, I’m using a CDN to load the CSS of the Materialize framework. Note that I’ve opened &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;body&amp;gt;&lt;/code&gt; tag and not closed it. You’ll see why next.&lt;/p&gt;
+
+&lt;p&gt;Create a new file called &lt;strong&gt;footer.html&lt;/strong&gt; inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes&lt;/code&gt; directory. The footer must contain all your &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tags, and the closing tags for both &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;body&amp;gt;&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre class=&quot;brush: html&quot;&gt;
+&amp;lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;I’ve, of course, used a CDN again to load the JS file of the Materialize framework.&lt;/p&gt;
+
+&lt;h3 id=&quot;create-a-default-layout&quot;&gt;Create a Default Layout&lt;/h3&gt;
+
+&lt;p&gt;Now that we’ve created a header and footer, we must create the layout that goes between them. You are free to use any layout you want.&lt;/p&gt;
+
+&lt;p&gt;Go to the &lt;code class=&quot;highlighter-rouge&quot;&gt;_layouts&lt;/code&gt; folder and open &lt;strong&gt;default.html&lt;/strong&gt;. This file should already contain a &lt;code class=&quot;highlighter-rouge&quot;&gt;content&lt;/code&gt; template. All you need to do is surround that with your layout. Here’s my layout, with a navbar, a simple container, and a footer:&lt;/p&gt;
+
+&lt;pre class=&quot;brush: html&quot;&gt;
+{% include header.html %}
+
+&amp;lt;nav&amp;gt;
+    &amp;lt;div class=&quot;nav-wrapper&quot;&amp;gt;
+      &amp;lt;div class=&quot;container&quot;&amp;gt;
+          &amp;lt;a href=&quot;#&quot; class=&quot;brand-logo&quot;&amp;gt; {{ site.title }} &amp;lt;/a&amp;gt;      
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/nav&amp;gt;
+
+&amp;lt;div class=&quot;container&quot;&amp;gt;
+     {{ content }} 
+&amp;lt;/div&amp;gt;
+
+&amp;lt;footer class=&quot;page-footer&quot;&amp;gt;
+  &amp;lt;div class=&quot;container&quot;&amp;gt;
+    &amp;lt;div class=&quot;row&quot;&amp;gt;
+      &amp;lt;div class=&quot;col l6 s12&quot;&amp;gt;
+        &amp;lt;h5 class=&quot;white-text&quot;&amp;gt; {{ site.title }} &amp;lt;/h5&amp;gt;
+        &amp;lt;p class=&quot;grey-text text-lighten-4&quot;&amp;gt; {{ site.description }} &amp;lt;/p&amp;gt;
+      &amp;lt;/div&amp;gt;
+      &amp;lt;div class=&quot;col l4 offset-l2 s12&quot;&amp;gt;
+        &amp;lt;h5 class=&quot;white-text&quot;&amp;gt;Links&amp;lt;/h5&amp;gt;
+        &amp;lt;ul&amp;gt;
+          &amp;lt;li&amp;gt;&amp;lt;a class=&quot;grey-text text-lighten-3&quot; href=&quot;#!&quot;&amp;gt;Link 1&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+          &amp;lt;li&amp;gt;&amp;lt;a class=&quot;grey-text text-lighten-3&quot; href=&quot;#!&quot;&amp;gt;Link 2&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+        &amp;lt;/ul&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;div class=&quot;footer-copyright&quot;&amp;gt;
+    &amp;lt;div class=&quot;container&quot;&amp;gt;
+    © 2014 Copyright {{ site.name }} | All rights reserved.
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/footer&amp;gt;
+
+{% include footer.html %}
+&lt;/pre&gt;
+
+&lt;h3 id=&quot;create-the-home-page&quot;&gt;Create the Home Page&lt;/h3&gt;
+
+&lt;p&gt;Well, every website has a home page, usually called &lt;strong&gt;index.html&lt;/strong&gt;. Therefore, create the file at the root of your theme, and open it. Inside it, add YAML front-matter saying it uses the &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; layout.&lt;/p&gt;
+
+&lt;p&gt;The home page usually lists all the posts present the blog. Therefore, we must now create a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop that loops through the &lt;code class=&quot;highlighter-rouge&quot;&gt;site.posts&lt;/code&gt; array. Inside the loop, you must specify how each post must be rendered. The following code creates a material card for each post:&lt;/p&gt;
+
+&lt;pre class=&quot;brush: html&quot;&gt;
+---
+layout: default
+---
+{% for post in site.posts %}
+&amp;lt;div class=&quot;row&quot;&amp;gt;
+    &amp;lt;div class=&quot;col s12 m6&quot;&amp;gt;
+      &amp;lt;div class=&quot;card&quot;&amp;gt;
+        &amp;lt;div class=&quot;card-content&quot;&amp;gt;
+          &amp;lt;span class=&quot;card-title&quot;&amp;gt;{{ post.title }}&amp;lt;/span&amp;gt;
+          &amp;lt;p&amp;gt;{{ post.excerpt }}&amp;lt;/p&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;div class=&quot;card-action&quot;&amp;gt;
+          &amp;lt;a href=&quot;{{ post.url | prepend: site.baseurl }}&quot;&amp;gt;
+            Read More
+          &amp;lt;/a&amp;gt;
+        &amp;lt;/div&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+{% endfor %}
+&lt;/pre&gt;
+
+&lt;p&gt;Your theme is now ready!&lt;/p&gt;
+
+&lt;p&gt;Here’s a sample blog using the theme:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/material_theme.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;material design jekyll theme&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;generate-a-gem&quot;&gt;Generate a Gem&lt;/h3&gt;
+
+&lt;p&gt;Optionally, if you want to publish your theme, you can convert it into a gem so that others can use it more easily. You can do so by running the following command:&lt;/p&gt;
+
+&lt;pre class=&quot;brush: bash&quot;&gt;
+gem build my-material-theme.gemspec
+&lt;/pre&gt;
+
+&lt;p&gt;Note, however, that your &lt;strong&gt;index.html&lt;/strong&gt; won’t be a part of the theme gem. To solve this problem, you can move all the contents of &lt;strong&gt;index.html&lt;/strong&gt; to a new type of layout inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;_layout&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;You now know how to create a theme for Jekyll from scratch. As you saw, it’s very easy and takes very little time(unless you have a complicated design).&lt;/p&gt;
+</description>
+        <pubDate>Tue, 30 Aug 2016 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2016/08/create-jekyll-theme-material-design.html</link>
+        <guid isPermaLink="true">http://progur.com/2016/08/create-jekyll-theme-material-design.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Jekyll vs WordPress, And Why I Chose Jekyll!</title>
+        <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;I assure you, when you decide to have a blog of your own, you’re going to spend days, if not weeks, choosing the “perfect” blogging platform. Usually, most people end up choosing WordPress, mostly because they’ve heard of it, or know someone who’s using it. Of course, those who’ve been on the Internet for long enough, would also choose it because it’s open-source and has a lively community. And then there are PHP programmers, who choose it because they think they’ll be able to make all the customizations they want.&lt;/p&gt;
+
+&lt;h3 id=&quot;advantages-of-using-jekyll&quot;&gt;Advantages of Using Jekyll&lt;/h3&gt;
+
+&lt;p&gt;I, however, chose to use Jekyll. It was a hard decision, and, I’m not even sure if it was right. But I’ll stick to it for one reason, and one reason alone: Jekyll is a static site generator. That means, I can host Jekyll blogs on any web server that can serve static pages. I don’t need any databases, interpreters or security updates. I don’t even have to worry about performance. Why? Because my blog now consists of only HTML pages, CSS, JavaScript, and images.&lt;/p&gt;
+
+&lt;p&gt;What’s more, Jekyll offers unlimited flexibility. I have complete control over the looks of every single page in my blog. Now, you could argue that that’s possible with WordPress too. But, with Jekyll, it’s far, far easier, and far less time-consuming.&lt;/p&gt;
+
+&lt;p&gt;Some of you programmers might be asking how comments would work on a static blog. Ever heard of Disqus? Well, I’m sure you have, becaue most blogs use it today. Embedding Disqus comments in a Jekyll blog is a walk in the park.&lt;/p&gt;
+
+&lt;h3 id=&quot;hosting-jekyll-blogs&quot;&gt;Hosting Jekyll Blogs&lt;/h3&gt;
+
+&lt;p&gt;When it comes to hosting a Jekyll blog, you’ve a lot of options. I mean, every web server can host static HTML pages. You can use paid services such as Amazon S3, Heroku, Digital Ocean, and the list goes on and on. But, you could also choose services such as GitHub, Gitlab, Firebase or App Engine, and run your blog for free. In fact, GitHub has built-in support for Jekyll blogs, and you can start using it right now by creating a new GitHub account and repository. The same can be said about GitLab.&lt;/p&gt;
+
+&lt;p&gt;You might now be wondering, &lt;em&gt;“if Jekyll is really so good, why don’t I see anybody using it?”&lt;/em&gt; You’d be surprised how many blogs are using it these days. I suggest you spend a few minutes taking a look at this &lt;a href=&quot;https://talk.jekyllrb.com/t/showcase-sites-made-using-jekyll/18&quot;&gt;showcase&lt;/a&gt;, or this &lt;a href=&quot;https://github.com/jekyll/jekyll/wiki/sites&quot;&gt;wiki&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;shortcomings&quot;&gt;Shortcomings&lt;/h3&gt;
+
+&lt;p&gt;I think I’ve praised Jekyll enough. Let’s talk about some of its inadequacies now. First of all, you’ll have to use the command line while working with it. You need to know just a handful of commands though. For example, to create a new Jekyll blog, you would have to say something like this:&lt;/p&gt;
+
+&lt;pre class=&quot;brush: ruby&quot;&gt;
+jekyll new BearsAreFluffy
+&lt;/pre&gt;
+
+&lt;p&gt;And to make it ready for publishing, you would have to type in the following:&lt;/p&gt;
+
+&lt;pre class=&quot;brush: ruby&quot;&gt;
+jekyll build
+&lt;/pre&gt;
+
+&lt;p&gt;If that scares you, you should consider using &lt;a href=&quot;https://jekyllrb.com/news/2016/08/24/jekyll-admin-initial-release/&quot;&gt;Jekyll Admin&lt;/a&gt;, which offers a nice GUI alternative for Jekyll’s command line tools. However, it was released just a few days ago. So, don’t expect too much from it.&lt;/p&gt;
+
+&lt;p&gt;In my opinion, the only thing that is holding Jekyll back is a severe lack of good themes. While hundreds of new WordPress themes are published every week, there might be less than a dozen good Jekyll themes in the wild right now, if that. Recently, Jekyll changed its theming system. So, I’m hoping more theme developers start supporting Jekyll.&lt;/p&gt;
+
+&lt;p&gt;Here’s what the default Jekyll theme looks like (it’s called Minima):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/jekyll_default_theme.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Default Jekyll theme (Minima)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Jekyll plugins too are quite scarce, although there are some great ones, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll-seo-tag&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll-paginate&lt;/code&gt;. Adding and using a Jekyll plugin can also be quite an involved process.&lt;/p&gt;
+
+&lt;p&gt;Lastly, Jekyll uses Ruby. That means, PHP programmers will have to learn a few things before they can start adding custom functionality to Jekyll blogs.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;Jekyll definitely has a lot of potential, and is becoming increasing popular, mainly among bloggers who are also developers. Once there are enough themes, it should see more widespread usage. Until then, if you don’t like to get your hands dirty using Liquid templates and markdown, I’d say stick with WordPress. But if you want complete control over your blog, go ahead with Jekyll.&lt;/p&gt;
+
+&lt;p&gt;Oh, and Jekyll has importers for almost every popular blogging platform. So, if you want to switch to Jekyll, it takes less than ten minutes.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 Aug 2016 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2016/08/jekyll-vs-wordpress.html</link>
+        <guid isPermaLink="true">http://progur.com/2016/08/jekyll-vs-wordpress.html</guid>
+        
+        
+        <category>Opinion</category>
+        
+      </item>
+    
+  </channel>
+</rss>
