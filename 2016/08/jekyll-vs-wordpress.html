@@ -8,7 +8,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
-    <link href="/css/syntax.css" rel="stylesheet">
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeEclipse.min.css">
@@ -81,7 +80,8 @@
                     <h1 class="post-title">Jekyll vs WordPress, And Why I Chose Jekyll!</h1>
                     <div class="post-meta">Written by Ashraff Hathibelagal &bull; 29 August 2016</div>
                     <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Opinion </span></p>
-                    <h3 id="introduction">Introduction</h3>
+                    <div class="post-actual-content">
+                        <h3 id="introduction">Introduction</h3>
 
 <p>I assure you, when you decide to have a blog of your own, you’re going to spend days, if not weeks, choosing the “perfect” blogging platform. Usually, most people end up choosing WordPress, mostly because they’ve heard of it, or know someone who’s using it. Of course, those who’ve been on the Internet for long enough, would also choose it because it’s open-source and has a lively community. And then there are PHP programmers, who choose it because they think they’ll be able to make all the customizations they want.</p>
 
@@ -93,6 +93,18 @@
 
 <p>Some of you programmers might be asking how comments would work on a static blog. Ever heard of Disqus? Well, I’m sure you have, becaue most blogs use it today. Embedding Disqus comments in a Jekyll blog is a walk in the park.</p>
 
+<p>One last advantage I’d like to mention is that setting up Jekyll on your computer takes less than five minutes. If you don’t have Ruby installed already, you can install it using any package manager. For example, if your are using Ubuntu, you could simply type in the following first:</p>
+
+<pre class="brush: bash">
+sudo apt-get install ruby2.0 ruby2.0-dev ruby2.0-bundler
+</pre>
+
+<p>Once Ruby is installed, installing Jekyll takes just one command.</p>
+
+<pre class="brush: bash">
+gem2.0 install jekyll
+</pre>
+
 <h3 id="hosting-jekyll-blogs">Hosting Jekyll Blogs</h3>
 
 <p>When it comes to hosting a Jekyll blog, you’ve a lot of options. I mean, every web server can host static HTML pages. You can use paid services such as Amazon S3, Heroku, Digital Ocean, and the list goes on and on. But, you could also choose services such as GitHub, Gitlab, Firebase or App Engine, and run your blog for free. In fact, GitHub has built-in support for Jekyll blogs, and you can start using it right now by creating a new GitHub account and repository. The same can be said about GitLab.</p>
@@ -103,13 +115,13 @@
 
 <p>I think I’ve praised Jekyll enough. Let’s talk about some of its inadequacies now. First of all, you’ll have to use the command line while working with it. You need to know just a handful of commands though. For example, to create a new Jekyll blog, you would have to say something like this:</p>
 
-<pre class="brush: ruby">
+<pre class="brush: bash">
 jekyll new BearsAreFluffy
 </pre>
 
 <p>And to make it ready for publishing, you would have to type in the following:</p>
 
-<pre class="brush: ruby">
+<pre class="brush: bash">
 jekyll build
 </pre>
 
@@ -131,6 +143,7 @@ jekyll build
 
 <p>Oh, and Jekyll has importers for almost every popular blogging platform. So, if you want to switch to Jekyll, it takes less than ten minutes.</p>
 
+                    </div>
 
                     <!-- Share -->
                     <div class="post-share">
@@ -192,6 +205,8 @@ jekyll build
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushPython.min.js"></script>
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushRuby.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushCpp.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.min.js"></script>
 
           <script>
               SyntaxHighlighter.defaults.toolbar = false;

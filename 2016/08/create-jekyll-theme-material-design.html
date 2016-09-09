@@ -8,7 +8,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
-    <link href="/css/syntax.css" rel="stylesheet">
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeEclipse.min.css">
@@ -81,7 +80,8 @@
                     <h1 class="post-title">How to Create a Material Design Jekyll Theme</h1>
                     <div class="post-meta">Written by Ashraff Hathibelagal &bull; 30 August 2016</div>
                     <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Programming </span></p>
-                    <p>In my opinion, Jekyll has the potential to become as popular as WordPress. The only thing holding it back is the fact that there aren’t enough themes for it. Indeed, you can count the good ones on your finger tips. Thankfully, creating themes for Jekyll is extremely easy. If you are comfortable with HTML, and are familiar with a good CSS framework, it won’t take you very long either. In this tutorial, I’m going to show you how to create a responsive, material design Jekyll theme from scratch. We’ll be using <a href="http://materializecss.com/">Materialize</a> as the CSS framework. This will be a theme you can immediately start using for a blog. And, with a little more polish and customizations, you can even aspire to sell it!</p>
+                    <div class="post-actual-content">
+                        <p>In my opinion, Jekyll has the potential to become as popular as WordPress. The only thing holding it back is the fact that there aren’t enough themes for it. Indeed, you can count the good ones on your finger tips. Thankfully, creating themes for Jekyll is extremely easy. If you are comfortable with HTML, and are familiar with a good CSS framework, it won’t take you very long either. In this tutorial, I’m going to show you how to create a responsive, material design Jekyll theme from scratch. We’ll be using <a href="http://materializecss.com/">Materialize</a> as the CSS framework. This will be a theme you can immediately start using for a blog. And, with a little more polish and customizations, you can even aspire to sell it!</p>
 
 <h3 id="prerequisites">Prerequisites</h3>
 
@@ -201,7 +201,7 @@ layout: default
 {% endfor %}
 </pre>
 
-<p>Your theme is now ready!</p>
+<p>The theme is now ready!</p>
 
 <p>Here’s a sample blog using the theme:</p>
 
@@ -215,12 +215,13 @@ layout: default
 gem build my-material-theme.gemspec
 </pre>
 
-<p>Note, however, that your <strong>index.html</strong> won’t be a part of the theme gem. To solve this problem, you can move all the contents of <strong>index.html</strong> to a new type of layout inside the <code class="highlighter-rouge">_layout</code> directory.</p>
+<p>Note, however, that <strong>index.html</strong> won’t be a part of the theme gem. To solve this problem, you can move all the contents of <strong>index.html</strong> to a new type of layout inside the <code class="highlighter-rouge">_layout</code> directory.</p>
 
 <h3 id="conclusion">Conclusion</h3>
 
 <p>You now know how to create a theme for Jekyll from scratch. As you saw, it’s very easy and takes very little time(unless you have a complicated design).</p>
 
+                    </div>
 
                     <!-- Share -->
                     <div class="post-share">
@@ -282,6 +283,8 @@ gem build my-material-theme.gemspec
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushPython.min.js"></script>
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushRuby.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushCpp.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.min.js"></script>
 
           <script>
               SyntaxHighlighter.defaults.toolbar = false;
