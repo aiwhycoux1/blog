@@ -5,9 +5,67 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 10 Sep 2016 20:55:24 +0530</pubDate>
-    <lastBuildDate>Sat, 10 Sep 2016 20:55:24 +0530</lastBuildDate>
+    <pubDate>Sat, 24 Sep 2016 21:47:44 +0530</pubDate>
+    <lastBuildDate>Sat, 24 Sep 2016 21:47:44 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>How to Hide the Status Bar and the Navigation Bar in Android</title>
+        <description>&lt;p&gt;Sometimes, you might want to use every single pixel that’s available on your user’s screen. Removing paddings and margins won’t get you very far because the Android OS, by default, displays a navigation bar at the bottom, and a status bar at the top. Both of them consume a lot of pixels and stop you from providing a truly immersive, full-screen experience. Fortunately, hiding those bars isn’t very difficult.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, I’ll show you how to hide both the status bar and the navigation bar of your Android &lt;code class=&quot;highlighter-rouge&quot;&gt;Activity&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;create-a-layout&quot;&gt;1. Create a Layout&lt;/h3&gt;
+
+&lt;p&gt;You’ll need a layout file for your Activity. So, create one now. Make sure that there are no margins or paddings in the root element of the layout. Here’s what I have:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;LinearLayout&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;xmlns:android=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:orientation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;vertical&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@+id/mylayout&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:background=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#FF0000&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;use-the-layout&quot;&gt;2. Use the Layout&lt;/h3&gt;
+
+&lt;p&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;Activity&lt;/code&gt;, inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;onCreate()&lt;/code&gt; method, pass the layout you just created to the &lt;code class=&quot;highlighter-rouge&quot;&gt;setContentView()&lt;/code&gt; method. Once you do so, you’ll be able to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;findViewById()&lt;/code&gt; method to get a reference to the &lt;code class=&quot;highlighter-rouge&quot;&gt;mylayout&lt;/code&gt; view.&lt;/p&gt;
+
+&lt;p&gt;And then, all you need to do is call the &lt;code class=&quot;highlighter-rouge&quot;&gt;setSystemUiVisibility()&lt;/code&gt; method and pass the following flags to it:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;View.SYSTEM_UI_FLAG_HIDE_NAVIGATION&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;View.SYSTEM_UI_FLAG_FULLSCREEN&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So, here’s what your code would look like:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overlay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mylayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;overlay&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setSystemUiVisibility&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;View&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;SYSTEM_UI_FLAG_HIDE_NAVIGATION&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;SYSTEM_UI_FLAG_IMMERSIVE_STICKY&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;SYSTEM_UI_FLAG_FULLSCREEN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And that’s it. If you run the app for the first time now, on Android Marshmallow, you’ll see a message that looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/fullscreen1.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;full screen message &quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you hide the message, you’ll see that your layout has occupied every single pixel of the device’s screen.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/fullscreen2.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;full screen android&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 12 Sep 2016 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html</link>
+        <guid isPermaLink="true">http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
     
       <item>
         <title>How to Create Deep Neural Networks in JavaScript</title>

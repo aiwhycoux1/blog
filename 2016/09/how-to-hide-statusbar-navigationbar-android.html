@@ -22,15 +22,15 @@
     <![endif]-->
     
     <!-- Begin Jekyll SEO tag v2.0.0 -->
-<title>Jekyll vs WordPress, And Why I Chose Jekyll! - Progur!</title>
-<meta property="og:title" content="Jekyll vs WordPress, And Why I Chose Jekyll!" />
-<meta name="description" content="In this article, you’re going to learn why Jekyll might be better than WordPress for most budding bloggers." />
-<meta property="og:description" content="In this article, you’re going to learn why Jekyll might be better than WordPress for most budding bloggers." />
-<link rel="canonical" href="http://progur.com/2016/08/jekyll-vs-wordpress.html" />
-<meta property="og:url" content="http://progur.com/2016/08/jekyll-vs-wordpress.html" />
+<title>How to Hide the Status Bar and the Navigation Bar in Android - Progur!</title>
+<meta property="og:title" content="How to Hide the Status Bar and the Navigation Bar in Android" />
+<meta name="description" content="Sometimes, you might want to use every single pixel that’s available on your user’s screen. In this tutorial, I’ll show you how to hide both the status bar and the navigation bar of your Android activity." />
+<meta property="og:description" content="Sometimes, you might want to use every single pixel that’s available on your user’s screen. In this tutorial, I’ll show you how to hide both the status bar and the navigation bar of your Android activity." />
+<link rel="canonical" href="http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html" />
+<meta property="og:url" content="http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html" />
 <meta property="og:site_name" content="Progur!" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2016-08-29T00:00:00+05:30" />
+<meta property="article:published_time" content="2016-09-12T00:00:00+05:30" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@hathibel" />
 <meta name="twitter:creator" content="@hathibel" />
@@ -38,11 +38,11 @@
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
-    "headline": "Jekyll vs WordPress, And Why I Chose Jekyll!",
-    "datePublished": "2016-08-29T00:00:00+05:30",
-    "description": "In this article, you’re going to learn why Jekyll might be better than WordPress for most budding bloggers.",
+    "headline": "How to Hide the Status Bar and the Navigation Bar in Android",
+    "datePublished": "2016-09-12T00:00:00+05:30",
+    "description": "Sometimes, you might want to use every single pixel that’s available on your user’s screen. In this tutorial, I’ll show you how to hide both the status bar and the navigation bar of your Android activity.",
     "logo": "http://progur.com/assets/logo.jpg",
-    "url": "http://progur.com/2016/08/jekyll-vs-wordpress.html"
+    "url": "http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html"
   }
 </script>
 <!-- End Jekyll SEO tag -->
@@ -78,84 +78,69 @@
         <div class="col-md-12">
             <div>
                 <div>
-                    <h1 class="post-title">Jekyll vs WordPress, And Why I Chose Jekyll!</h1>
-                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 29 August 2016</div>
-                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Opinion </span></p>
+                    <h1 class="post-title">How to Hide the Status Bar and the Navigation Bar in Android</h1>
+                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 12 September 2016</div>
+                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Programming </span></p>
                     <div class="post-actual-content">
-                        <h3 id="introduction">Introduction</h3>
+                        <p>Sometimes, you might want to use every single pixel that’s available on your user’s screen. Removing paddings and margins won’t get you very far because the Android OS, by default, displays a navigation bar at the bottom, and a status bar at the top. Both of them consume a lot of pixels and stop you from providing a truly immersive, full-screen experience. Fortunately, hiding those bars isn’t very difficult.</p>
 
-<p>I assure you, when you decide to have a blog of your own, you’re going to spend days, if not weeks, choosing the “perfect” blogging platform. Usually, most people end up choosing WordPress, mostly because they’ve heard of it, or know someone who’s using it. Of course, those who’ve been on the Internet for long enough, would also choose it because it’s open-source and has a lively community. And then there are PHP programmers, who choose it because they think they’ll be able to make all the customizations they want.</p>
+<p>In this tutorial, I’ll show you how to hide both the status bar and the navigation bar of your Android <code class="highlighter-rouge">Activity</code>.</p>
 
-<h3 id="advantages-of-using-jekyll">Advantages of Using Jekyll</h3>
+<h3 id="create-a-layout">1. Create a Layout</h3>
 
-<p>I, however, chose to use Jekyll. It was a hard decision, and, I’m not even sure if it was right. But I’ll stick to it for one reason, and one reason alone: Jekyll is a static site generator. That means, I can host Jekyll blogs on any web server that can serve static pages. I don’t need any databases, interpreters or security updates. I don’t even have to worry about performance. Why? Because my blog now consists of only HTML pages, CSS, JavaScript, and images.</p>
+<p>You’ll need a layout file for your Activity. So, create one now. Make sure that there are no margins or paddings in the root element of the layout. Here’s what I have:</p>
 
-<p>What’s more, Jekyll offers unlimited flexibility. I have complete control over the looks of every single page in my blog. Now, you could argue that that’s possible with WordPress too. But, with Jekyll, it’s far, far easier, and far less time-consuming.</p>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;LinearLayout</span>
+    <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">android:orientation=</span><span class="s">"vertical"</span>
+    <span class="na">android:id=</span><span class="s">"@+id/mylayout"</span>
+    <span class="na">android:background=</span><span class="s">"#FF0000"</span><span class="nt">&gt;</span>
 
-<p>Some of you programmers might be asking how comments would work on a static blog. Ever heard of Disqus? Well, I’m sure you have, becaue most blogs use it today. Embedding Disqus comments in a Jekyll blog is a walk in the park.</p>
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></figure>
 
-<p>One last advantage I’d like to mention is that setting up Jekyll on your computer takes less than five minutes. If you don’t have Ruby installed already, you can install it using any package manager. For example, if your are using Ubuntu, you could simply type in the following first:</p>
+<h3 id="use-the-layout">2. Use the Layout</h3>
 
-<pre class="brush: bash">
-sudo apt-get install ruby2.0 ruby2.0-dev ruby2.0-bundler
-</pre>
+<p>In your <code class="highlighter-rouge">Activity</code>, inside the <code class="highlighter-rouge">onCreate()</code> method, pass the layout you just created to the <code class="highlighter-rouge">setContentView()</code> method. Once you do so, you’ll be able to use the <code class="highlighter-rouge">findViewById()</code> method to get a reference to the <code class="highlighter-rouge">mylayout</code> view.</p>
 
-<p>Once Ruby is installed, installing Jekyll takes just one command.</p>
+<p>And then, all you need to do is call the <code class="highlighter-rouge">setSystemUiVisibility()</code> method and pass the following flags to it:</p>
 
-<pre class="brush: bash">
-gem2.0 install jekyll
-</pre>
+<ul>
+  <li><code class="highlighter-rouge">View.SYSTEM_UI_FLAG_HIDE_NAVIGATION</code></li>
+  <li><code class="highlighter-rouge">View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY</code></li>
+  <li><code class="highlighter-rouge">View.SYSTEM_UI_FLAG_FULLSCREEN</code></li>
+</ul>
 
-<h3 id="hosting-jekyll-blogs">Hosting Jekyll Blogs</h3>
+<p>So, here’s what your code would look like:</p>
 
-<p>When it comes to hosting a Jekyll blog, you’ve a lot of options. I mean, every web server can host static HTML pages. You can use paid services such as Amazon S3, Heroku, Digital Ocean, and the list goes on and on. But, you could also choose services such as GitHub, Gitlab, Firebase or App Engine, and run your blog for free. In fact, GitHub has built-in support for Jekyll blogs, and you can start using it right now by creating a new GitHub account and repository. The same can be said about GitLab.</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">View</span> <span class="n">overlay</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">mylayout</span><span class="o">);</span>
 
-<p>You might now be wondering, <em>“if Jekyll is really so good, why don’t I see anybody using it?”</em> You’d be surprised how many blogs are using it these days. I suggest you spend a few minutes taking a look at this <a href="https://talk.jekyllrb.com/t/showcase-sites-made-using-jekyll/18">showcase</a>, or this <a href="https://github.com/jekyll/jekyll/wiki/sites">wiki</a>.</p>
+<span class="n">overlay</span><span class="o">.</span><span class="na">setSystemUiVisibility</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">SYSTEM_UI_FLAG_HIDE_NAVIGATION</span>
+        <span class="o">|</span> <span class="n">View</span><span class="o">.</span><span class="na">SYSTEM_UI_FLAG_IMMERSIVE_STICKY</span>
+        <span class="o">|</span> <span class="n">View</span><span class="o">.</span><span class="na">SYSTEM_UI_FLAG_FULLSCREEN</span><span class="o">);</span></code></pre></figure>
 
-<h3 id="shortcomings">Shortcomings</h3>
+<p>And that’s it. If you run the app for the first time now, on Android Marshmallow, you’ll see a message that looks like this:</p>
 
-<p>I think I’ve praised Jekyll enough. Let’s talk about some of its inadequacies now. First of all, you’ll have to use the command line while working with it. You need to know just a handful of commands though. For example, to create a new Jekyll blog, you would have to say something like this:</p>
+<p><img src="/assets/block1/fullscreen1.png" class="img-responsive center-block img-thumbnail" alt="full screen message " /></p>
 
-<pre class="brush: bash">
-jekyll new BearsAreFluffy
-</pre>
+<p>Once you hide the message, you’ll see that your layout has occupied every single pixel of the device’s screen.</p>
 
-<p>And to make it ready for publishing, you would have to type in the following:</p>
-
-<pre class="brush: bash">
-jekyll build
-</pre>
-
-<p>If that scares you, you should consider using <a href="https://jekyllrb.com/news/2016/08/24/jekyll-admin-initial-release/">Jekyll Admin</a>, which offers a nice GUI alternative for Jekyll’s command line tools. However, it was released just a few days ago. So, don’t expect too much from it.</p>
-
-<p>In my opinion, the only thing that is holding Jekyll back is a severe lack of good themes. While hundreds of new WordPress themes are published every week, there might be less than a dozen good Jekyll themes in the wild right now, if that. Recently, Jekyll changed its theming system. So, I’m hoping more theme developers start supporting Jekyll.</p>
-
-<p>Here’s what the default Jekyll theme looks like (it’s called Minima):</p>
-
-<p><img src="/assets/block1/jekyll_default_theme.png" class="img-responsive center-block img-thumbnail" alt="Default Jekyll theme (Minima)" /></p>
-
-<p>Jekyll plugins too are quite scarce, although there are some great ones, such as <code class="highlighter-rouge">jekyll-seo-tag</code> and <code class="highlighter-rouge">jekyll-paginate</code>. Adding and using a Jekyll plugin can also be quite an involved process.</p>
-
-<p>Lastly, Jekyll uses Ruby. That means, PHP programmers will have to learn a few things before they can start adding custom functionality to Jekyll blogs.</p>
-
-<h3 id="conclusion">Conclusion</h3>
-
-<p>Jekyll definitely has a lot of potential, and is becoming increasing popular, mainly among bloggers who are also developers. Once there are enough themes, it should see more widespread usage. Until then, if you don’t like to get your hands dirty using Liquid templates and markdown, I’d say stick with WordPress. But if you want complete control over your blog, go ahead with Jekyll.</p>
-
-<p>Oh, and Jekyll has importers for almost every popular blogging platform. So, if you want to switch to Jekyll, it takes less than ten minutes.</p>
+<p><img src="/assets/block1/fullscreen2.png" class="img-responsive center-block img-thumbnail" alt="full screen android" /></p>
 
                     </div>
 
                     <!-- Share -->
                     <div class="post-share">
                         <p>If you found this article useful, please share it with your friends and colleagues!</p>
-                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=Jekyll vs WordPress, And Why I Chose Jekyll!&url=http://progur.com/2016/08/jekyll-vs-wordpress.html&via=hathibel" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=How to Hide the Status Bar and the Navigation Bar in Android&url=http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html&via=hathibel" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-twitter fa-lg"></i></a>
 
-                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2016/08/jekyll-vs-wordpress.html" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-facebook fa-lg"></i></a>
                         
-                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2016/08/jekyll-vs-wordpress.html" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus fa-lg"></i></a>
                     </div>
 
@@ -166,8 +151,8 @@ jekyll build
                           <div id="disqus_thread"></div>
                             <script>                                    
                                 var disqus_config = function () {
-                                    this.page.url = "http://progur.com/2016/08/jekyll-vs-wordpress.html";
-                                    this.page.identifier = "/2016/08/jekyll-vs-wordpress.html";
+                                    this.page.url = "http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html";
+                                    this.page.identifier = "/2016/09/how-to-hide-statusbar-navigationbar-android.html";
                                 };
                                 (function() {
                                     var d = document, s = d.createElement('script');
