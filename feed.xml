@@ -5,8 +5,8 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 24 Sep 2016 21:47:44 +0530</pubDate>
-    <lastBuildDate>Sat, 24 Sep 2016 21:47:44 +0530</lastBuildDate>
+    <pubDate>Sat, 24 Sep 2016 22:41:52 +0530</pubDate>
+    <lastBuildDate>Sat, 24 Sep 2016 22:41:52 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
@@ -382,7 +382,7 @@ Jump Neuron: 98.24123037285819%
       </item>
     
       <item>
-        <title>How to Use Facebook's Zstandard</title>
+        <title>How to Install and Use Facebook's Zstandard</title>
         <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 
 &lt;p&gt;Recently, Facebook released version 1.0 of &lt;a href=&quot;https://github.com/facebook/zstd&quot;&gt;Zstandard&lt;/a&gt;, popularly known as just Zstd. It is an implementation of a new data compression algorithm developed by &lt;a href=&quot;https://github.com/Cyan4973&quot;&gt;Yann Collet&lt;/a&gt;, the same guy who developed LZ4 and xxHash. I believe that Zstandard might very well become the new de facto compression library of the future because it overcomes most of the limitations present in zlib, and offers markedly better compression ratios.&lt;/p&gt;
