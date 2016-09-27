@@ -92,7 +92,7 @@
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">wget http://www.antlr.org/download/antlr-4.5.3-complete.jar</code></pre></figure>
 
-<p>After you place it in the <strong>lib</strong> folder of your project, in the Eclipse Package Explorer view, right click on it, and select <strong>Build Path &gt; Add to Build Path</strong>.</p>
+<p>After you place it in the <strong>lib</strong> folder of your project, in the Package Explorer view, right click on it and select <strong>Build Path &gt; Add to Build Path</strong>.</p>
 
 <h3 id="create-a-grammar-file">Create a Grammar File</h3>
 
@@ -148,7 +148,7 @@
 
 <p>You must now create a new Java class that is a subclass of the <code class="highlighter-rouge">GYOOBaseListener</code> class. Call it <strong>MyListener</strong>.</p>
 
-<p>Inside <code class="highlighter-rouge">MyListener</code>, you need to tell ANTLR’s parser what it should do every time it encounters a specific type of token. For example, every time it encounters an assign statement, it must assign a value to a variable. You can do so by overriding the <code class="highlighter-rouge">enterAssign()</code> and <code class="highlighter-rouge">exitAssign()</code>. There are similar methods for the print and add statements too.</p>
+<p>Inside <code class="highlighter-rouge">MyListener</code>, you need to tell ANTLR’s parser what it should do every time it encounters a specific type of token. For example, every time it encounters an assign statement, it must assign a value to a variable. You can do so by overriding the <code class="highlighter-rouge">enterAssign()</code> and <code class="highlighter-rouge">exitAssign()</code> methods. There are similar methods for the print and add statements too.</p>
 
 <p><code class="highlighter-rouge">MyListener</code> also needs a <code class="highlighter-rouge">Map</code> object that can store the names and values of all the variables.</p>
 
@@ -205,32 +205,31 @@
 
 <h3 id="run-the-parser">Run the Parser</h3>
 
-<p>At this point, our programming language is almost ready. All we need to do is pass an input file to it. In order to that, add a new class called <strong>Main</strong> to your project, and add a <code class="highlighter-rouge">main()</code> method to it.</p>
+<p>At this point, our programming language is almost ready. However, we still need to pass an input file to it and break it down into tokens. In order to that, add a new class called <strong>Main</strong> to your project and add a <code class="highlighter-rouge">main()</code> method to it.</p>
 
 <p>Inside the method, you must first create an <code class="highlighter-rouge">ANTLRInputStream</code> object and pass a <code class="highlighter-rouge">FileInputStream</code> to it. Next, you must create a <code class="highlighter-rouge">GYOOLexer</code> object based on the <code class="highlighter-rouge">InputStream</code>. You can now create a stream of tokens using the lexer, and pass it as an input to a <code class="highlighter-rouge">GYOOParser</code> object.</p>
 
-<p>You must, of course, not forget to add the <code class="highlighter-rouge">MyListener</code> class as a listener of the parser.</p>
+<p>You must, of course, not forget to add the <code class="highlighter-rouge">MyListener</code> class as a listener to the <code class="highlighter-rouge">GYOOParser</code> object.</p>
 
 <p>At this point, you can call the <code class="highlighter-rouge">program()</code> method to start the parsing.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 	<span class="k">try</span> <span class="o">{</span>
-		<span class="n">ANTLRInputStream</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ANTLRInputStream</span><span class="o">(</span>
-                <span class="k">new</span> <span class="nf">FileInputStream</span><span class="o">(</span><span class="s">"/tmp/myprogram.gyoo"</span><span class="o">));</span>
+			<span class="n">ANTLRInputStream</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ANTLRInputStream</span><span class="o">(</span>
+                <span class="k">new</span> <span class="nf">FileInputStream</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>	
 		
-		<span class="n">GYOOLexer</span> <span class="n">lexer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOLexer</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
+			<span class="n">GYOOLexer</span> <span class="n">lexer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOLexer</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
+			<span class="n">GYOOParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOParser</span><span class="o">(</span><span class="k">new</span> <span class="n">CommonTokenStream</span><span class="o">(</span><span class="n">lexer</span><span class="o">));</span>
+			<span class="n">parser</span><span class="o">.</span><span class="na">addParseListener</span><span class="o">(</span><span class="k">new</span> <span class="n">MyListener</span><span class="o">());</span>
 
-		<span class="n">CommonTokenStream</span> <span class="n">tokens</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CommonTokenStream</span><span class="o">(</span><span class="n">lexer</span><span class="o">);</span>
-		<span class="n">GYOOParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOParser</span><span class="o">(</span><span class="n">tokens</span><span class="o">);</span>
-		<span class="n">parser</span><span class="o">.</span><span class="na">addParseListener</span><span class="o">(</span><span class="k">new</span> <span class="n">MyListener</span><span class="o">());</span>
-
-		<span class="n">parser</span><span class="o">.</span><span class="na">program</span><span class="o">();</span> <span class="c1">// Start parsing</span>
+            <span class="c1">// Start parsing</span>
+			<span class="n">parser</span><span class="o">.</span><span class="na">program</span><span class="o">();</span>
 	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
 		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
 	<span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>If you pass the sample GYOO program you saw earlier as the input file, you should see the following output:</p>
+<p>And now, if you pass the sample GYOO program you saw earlier as the input file, you should see the following output:</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="mi">31</span>
 <span class="mi">3</span></code></pre></figure>
