@@ -122,7 +122,7 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">grammar</span> <span class="no">GYOO</span><span class="p">;</span>
 <span class="n">program</span>   <span class="p">:</span> <span class="s1">'begin'</span> <span class="n">statement</span><span class="o">+</span> <span class="s1">'end'</span><span class="p">;</span>
-		  
+          
 <span class="n">statement</span> <span class="p">:</span> <span class="n">assign</span> <span class="o">|</span> <span class="n">add</span> <span class="o">|</span> <span class="nb">print</span> <span class="p">;</span>
 
 <span class="n">assign</span>    <span class="p">:</span> <span class="s1">'let'</span> <span class="no">ID</span> <span class="s1">'be'</span> <span class="p">(</span><span class="no">NUMBER</span> <span class="o">|</span> <span class="no">ID</span><span class="p">)</span> <span class="p">;</span>
@@ -156,50 +156,50 @@
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyListener</span> <span class="kd">extends</span> <span class="n">GYOOBaseListener</span> <span class="o">{</span>
 
-	<span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">variables</span><span class="o">;</span>
-	
-	<span class="kd">public</span> <span class="nf">MyListener</span><span class="o">()</span> <span class="o">{</span>
-		<span class="n">variables</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">exitAssign</span><span class="o">(</span><span class="n">AssignContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
-		<span class="c1">// This method is called when the parser has finished</span>
-		<span class="c1">// parsing the assign statement</span>
-		
-		<span class="c1">// Get variable name</span>
-		<span class="n">String</span> <span class="n">variableName</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getText</span><span class="o">();</span>
-		
-		<span class="c1">// Get value from variable or number</span>
-		<span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">getText</span><span class="o">()</span> 
-				<span class="o">:</span> <span class="n">ctx</span><span class="o">.</span><span class="na">NUMBER</span><span class="o">().</span><span class="na">getText</span><span class="o">();</span>
-		
-		<span class="c1">// Add variable to map</span>
-		<span class="n">variables</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">variableName</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">value</span><span class="o">));</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">exitAdd</span><span class="o">(</span><span class="n">AddContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
-		<span class="c1">// This method is called when the parser has finished</span>
-		<span class="c1">// parsing the add statement</span>
-		
-		<span class="n">String</span> <span class="n">variableName</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">getText</span><span class="o">()</span> 
-				<span class="o">:</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getText</span><span class="o">();</span>
-		<span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">variables</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getText</span><span class="o">())</span> 
-				<span class="o">:</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">NUMBER</span><span class="o">().</span><span class="na">getText</span><span class="o">());</span>
-		
-		<span class="n">variables</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">variableName</span><span class="o">,</span> <span class="n">variables</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">variableName</span><span class="o">)</span> <span class="o">+</span> <span class="n">value</span><span class="o">);</span>
-	<span class="o">}</span>
-	
-	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">exitPrint</span><span class="o">(</span><span class="n">PrintContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
-		<span class="c1">// This method is called when the parser has finished</span>
-		<span class="c1">// parsing the print statement</span>
-		
-		<span class="n">String</span> <span class="n">output</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">ctx</span><span class="o">.</span><span class="na">NUMBER</span><span class="o">().</span><span class="na">getText</span><span class="o">()</span> 
-				<span class="o">:</span> <span class="n">variables</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">getText</span><span class="o">()).</span><span class="na">toString</span><span class="o">();</span>
-		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">output</span><span class="o">);</span>
-	<span class="o">}</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">variables</span><span class="o">;</span>
+    
+    <span class="kd">public</span> <span class="nf">MyListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exitAssign</span><span class="o">(</span><span class="n">AssignContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// This method is called when the parser has finished</span>
+        <span class="c1">// parsing the assign statement</span>
+        
+        <span class="c1">// Get variable name</span>
+        <span class="n">String</span> <span class="n">variableName</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getText</span><span class="o">();</span>
+        
+        <span class="c1">// Get value from variable or number</span>
+        <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">getText</span><span class="o">()</span> 
+                <span class="o">:</span> <span class="n">ctx</span><span class="o">.</span><span class="na">NUMBER</span><span class="o">().</span><span class="na">getText</span><span class="o">();</span>
+        
+        <span class="c1">// Add variable to map</span>
+        <span class="n">variables</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">variableName</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">value</span><span class="o">));</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exitAdd</span><span class="o">(</span><span class="n">AddContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// This method is called when the parser has finished</span>
+        <span class="c1">// parsing the add statement</span>
+        
+        <span class="n">String</span> <span class="n">variableName</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">getText</span><span class="o">()</span> 
+                <span class="o">:</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getText</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">variables</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getText</span><span class="o">())</span> 
+                <span class="o">:</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">NUMBER</span><span class="o">().</span><span class="na">getText</span><span class="o">());</span>
+        
+        <span class="n">variables</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">variableName</span><span class="o">,</span> <span class="n">variables</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">variableName</span><span class="o">)</span> <span class="o">+</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exitPrint</span><span class="o">(</span><span class="n">PrintContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// This method is called when the parser has finished</span>
+        <span class="c1">// parsing the print statement</span>
+        
+        <span class="n">String</span> <span class="n">output</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">ctx</span><span class="o">.</span><span class="na">NUMBER</span><span class="o">().</span><span class="na">getText</span><span class="o">()</span> 
+                <span class="o">:</span> <span class="n">variables</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">ID</span><span class="o">().</span><span class="na">getText</span><span class="o">()).</span><span class="na">toString</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">output</span><span class="o">);</span>
+    <span class="o">}</span>
 
 <span class="o">}</span></code></pre></figure>
 
@@ -214,19 +214,19 @@
 <p>At this point, you can call the <code class="highlighter-rouge">program()</code> method to start the parsing.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-	<span class="k">try</span> <span class="o">{</span>
-			<span class="n">ANTLRInputStream</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ANTLRInputStream</span><span class="o">(</span>
-                <span class="k">new</span> <span class="nf">FileInputStream</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>	
-		
-			<span class="n">GYOOLexer</span> <span class="n">lexer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOLexer</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
-			<span class="n">GYOOParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOParser</span><span class="o">(</span><span class="k">new</span> <span class="n">CommonTokenStream</span><span class="o">(</span><span class="n">lexer</span><span class="o">));</span>
-			<span class="n">parser</span><span class="o">.</span><span class="na">addParseListener</span><span class="o">(</span><span class="k">new</span> <span class="n">MyListener</span><span class="o">());</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">ANTLRInputStream</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ANTLRInputStream</span><span class="o">(</span>
+            <span class="k">new</span> <span class="nf">FileInputStream</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>    
 
-            <span class="c1">// Start parsing</span>
-			<span class="n">parser</span><span class="o">.</span><span class="na">program</span><span class="o">();</span>
-	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-	<span class="o">}</span>
+        <span class="n">GYOOLexer</span> <span class="n">lexer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOLexer</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
+        <span class="n">GYOOParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GYOOParser</span><span class="o">(</span><span class="k">new</span> <span class="n">CommonTokenStream</span><span class="o">(</span><span class="n">lexer</span><span class="o">));</span>
+        <span class="n">parser</span><span class="o">.</span><span class="na">addParseListener</span><span class="o">(</span><span class="k">new</span> <span class="n">MyListener</span><span class="o">());</span>
+
+        <span class="c1">// Start parsing</span>
+        <span class="n">parser</span><span class="o">.</span><span class="na">program</span><span class="o">();</span> 
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
 <p>And now, if you pass the sample GYOO program you saw earlier as the input file, you should see the following output:</p>
