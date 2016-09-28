@@ -5,9 +5,105 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 27 Sep 2016 07:32:14 +0530</pubDate>
-    <lastBuildDate>Tue, 27 Sep 2016 07:32:14 +0530</lastBuildDate>
+    <pubDate>Wed, 28 Sep 2016 23:48:01 +0530</pubDate>
+    <lastBuildDate>Wed, 28 Sep 2016 23:48:01 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>How to Create a Reddit Bot Using PRAW4 In 5 Minutes</title>
+        <description>&lt;p&gt;Whether you like it or not, a significant number of Reddit users are bots. Usually, they perform just two tasks: they look for comments that match a few well-defined criteria and then automatically reply to them. Creating such bots takes less than 5 minutes if you know how to use Python.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, I’ll show you how to use the new and very powerful PRAW 4 Python package to create a Reddit bot that can not only look for comments containing a specific word in a given subreddit, but also automatically reply to such comments with a predefined message.&lt;/p&gt;
+
+&lt;p&gt;For the sake of clear example, we’ll be looking for the word &lt;strong&gt;Mars&lt;/strong&gt; in the comments of the &lt;a href=&quot;https://reddit.com/r/space&quot;&gt;r/space&lt;/a&gt; subreddit. The canned reply will be &lt;strong&gt;Why no love for Titan?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;setup&quot;&gt;Setup&lt;/h3&gt;
+
+&lt;p&gt;Let’s start by installing the PRAW 4 package. The easiest way to do so is to use Python pip. If you don’t have it, here’s how you can get it on Ubuntu 14.04:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo apt-get install python3-pip&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;With &lt;code class=&quot;highlighter-rouge&quot;&gt;pip3&lt;/code&gt;, you can install PRAW using the following command:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;pip3 install --user --upgrade https://github.com/praw-dev/praw/archive/praw4.zip&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;At this point, you can start using PRAW 4.&lt;/p&gt;
+
+&lt;h3 id=&quot;registering-the-bot&quot;&gt;Registering the Bot&lt;/h3&gt;
+
+&lt;p&gt;All Reddit bots must be registered with Reddit. Therefore, log in to Reddit using a new account, or an account you already have, and click on the &lt;strong&gt;preferences&lt;/strong&gt; link.&lt;/p&gt;
+
+&lt;p&gt;Next, click on the &lt;strong&gt;apps&lt;/strong&gt; tab.&lt;/p&gt;
+
+&lt;p&gt;Here, click on the &lt;strong&gt;create an app…&lt;/strong&gt; button. You’ll now see a form asking for various details about the application.&lt;/p&gt;
+
+&lt;p&gt;Give a unique name and meaningful description to the application, and select &lt;strong&gt;script&lt;/strong&gt;. The &lt;strong&gt;about url&lt;/strong&gt; and &lt;strong&gt;redirect uri&lt;/strong&gt; fields are not necessary for a script-based bot. Therefore, you can specify any URL. I’ll use &lt;strong&gt;example.com&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/reddit3.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;app registration form&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you press the &lt;strong&gt;create app&lt;/strong&gt; button, your bot will be registered and you will be able to see its client ID and client secret. Make a note of them because you’ll be needing them next.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/reddit1.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;app registration complete&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-the-bot&quot;&gt;Creating the Bot&lt;/h3&gt;
+
+&lt;p&gt;Create a new file called &lt;strong&gt;mybot.py&lt;/strong&gt;, and open it using your favorite code editor. The first thing you need to do inside it is import the PRAW package using the following statement:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;praw&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;You can now create an instance of your bot using the &lt;code class=&quot;highlighter-rouge&quot;&gt;praw.Reddit&lt;/code&gt; class. To its constructor, you must pass a meaningful user-agent, the client id, the client secret, your Reddit account’s username, and its password. Note that the Reddit account you use here is the same as the one you used while registering the bot.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;bot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;praw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Reddit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_agent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MySimpleBot v0.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                  &lt;span class=&quot;n&quot;&gt;client_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'abcdefGHIJKLO123--'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                  &lt;span class=&quot;n&quot;&gt;client_secret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'12345678901abcdefgh-_'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                  &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'demo_user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                  &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'demo_password'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The bot is now ready to be used.&lt;/p&gt;
+
+&lt;p&gt;To point it to a specific subreddit, you must use the &lt;code class=&quot;highlighter-rouge&quot;&gt;subreddit()&lt;/code&gt; method. Here’s how you point it to the &lt;a href=&quot;https://reddit.com/r/space&quot;&gt;r/space&lt;/a&gt; subreddit.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;subreddit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subreddit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'space'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;PRAW4 makes it very easy for you to continuously monitor a subreddit for new posts and comments. All you need to do is make use of the &lt;code class=&quot;highlighter-rouge&quot;&gt;stream&lt;/code&gt; object. By using &lt;code class=&quot;highlighter-rouge&quot;&gt;stream&lt;/code&gt;, you don’t have to create any loop, or bother about Reddit’s rate limits. PRAW 4 handles it all for you automatically.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subreddit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Once you have the &lt;code class=&quot;highlighter-rouge&quot;&gt;comments&lt;/code&gt; list, you can create a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop to analyze each item inside it. For now, let us just extract the comment’s &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;author&lt;/code&gt; fields.&lt;/p&gt;
+
+&lt;p&gt;Once you are sure that the &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; contains the keyword &lt;strong&gt;Mars&lt;/strong&gt;, you can call the &lt;code class=&quot;highlighter-rouge&quot;&gt;reply()&lt;/code&gt; method of the &lt;code class=&quot;highlighter-rouge&quot;&gt;comment&lt;/code&gt; object to send a canned reply. Here’s how you would do that:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Fetch body&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;author&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Fetch author&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'mars'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# Generate a message&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Why no love for Titan, u/{0} ?&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Send message&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;That’s all you need to do. Save the file, and exit your code editor. From the command line, you can run the bot using the following command:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;python3 mybot.py&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Note that the script will never exit, unless you press &lt;strong&gt;Ctrl+C&lt;/strong&gt;. That’s because it is continuously fetching new comments, analyzing them, and replying to them.&lt;/p&gt;
+
+&lt;p&gt;You can, of course, take a look at its replies directly on Reddit.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/reddit2.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;bot replies&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In this tutorial, you learned how to create a Reddit bot using PRAW 4. For best results, I suggest you use a Reddit account that is at least a week old for your bot. Otherwise, Reddit might be restricting it considerably.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 28 Sep 2016 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2016/09/how-to-create-reddit-bot-using-praw4.html</link>
+        <guid isPermaLink="true">http://progur.com/2016/09/how-to-create-reddit-bot-using-praw4.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
     
       <item>
         <title>How to Create a Programming Language Using ANTLR4</title>
