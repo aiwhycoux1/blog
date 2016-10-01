@@ -5,8 +5,8 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 30 Sep 2016 19:56:57 +0530</pubDate>
-    <lastBuildDate>Fri, 30 Sep 2016 19:56:57 +0530</lastBuildDate>
+    <pubDate>Sat, 01 Oct 2016 20:18:27 +0530</pubDate>
+    <lastBuildDate>Sat, 01 Oct 2016 20:18:27 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
@@ -15,7 +15,7 @@
 
 &lt;p&gt;In this tutorial, I’ll show you how to use the new and very powerful PRAW 4 Python package to create a Reddit bot that can not only look for comments containing a specific word in a given subreddit, but also automatically reply to such comments with a predefined message.&lt;/p&gt;
 
-&lt;p&gt;For the sake of clear example, we’ll be looking for the word &lt;strong&gt;Mars&lt;/strong&gt; in the comments of the &lt;a href=&quot;https://reddit.com/r/space&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;r/space&lt;/a&gt; subreddit. The canned reply will be &lt;strong&gt;Why no love for Titan?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For the sake of a clear example, we’ll be looking for the word &lt;strong&gt;Mars&lt;/strong&gt; in the comments of the &lt;a href=&quot;https://reddit.com/r/space&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;r/space&lt;/a&gt; subreddit. The canned reply will be &lt;strong&gt;Why no love for Titan?&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;setup&quot;&gt;Setup&lt;/h3&gt;
 
@@ -47,7 +47,7 @@
 
 &lt;h3 id=&quot;creating-the-bot&quot;&gt;Creating the Bot&lt;/h3&gt;
 
-&lt;p&gt;Create a new file called &lt;strong&gt;mybot.py&lt;/strong&gt;, and open it using your favorite code editor. The first thing you need to do inside it is import the PRAW package using the following statement:&lt;/p&gt;
+&lt;p&gt;Create a new file called &lt;strong&gt;mybot.py&lt;/strong&gt; and open it using your favorite code editor. The first thing you need to do inside it is import the PRAW package using the following statement:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;praw&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
