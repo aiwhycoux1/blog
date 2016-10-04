@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">        
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeEclipse.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCoreEclipse.min.css">
+
+    <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/syntax.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>How to Use Reddit OAuth 2.0 In Android Apps - Progur!</title>
+<meta property="og:title" content="How to Use Reddit OAuth 2.0 In Android Apps" />
+<meta name="description" content="If you are building an Android client for Reddit, you can no longer ask your users to type in their usernames and passwords directly into your app. You must use Reddit’s OAuth 2.0 flow instead. This tutorial shows you how." />
+<meta property="og:description" content="If you are building an Android client for Reddit, you can no longer ask your users to type in their usernames and passwords directly into your app. You must use Reddit’s OAuth 2.0 flow instead. This tutorial shows you how." />
+<link rel="canonical" href="http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html" />
+<meta property="og:url" content="http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html" />
+<meta property="og:site_name" content="Progur!" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-10-03T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@hathibel" />
+<meta name="twitter:creator" content="@hathibel" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Use Reddit OAuth 2.0 In Android Apps",
+    "datePublished": "2016-10-03T00:00:00+05:30",
+    "description": "If you are building an Android client for Reddit, you can no longer ask your users to type in their usernames and passwords directly into your app. You must use Reddit’s OAuth 2.0 flow instead. This tutorial shows you how.",
+    "logo": "http://progur.com/assets/logo.jpg",
+    "url": "http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><i class="fa fa-terminal logo"></i> PROGUR!</a>
+        </div>
+        <!-- Options -->
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://twitter.com/hathibel" title="Follow me on Twitter"><i class="fa fa-lg fa-twitter" style="color: #4099FF"></i> &nbsp; Twitter</a></li>
+            <li><a href="https://github.com/hathibelagal" title="Follow me on GitHub"><i class="fa fa-lg fa-github" style="color: #999999"></i> &nbsp; GitHub</a></li>
+            <li><a href="https://medium.com/@hathibel" title="Follow me on Medium"><i class="fa fa-lg fa-medium" style="color: #0be370"></i> &nbsp; Medium</a></li>
+            <li><a href="/feed.xml" title="Subscribe to our RSS feed"><i class="fa fa-lg fa-rss" style="color: #FF6600"></i>&nbsp; RSS</a></li>
+          </ul>
+        </div>
+        <!-- End of Options -->
+      </div>
+    </nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <div>
+                    <h1 class="post-title">How to Use Reddit OAuth 2.0 In Android Apps</h1>
+                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 03 October 2016</div>
+                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Programming </span></p>
+                    <div class="post-actual-content">
+                        <p>If you are building an Android client for Reddit, you cannot ask your users to type in their usernames and passwords directly into your app. Well, you could a few years ago, but not anymore. Reddit now expects all its mobile clients to follow the OAuth 2.0 protocol. Adding the OAuth flow to an Android app, however, is no trivial task. Last week, I spent about an hour learning how to implement it. By writing this tutorial, I hope to help you save some time.</p>
+
+<h3 id="register-your-app">Register your App</h3>
+
+<p>The first thing you need to do is register your app with Reddit. Therefore, go to the <strong>preferences &gt; apps</strong> page of Reddit, and create a new app. If this is your first Reddit app, you’ll have to click on a button that says <strong>are you a developer? create an app…</strong>.</p>
+
+<p>In the form that pops up, give a name and description to your app and select <strong>installed app</strong>. In the <strong>about url</strong> field, you can type in the address of a page that is present on your website. For now, however, feel free to just say <strong>example.com</strong>.</p>
+
+<p>In the <strong>redirect uri</strong> field, type in another URL, preferably one that belongs to your website. For now, you can simply say <strong>http://www.example.com/my_redirect</strong>. It’s okay if the page does not exist. It’s just the string that is important. Make a note of it.</p>
+
+<p><img src="/assets/block1/app_form1.png" class="img-responsive center-block img-thumbnail" alt="app registration form" /></p>
+
+<p>Finally, press the <strong>Create app</strong> button to get your client ID.</p>
+
+<p><img src="/assets/block1/app_form2.png" class="img-responsive center-block img-thumbnail" alt="app registration form complete" /></p>
+
+<h3 id="dependencies-and-requirements">Dependencies and Requirements</h3>
+
+<p>In this tutorial, we’ll be using the OkHttp library to communicate with Reddit’s servers. Therefore, add the following line to your Android Studio project’s <strong>build.gradle</strong> file:</p>
+
+<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">compile</span> <span class="s1">'com.squareup.okhttp3:okhttp:3.4.1'</span></code></pre></figure>
+
+<p>Of course, we’ll also need the <code class="highlighter-rouge">INTERNET</code> permission. So, add the following line to your manifest:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.INTERNET"</span> <span class="nt">/&gt;</span></code></pre></figure>
+
+<h3 id="create-a-login-button">Create a Login Button</h3>
+
+<p>The user will be clicking on a button to initiate the login process. Therefore, your layout must have a button saying something like <em>“Sign in to Reddit”</em>.</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;Button</span> <span class="na">android:id=</span><span class="s">"@+id/signin"</span>
+    <span class="na">android:text=</span><span class="s">"Sign In With Reddit"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+    <span class="na">android:onClick=</span><span class="s">"startSignIn"</span><span class="nt">/&gt;</span></code></pre></figure>
+
+<p>Note that the button I added has an <code class="highlighter-rouge">onClick</code> listener called <strong>startSignIn</strong>. So, inside the <code class="highlighter-rouge">startSignIn()</code> method of your <code class="highlighter-rouge">Activity</code>, you’ll be writing code to start the sign in process.</p>
+
+<p>The users will be typing in their usernames and passwords on a sign in page that’s hosted on Reddit’s servers. Therefore, you must now create an <code class="highlighter-rouge">Intent</code> that opens a browser and takes the user to the sign in page.</p>
+
+<p>But first, add a few <code class="highlighter-rouge">final</code> member variables to your <code class="highlighter-rouge">Activity</code>:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">AUTH_URL</span> <span class="o">=</span>
+    <span class="s">"https://www.reddit.com/api/v1/authorize.compact?client_id=%s"</span> <span class="o">+</span>
+    <span class="s">"&amp;response_type=code&amp;state=%s&amp;redirect_uri=%s&amp;"</span> <span class="o">+</span>
+    <span class="s">"duration=permanent&amp;scope=identity"</span><span class="o">;</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">CLIENT_ID</span> <span class="o">=</span> <span class="s">"ABCDEFGHIJKLM012345-AA"</span><span class="o">;</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">REDIRECT_URI</span> <span class="o">=</span>
+        <span class="s">"http://www.example.com/my_redirect"</span><span class="o">;</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">STATE</span> <span class="o">=</span> <span class="s">"MY_RANDOM_STRING_1"</span><span class="o">;</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ACCESS_TOKEN_URL</span> <span class="o">=</span>
+        <span class="s">"https://www.reddit.com/api/v1/access_token"</span><span class="o">;</span></code></pre></figure>
+
+<p>The names of the variables must be fairly intuitive. If you are wondering what the <code class="highlighter-rouge">STATE</code> variable is, it’s just a random string that you pass to the <code class="highlighter-rouge">AUTH_URL</code>. The same string will be present in the sign in result, and you can use it to make sure that the sign in result belongs to you.</p>
+
+<p>Now, you can create a <code class="highlighter-rouge">startSignIn()</code> method and add the following code to it, which simply opens the AUTH_URL:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">startSignIn</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">AUTH_URL</span><span class="o">,</span> <span class="n">CLIENT_ID</span><span class="o">,</span> <span class="n">STATE</span><span class="o">,</span> <span class="n">REDIRECT_URI</span><span class="o">);</span>
+    <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">url</span><span class="o">));</span>
+    <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<h3 id="handling-the-sign-in-result">Handling the Sign In Result</h3>
+
+<p>Once the user completes the sign in, Reddit’s server will redirect the browser to the redirect URI you mentioned. Therefore, to be able to get the sign in result, your app must handle that redirect URI. You can do so by adding an <code class="highlighter-rouge">intent-filter</code> for it inside you manifest file.</p>
+
+<p>So, inside the declaration of your <code class="highlighter-rouge">Activity</code>, add the following code:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;intent-filter&gt;</span>
+    <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">"android.intent.action.VIEW"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">"android.intent.category.DEFAULT"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">"android.intent.category.BROWSABLE"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;data</span> <span class="na">android:host=</span><span class="s">"www.example.com"</span>
+        <span class="na">android:scheme=</span><span class="s">"http"</span>
+        <span class="na">android:path=</span><span class="s">"/my_redirect"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/intent-filter&gt;</span></code></pre></figure>
+
+<p>You must, of course, make sure that the <code class="highlighter-rouge">host</code>, <code class="highlighter-rouge">scheme</code>, and <code class="highlighter-rouge">path</code> attributes of the <code class="highlighter-rouge">&lt;data&gt;</code> tag match your redirect URI.</p>
+
+<p>Once you add the <code class="highlighter-rouge">intent-filter</code>, your <code class="highlighter-rouge">Activity</code> will be automatically opened when the browser tries to visit the redirect URI. Your <code class="highlighter-rouge">Activity</code> will also receive an <code class="highlighter-rouge">Intent</code> object containing details about the sign in result.</p>
+
+<p>You can receive the <code class="highlighter-rouge">Intent</code> in the <code class="highlighter-rouge">onResume()</code> method of your <code class="highlighter-rouge">Activity</code>. The <code class="highlighter-rouge">Intent</code> object’s data will be a <code class="highlighter-rouge">Uri</code> object whose query string contains a special code you can use to request for an access token. Before you try to extract code, however, you must check for errors, and also make sure that the <code class="highlighter-rouge">state</code> parameter matches the random string you defined earlier.</p>
+
+<p>Accordingly, add the following code to your <code class="highlighter-rouge">Activity</code>:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
+
+    <span class="k">if</span><span class="o">(</span><span class="n">getIntent</span><span class="o">()!=</span><span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getAction</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getData</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">uri</span><span class="o">.</span><span class="na">getQueryParameter</span><span class="o">(</span><span class="s">"error"</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">error</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="na">getQueryParameter</span><span class="o">(</span><span class="s">"error"</span><span class="o">);</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">"An error has occurred : "</span> <span class="o">+</span> <span class="n">error</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">state</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="na">getQueryParameter</span><span class="o">(</span><span class="s">"state"</span><span class="o">);</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">STATE</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">String</span> <span class="n">code</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="na">getQueryParameter</span><span class="o">(</span><span class="s">"code"</span><span class="o">);</span>
+                <span class="n">getAccessToken</span><span class="o">(</span><span class="n">code</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Note that we are passing the <code class="highlighter-rouge">code</code> as an argument to a method called <code class="highlighter-rouge">getAccessToken()</code>. Let’s create that.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">getAccessToken</span><span class="o">(</span><span class="n">String</span> <span class="n">code</span><span class="o">)</span> <span class="o">{</span>
+
+<span class="o">}</span></code></pre></figure>
+
+<p>Inside the method, you must create a new instance of <code class="highlighter-rouge">OkHttpClient</code>. We’ll be using it to fetch the access token.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">OkHttpClient</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OkHttpClient</span><span class="o">();</span></code></pre></figure>
+
+<p>You’ll also need a Base64 encoded authentication string containing your <code class="highlighter-rouge">CLIENT_ID</code> and a blank password, separated by a <code class="highlighter-rouge">:</code>.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">authString</span> <span class="o">=</span> <span class="n">CLIENT_ID</span> <span class="o">+</span> <span class="s">":"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">encodedAuthString</span> <span class="o">=</span> <span class="n">Base64</span><span class="o">.</span><span class="na">encodeToString</span><span class="o">(</span><span class="n">authString</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span>
+        <span class="n">Base64</span><span class="o">.</span><span class="na">NO_WRAP</span><span class="o">);</span></code></pre></figure>
+
+<p>You can now build a <code class="highlighter-rouge">Request</code> object to connect to the <code class="highlighter-rouge">ACCESS_TOKEN_URL</code>. You must pass the <code class="highlighter-rouge">encodedAuthString</code> as a header of the request. It’s also a good idea to include a custom <code class="highlighter-rouge">User-Agent</code> header.</p>
+
+<p>You must pass the <code class="highlighter-rouge">code</code> as POST data.</p>
+
+<p>Accordingly, add the following code to the method:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Request</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Request</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"User-Agent"</span><span class="o">,</span> <span class="s">"Sample App"</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Authorization"</span><span class="o">,</span> <span class="s">"Basic "</span> <span class="o">+</span> <span class="n">encodedAuthString</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">url</span><span class="o">(</span><span class="n">ACCESS_TOKEN_URL</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">RequestBody</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">MediaType</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">"application/x-www-form-urlencoded"</span><span class="o">),</span>
+                <span class="s">"grant_type=authorization_code&amp;code="</span> <span class="o">+</span> <span class="n">code</span> <span class="o">+</span>
+                <span class="s">"&amp;redirect_uri="</span> <span class="o">+</span> <span class="n">REDIRECT_URI</span><span class="o">))</span>
+        <span class="o">.</span><span class="na">build</span><span class="o">();</span></code></pre></figure>
+
+<p>Finally, use the <code class="highlighter-rouge">newCall()</code> method of the <code class="highlighter-rouge">OkHttpClient</code> object to actually execute the request. You can use the <code class="highlighter-rouge">enqueue()</code> function to make sure that the request is asynchronous. If there are no errors, in the callback object’s <code class="highlighter-rouge">onResponse()</code> method, you’ll get a JSON string containing both the access token and the refresh token.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">client</span><span class="o">.</span><span class="na">newCall</span><span class="o">(</span><span class="n">request</span><span class="o">).</span><span class="na">enqueue</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onFailure</span><span class="o">(</span><span class="n">Call</span> <span class="n">call</span><span class="o">,</span> <span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">"ERROR: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onResponse</span><span class="o">(</span><span class="n">Call</span> <span class="n">call</span><span class="o">,</span> <span class="n">Response</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">body</span><span class="o">().</span><span class="na">string</span><span class="o">();</span>
+
+        <span class="n">JSONObject</span> <span class="n">data</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">accessToken</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">optString</span><span class="o">(</span><span class="s">"access_token"</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">refreshToken</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">optString</span><span class="o">(</span><span class="s">"refresh_token"</span><span class="o">);</span>
+
+            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">"Access Token = "</span> <span class="o">+</span> <span class="n">accessToken</span><span class="o">);</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">"Refresh Token = "</span> <span class="o">+</span> <span class="n">refreshToken</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">JSONException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">});</span></code></pre></figure>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>You now know how to use Reddit’s OAuth 2.0 flow. The access token is valid only for an hour. Therefore, don’t forget to use the refresh token to get a new access token every now and then.</p>
+
+                    </div>
+
+                    <!-- Share -->
+                    <div class="post-share">
+                        <p>If you found this article useful, please share it with your friends and colleagues!</p>
+                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=How to Use Reddit OAuth 2.0 In Android Apps&url=http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html&via=hathibel" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-twitter fa-lg"></i></a>
+
+                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-facebook fa-lg"></i></a>
+                        
+                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus fa-lg"></i></a>
+                    </div>
+
+                    <!-- End of Share -->
+
+                    <!-- Comments -->
+                      <div class="comments">
+                          <div id="disqus_thread"></div>
+                            <script>                                    
+                                var disqus_config = function () {
+                                    this.page.url = "http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html";
+                                    this.page.identifier = "/2016/10/how-to-use-reddit-oauth2-in-android-apps.html";
+                                };
+                                (function() {
+                                    var d = document, s = d.createElement('script');
+
+                                    s.src = '//progur.disqus.com/embed.js';
+
+                                    s.setAttribute('data-timestamp', +new Date());
+                                    (d.head || d.body).appendChild(s);
+                                })();
+                            </script>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                      </div>
+                    <!-- End of comments -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>
+        Copyright &copy; 2016-2017 Progur.com | All rights reserved.
+        <br/>
+        Powered by Jekyll, and several secret sauces.
+    </p>
+  </div>
+</footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shAutoloader.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushBash.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJava.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushPython.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushRuby.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushCpp.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.min.js"></script>
+
+          <script>
+              SyntaxHighlighter.defaults.toolbar = false;
+              SyntaxHighlighter.all();
+          </script>
+
+        <!-- Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-46644689-5', 'auto');
+          ga('send', 'pageview');
+
+        </script>
+        <!-- End of Analytics -->
+
+  </body>
+</html>
+
