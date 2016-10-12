@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://progur.com/2016/10/how-to-use-tesseract-for-ocr-javascript.html</loc>
+<lastmod>2016-10-12T00:00:00+05:30</lastmod>
+</url>
+<url>
 <loc>http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html</loc>
 <lastmod>2016-10-03T00:00:00+05:30</lastmod>
 </url>
