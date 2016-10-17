@@ -80,8 +80,10 @@ p {
     padding:10px;
 }
 
-.pagination {
+.pagination {    
     margin-top: 16px;
+    width: 50%;    
+    text-align: center;
 }
 
 .syntaxhighlighter { 

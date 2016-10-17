@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">        
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeEclipse.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCoreEclipse.min.css">
+
+    <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/syntax.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Procedural Generation Tutorial: Creating Fractal Trees Using JavaScript - Progur!</title>
+<meta property="og:title" content="Procedural Generation Tutorial: Creating Fractal Trees Using JavaScript" />
+<meta name="description" content="In this tutorial, I show you how to create colorful fractal trees using just JavaScript and the HTML5 canvas." />
+<meta property="og:description" content="In this tutorial, I show you how to create colorful fractal trees using just JavaScript and the HTML5 canvas." />
+<link rel="canonical" href="http://progur.com/2016/10/procedural-generation-create-fractal-trees-javascript.html" />
+<meta property="og:url" content="http://progur.com/2016/10/procedural-generation-create-fractal-trees-javascript.html" />
+<meta property="og:site_name" content="Progur!" />
+<meta property="og:image" content="http://progur.com/assets/block2/tree5.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-10-16T00:00:00+05:30" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@hathibel" />
+<meta name="twitter:creator" content="@hathibel" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Procedural Generation Tutorial: Creating Fractal Trees Using JavaScript",
+    "image": "http://progur.com/assets/block2/tree5.png",
+    "datePublished": "2016-10-16T00:00:00+05:30",
+    "description": "In this tutorial, I show you how to create colorful fractal trees using just JavaScript and the HTML5 canvas.",
+    "logo": "http://progur.com/assets/logo.jpg",
+    "url": "http://progur.com/2016/10/procedural-generation-create-fractal-trees-javascript.html"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><i class="fa fa-terminal logo"></i> PROGUR!</a>
+        </div>
+        <!-- Options -->
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://twitter.com/hathibel" title="Follow me on Twitter"><i class="fa fa-lg fa-twitter" style="color: #4099FF"></i> &nbsp; Twitter</a></li>
+            <li><a href="https://github.com/hathibelagal" title="Follow me on GitHub"><i class="fa fa-lg fa-github" style="color: #999999"></i> &nbsp; GitHub</a></li>
+            <li><a href="https://medium.com/@hathibel" title="Follow me on Medium"><i class="fa fa-lg fa-medium" style="color: #0be370"></i> &nbsp; Medium</a></li>
+            <li><a href="/feed.xml" title="Subscribe to our RSS feed"><i class="fa fa-lg fa-rss" style="color: #FF6600"></i>&nbsp; RSS</a></li>
+          </ul>
+        </div>
+        <!-- End of Options -->
+      </div>
+    </nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <div>
+                    <h1 class="post-title">Procedural Generation Tutorial: Creating Fractal Trees Using JavaScript</h1>
+                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 16 October 2016</div>
+                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Programming </span></p>
+                    <div class="post-actual-content">
+                        <p>Did you know that trees–I’m talking about the ones you find in a jungle, not those that are in an algorithms book–too behave like fractals? If you step out of your room and take a close look at any old tree in your garden or neighborhood, you’ll notice that most of its branches are quite similar to each other. They might not be exactly like one another, but they definitely share patterns. In this tutorial, I show you how to procedurally generate trees using JavaScript.</p>
+
+<p>Fractal trees, although not as well known as other types of fractals, are definitely interesting. If you are familiar with recursion, creating them is easy and intuitive.</p>
+
+<p>In this tutorial, I’ll assume that you already have access to an HTML5 canvas, and its 2D context. If you don’t know how to create and initialize a canvas, I suggest you read my previous tutorial.</p>
+
+<h3 id="the-algorithm">The Algorithm</h3>
+
+<p>Here’s the essence of the algorithm we’ll be using to generate our fractal trees:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Step 1: If a branch is long enough, attach two branches to it: one on the left, and one on the right. Both the new branches should be slightly shorter than their parent branch.
+
+Step 2: Repeat Step 1 for both the new branches
+</code></pre>
+</div>
+
+<p>We will, of course, start with a long branch, which will serve as the trunk of the tree.</p>
+
+<h3 id="creating-the-recursive-function">Creating the Recursive Function</h3>
+
+<p>Create a new function called <code class="highlighter-rouge">draw()</code>. It should take four arguments:</p>
+
+<ul>
+  <li>The starting X-coordinate of a branch</li>
+  <li>The starting Y-coordinate of the branch</li>
+  <li>The length of the branch</li>
+  <li>The angle of the branch</li>
+</ul>
+
+<p>It should look like this:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">draw</span><span class="p">(</span><span class="nx">startX</span><span class="p">,</span> <span class="nx">startY</span><span class="p">,</span> <span class="nx">len</span><span class="p">,</span> <span class="nx">angle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// All code goes here</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>To draw the branches, we’ll be using paths. The paths, however, will always be straight, vertical  lines. To be able to draw them at the required angle, we’ll be rotating the canvas itself using the <code class="highlighter-rouge">rotate()</code> method. Of course, we’ll also have to save and restore the state of the canvas at appropriate times.</p>
+
+<p>Once the branch is drawn, we call the <code class="highlighter-rouge">draw()</code> function twice, once for the left branch and once for the right branch.</p>
+
+<p>Here’s the code for doing all that:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">draw</span><span class="p">(</span><span class="nx">startX</span><span class="p">,</span> <span class="nx">startY</span><span class="p">,</span> <span class="nx">len</span><span class="p">,</span> <span class="nx">angle</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+  
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">translate</span><span class="p">(</span><span class="nx">startX</span><span class="p">,</span> <span class="nx">startY</span><span class="p">);</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">rotate</span><span class="p">(</span><span class="nx">angle</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">lineTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+  
+  <span class="k">if</span><span class="p">(</span><span class="nx">len</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">);</span>
+  <span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+  
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>At this point, you can add a call to the <code class="highlighter-rouge">draw()</code> function to actually draw the tree.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">draw</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span><span class="mi">600</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span></code></pre></figure>
+
+<p>Note that the first two arguments are where the tree’s trunk should start. The third argument is the length of the trunk, and the last argument is zero because the trunk should be straight.</p>
+
+<p>If you run the above code, you should see a tree that looks like this:</p>
+
+<p><img src="/assets/block2/tree1.jpg" class="img-responsive center-block img-thumbnail" alt="Fractal tree, simple" /></p>
+
+<p>It isn’t very impressive, but our function is working the way it should. All it needs now is a few tweaks!</p>
+
+<h3 id="tweak-1-branch-thickness">Tweak 1: Branch Thickness</h3>
+
+<p>All branches of a real tree don’t have the same thickness. They tend to get thinner as we go higher. Implementing that is simple. Just add an extra parameter to the <code class="highlighter-rouge">draw()</code> function called <strong>branchWidth</strong>. And then, every time you call the <code class="highlighter-rouge">draw()</code> function, decrement the <code class="highlighter-rouge">branchWidth</code> by a small value, like so:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span>
+<span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span></code></pre></figure>
+
+<p>To actually change the thickness, at the beginning of the <code class="highlighter-rouge">draw()</code> function, use the <code class="highlighter-rouge">lineWidth</code> attribute of the context.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="nx">branchWidth</span><span class="p">;</span></code></pre></figure>
+
+<p>With an initial thickness of 10, here’s what the tree looks like:</p>
+
+<p><img src="/assets/block2/tree3.png" class="img-responsive center-block img-thumbnail" alt="Fractal tree, thick" /></p>
+
+<h3 id="tweak-2-add-leaves-and-color">Tweak 2: Add Leaves and Color</h3>
+
+<p>Adding color is simple. Just add the following lines right after you initialize your 2D drawing context.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">"darkgreen"</span><span class="p">;</span>
+<span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">"green"</span><span class="p">;</span></code></pre></figure>
+
+<blockquote>
+  <p>Yeah, feel free to use brown for the trunk if you want to. My tree shall have a dark green trunk.</p>
+</blockquote>
+
+<p>Adding leaves is a little tricky. For now, let’s use the <code class="highlighter-rouge">arc()</code> and <code class="highlighter-rouge">fill()</code> methods to create slices of a circle that look like leaves. You must, of course, create the leaves only when the branch cannot branch further.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span><span class="p">(</span><span class="nx">len</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Additionally, let’s increment the angle every time a new branch is drawn. To do so, change the calls to the <code class="highlighter-rouge">draw()</code> function to look like this:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="nx">angle</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span>
+<span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="nx">angle</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span></code></pre></figure>
+
+<p>And now, the tree should look like this:</p>
+
+<p><img src="/assets/block2/tree2.jpg" class="img-responsive center-block img-thumbnail" alt="Fractal tree, colored" /></p>
+
+<p>Much better!</p>
+
+<h3 id="tweak-3-add-shadows">Tweak 3: Add Shadows</h3>
+
+<p>This is going to be the last tweak. Let’s add shadows! Doing so is easy: just use the <code class="highlighter-rouge">shadowBlur</code> and <code class="highlighter-rouge">shadowColor</code> attributes of the context.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowBlur</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowColor</span> <span class="o">=</span> <span class="s2">"rgba(0,0,0,0.8)"</span><span class="p">;</span></code></pre></figure>
+
+<p>The tree will now look like this:</p>
+
+<p><img src="/assets/block2/tree4.png" class="img-responsive center-block img-thumbnail" alt="Fractal tree, thick" /></p>
+
+<h3 id="tweak-4-use-bezier-curves">Tweak 4: Use Bezier Curves</h3>
+
+<p>All our branches are too straight. That makes our tree look stiff and unrealistic. Fortunately, the Canvas API allows us to use bezier curves. If you want to, you can replace the call to the <code class="highlighter-rouge">lineTo()</code> method in your code, with calls to the <code class="highlighter-rouge">bezierCurveTo()</code> method. Here’s how:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span><span class="p">(</span><span class="nx">angle</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">bezierCurveTo</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">bezierCurveTo</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>After changing the minimum length to 5 instead of 10, you will now have a rather realistic looking tree:</p>
+
+<p><img src="/assets/block2/tree5.png" class="img-responsive center-block img-thumbnail" alt="Fractal tree, realistic" /></p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>You now know how to create fractal trees using just JavaScript and the HTML5 Canvas API. We didn’t use any libraries, and our code is quite concise.</p>
+
+<p>If you found anything confusing, here’s the complete code, with all the tweaks:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">myCanvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"my_canvas"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">myCanvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">"2d"</span><span class="p">);</span>
+
+<span class="nx">ctx</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">"darkgreen"</span><span class="p">;</span>
+<span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">"green"</span><span class="p">;</span>
+<span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowBlur</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowColor</span> <span class="o">=</span> <span class="s2">"rgba(0,0,0,0.8)"</span><span class="p">;</span>
+
+<span class="nx">ctx</span><span class="p">.</span><span class="nx">lineCap</span> <span class="o">=</span> <span class="s2">"round"</span><span class="p">;</span> <span class="c1">// optional</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">(</span><span class="nx">startX</span><span class="p">,</span> <span class="nx">startY</span><span class="p">,</span> <span class="nx">len</span><span class="p">,</span> <span class="nx">angle</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="nx">branchWidth</span><span class="p">;</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+  
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">translate</span><span class="p">(</span><span class="nx">startX</span><span class="p">,</span> <span class="nx">startY</span><span class="p">);</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">rotate</span><span class="p">(</span><span class="nx">angle</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">angle</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">bezierCurveTo</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">bezierCurveTo</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+  
+  <span class="k">if</span><span class="p">(</span><span class="nx">len</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="nx">angle</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span>
+  <span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="nx">angle</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span>
+  
+  <span class="nx">ctx</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">draw</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span><span class="mi">600</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span></code></pre></figure>
+
+<p><em>Beware that the code takes a few seconds to run. Your browser might complain that it’s taking too long, but let it run to completion.</em></p>
+
+                    </div>
+
+                    <!-- Share -->
+                    <div class="post-share">
+                        <p>If you found this article useful, please share it with your friends and colleagues!</p>
+                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=Procedural Generation Tutorial: Creating Fractal Trees Using JavaScript&url=http://progur.com/2016/10/procedural-generation-create-fractal-trees-javascript.html&via=hathibel" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-twitter fa-lg"></i></a>
+
+                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2016/10/procedural-generation-create-fractal-trees-javascript.html" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-facebook fa-lg"></i></a>
+                        
+                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2016/10/procedural-generation-create-fractal-trees-javascript.html" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus fa-lg"></i></a>
+                    </div>
+
+                    <!-- End of Share -->
+
+                    <!-- Comments -->
+                      <div class="comments">
+                          <div id="disqus_thread"></div>
+                            <script>                                    
+                                var disqus_config = function () {
+                                    this.page.url = "http://progur.com/2016/10/procedural-generation-create-fractal-trees-javascript.html";
+                                    this.page.identifier = "/2016/10/procedural-generation-create-fractal-trees-javascript.html";
+                                };
+                                (function() {
+                                    var d = document, s = d.createElement('script');
+
+                                    s.src = '//progur.disqus.com/embed.js';
+
+                                    s.setAttribute('data-timestamp', +new Date());
+                                    (d.head || d.body).appendChild(s);
+                                })();
+                            </script>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                      </div>
+                    <!-- End of comments -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>
+        Copyright &copy; 2016-2017 Progur.com | All rights reserved.
+        <br/>
+        Powered by Jekyll, and several secret sauces.
+    </p>
+  </div>
+</footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shAutoloader.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushBash.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJava.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushPython.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushRuby.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushCpp.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.min.js"></script>
+
+          <script>
+              SyntaxHighlighter.defaults.toolbar = false;
+              SyntaxHighlighter.all();
+          </script>
+
+        <!-- Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-46644689-5', 'auto');
+          ga('send', 'pageview');
+
+        </script>
+        <!-- End of Analytics -->
+
+  </body>
+</html>
+
