@@ -117,7 +117,7 @@
 
 <h3 id="generate-a-thue-morse-sequence">2. Generate a Thue-Morse Sequence</h3>
 
-<p>One of the easiest ways to generate a Koch Curve is to use a <a href="https://en.wikipedia.org/wiki/Thue%E2%80%93Morse_sequence" target="_blank">Thue-Morse sequence</a>, which is just a sequence containing zeroes and ones. It starts with a <code class="highlighter-rouge">0</code> and the consequent digits are determined using the following algorithm:</p>
+<p>One of the easiest ways to generate a Koch Curve is to use a <a href="https://en.wikipedia.org/wiki/Thue%E2%80%93Morse_sequence" target="_blank">Thue-Morse sequence</a>, which is just a sequence containing zeroes and ones. It starts with a <code class="highlighter-rouge">0</code> and the rest of the digits are determined using the following algorithm:</p>
 
 <ul>
   <li>Step 1: Generate the complement of all the previous digits</li>
@@ -145,13 +145,16 @@
     <span class="k">return</span> <span class="nx">sequence</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>It’s not the most efficient approach, but it gets the job done and is quite intuitive. Note that we are running 18 iterations. Going beyond 20 iterations increases the run-time dramatically.</p>
+<p>It’s not the most efficient approach, but it gets the job done and is quite intuitive. Note that we are running 20 iterations. Going beyond that number increases the run-time dramatically.</p>
 
 <h3 id="generate-the-koch-curve">3. Generate the Koch Curve</h3>
 
-<p>We shall now use the Thue-Morse sequence to generate the Koch curve. Here’s how we will use the sequence:
-- Everytime we encounter a zero in the sequence, we draw a straight line of a fixed length
-- Everytime we encounter a one in the sequence, we rotate the canvas by 60 degrees.</p>
+<p>We shall now use the Thue-Morse sequence to generate the Koch curve. Here’s how we will use the sequence:</p>
+
+<ul>
+  <li>Everytime we encounter a zero in the sequence, we draw a straight line of a fixed length</li>
+  <li>Everytime we encounter a one in the sequence, we rotate the canvas by 60 degrees.</li>
+</ul>
 
 <p>As you might have guessed, the code to implement the above algorithm is going to be very simple and straight-forward.</p>
 
