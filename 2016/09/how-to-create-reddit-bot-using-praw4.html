@@ -140,7 +140,7 @@
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">comments</span> <span class="o">=</span> <span class="n">subreddit</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">comments</span><span class="p">()</span></code></pre></figure>
 
-<p>Once you have the <code class="highlighter-rouge">comments</code> list, you can create a <code class="highlighter-rouge">for</code> loop to analyze each item inside it. For now, let us just extract the comment’s <code class="highlighter-rouge">body</code> and <code class="highlighter-rouge">author</code> fields.</p>
+<p>Once you have the <code class="highlighter-rouge">comments</code> generator, you can create a <code class="highlighter-rouge">for</code> loop to analyze each item it returns. For now, let us just extract the comment’s <code class="highlighter-rouge">body</code> and <code class="highlighter-rouge">author</code> fields.</p>
 
 <p>Once you are sure that the <code class="highlighter-rouge">body</code> contains the keyword <strong>Mars</strong>, you can call the <code class="highlighter-rouge">reply()</code> method of the <code class="highlighter-rouge">comment</code> object to send a canned reply. Here’s how you would do that:</p>
 
