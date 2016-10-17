@@ -5,8 +5,8 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 17 Oct 2016 07:48:49 +0530</pubDate>
-    <lastBuildDate>Mon, 17 Oct 2016 07:48:49 +0530</lastBuildDate>
+    <pubDate>Mon, 17 Oct 2016 07:53:41 +0530</pubDate>
+    <lastBuildDate>Mon, 17 Oct 2016 07:53:41 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
@@ -141,7 +141,7 @@ Step 2: Repeat Step 1 for both the new branches
 
 &lt;p&gt;The tree will now look like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/block2/tree4.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Fractal tree, thick&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/block2/tree4.jpg&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Fractal tree, thick&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;tweak-4-use-bezier-curves&quot;&gt;Tweak 4: Use Bezier Curves&lt;/h3&gt;
 
@@ -155,7 +155,7 @@ Step 2: Repeat Step 1 for both the new branches
 
 &lt;p&gt;After changing the minimum length to 5 instead of 10, you will now have a rather realistic looking tree:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/block2/tree5.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Fractal tree, realistic&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/block2/tree5.jpg&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Fractal tree, realistic&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
 
