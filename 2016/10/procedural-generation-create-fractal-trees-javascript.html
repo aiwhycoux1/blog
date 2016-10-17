@@ -207,7 +207,7 @@ Step 2: Repeat Step 1 for both the new branches
 
 <h3 id="tweak-3-add-shadows">Tweak 3: Add Shadows</h3>
 
-<p>This is going to be the last tweak. Let’s add shadows! Doing so is easy: just use the <code class="highlighter-rouge">shadowBlur</code> and <code class="highlighter-rouge">shadowColor</code> attributes of the context.</p>
+<p>Let’s make our tree more realistic by adding shadows! Doing so is easy: just use the <code class="highlighter-rouge">shadowBlur</code> and <code class="highlighter-rouge">shadowColor</code> attributes of the context.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowBlur</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowColor</span> <span class="o">=</span> <span class="s2">"rgba(0,0,0,0.8)"</span><span class="p">;</span></code></pre></figure>
@@ -218,7 +218,7 @@ Step 2: Repeat Step 1 for both the new branches
 
 <h3 id="tweak-4-use-bezier-curves">Tweak 4: Use Bezier Curves</h3>
 
-<p>All our branches are too straight. That makes our tree look stiff and unrealistic. Fortunately, the Canvas API allows us to use bezier curves. If you want to, you can replace the call to the <code class="highlighter-rouge">lineTo()</code> method in your code, with calls to the <code class="highlighter-rouge">bezierCurveTo()</code> method. Here’s how:</p>
+<p>All our branches are too straight. As a result, our tree looks too stiff and unnatural. Fortunately, the Canvas API allows us to create bezier curves. If you want to, you can replace the call to the <code class="highlighter-rouge">lineTo()</code> method in your code, with calls to the <code class="highlighter-rouge">bezierCurveTo()</code> method. Here’s how:</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span><span class="p">(</span><span class="nx">angle</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">ctx</span><span class="p">.</span><span class="nx">bezierCurveTo</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
