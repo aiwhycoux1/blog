@@ -234,50 +234,9 @@ Step 2: Repeat Step 1 for both the new branches
 
 <p>You now know how to create fractal trees using just JavaScript and the HTML5 Canvas API. We didn’t use any libraries, and our code is quite concise.</p>
 
-<p>If you found anything confusing, here’s the complete code, with all the tweaks:</p>
+<p>If you found anything confusing, please leave a comment.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">myCanvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"my_canvas"</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">myCanvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">"2d"</span><span class="p">);</span>
-
-<span class="nx">ctx</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">"darkgreen"</span><span class="p">;</span>
-<span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">"green"</span><span class="p">;</span>
-<span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowBlur</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
-<span class="nx">ctx</span><span class="p">.</span><span class="nx">shadowColor</span> <span class="o">=</span> <span class="s2">"rgba(0,0,0,0.8)"</span><span class="p">;</span>
-
-<span class="nx">ctx</span><span class="p">.</span><span class="nx">lineCap</span> <span class="o">=</span> <span class="s2">"round"</span><span class="p">;</span> <span class="c1">// optional</span>
-
-<span class="kd">function</span> <span class="nx">draw</span><span class="p">(</span><span class="nx">startX</span><span class="p">,</span> <span class="nx">startY</span><span class="p">,</span> <span class="nx">len</span><span class="p">,</span> <span class="nx">angle</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="nx">branchWidth</span><span class="p">;</span>
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
-  
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">translate</span><span class="p">(</span><span class="nx">startX</span><span class="p">,</span> <span class="nx">startY</span><span class="p">);</span>
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">rotate</span><span class="p">(</span><span class="nx">angle</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="o">/</span><span class="mi">180</span><span class="p">);</span>
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">angle</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">bezierCurveTo</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">bezierCurveTo</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
-  
-  <span class="k">if</span><span class="p">(</span><span class="nx">len</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
-    <span class="nx">ctx</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
-    <span class="k">return</span><span class="p">;</span>
-  <span class="p">}</span>
-  
-  <span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="nx">angle</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span>
-  <span class="nx">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">len</span><span class="p">,</span> <span class="nx">len</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="nx">angle</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="nx">branchWidth</span><span class="o">*</span><span class="mf">0.8</span><span class="p">);</span>
-  
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="nx">draw</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span><span class="mi">600</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span></code></pre></figure>
-
-<p><em>Beware that the code takes a few seconds to run. Your browser might complain that it’s taking too long, but let it run to completion.</em></p>
+<p><em>Beware that the fractal tree generation code can take a few seconds to run. Your browser might complain that it’s taking too long, but let it run to completion.</em></p>
 
                     </div>
 
