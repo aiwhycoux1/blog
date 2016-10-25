@@ -5,12 +5,12 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 17 Oct 2016 20:21:41 +0530</pubDate>
-    <lastBuildDate>Mon, 17 Oct 2016 20:21:41 +0530</lastBuildDate>
+    <pubDate>Tue, 25 Oct 2016 20:52:02 +0530</pubDate>
+    <lastBuildDate>Tue, 25 Oct 2016 20:52:02 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
-        <title>Procedural Generation Tutorial: Creating Fractal Trees Using JavaScript</title>
+        <title>How to Create Fractal Trees Using JavaScript</title>
         <description>&lt;p&gt;Did you know that trees–I’m talking about the ones you find in a jungle, not those that are in an algorithms book–too behave like fractals? If you step out of your room and take a close look at any old tree in your garden or neighborhood, you’ll notice that most of its branches are quite similar to each other. They might not be exactly like one another, but they definitely share patterns. In this tutorial, I show you how to procedurally generate trees using JavaScript.&lt;/p&gt;
 
 &lt;p&gt;Fractal trees, although not as well known as other types of fractals, are definitely interesting. If you are familiar with recursion, creating them is easy and intuitive.&lt;/p&gt;
@@ -216,7 +216,7 @@ Step 2: Repeat Step 1 for both the new branches
       </item>
     
       <item>
-        <title>Procedural Generation Tutorial: Creating a Koch Curve Using JavaScript</title>
+        <title>How to Create a Koch Curve Using JavaScript</title>
         <description>&lt;p&gt;If you’ve had an opportunity to observe them closely, I’m sure you’d agree with me when I say that fractal patterns are incredibly fascinating and awe-inspiring. Even though they look so complex, writing programs to generate them takes very little time and effort. In this tutorial, I show you how to create one of the simplest fractals we know. It’s called a &lt;a href=&quot;https://en.wikipedia.org/wiki/Koch_snowflake&quot; target=&quot;_blank&quot;&gt;Koch curve&lt;/a&gt;. I’m not going to get in to its theory–the Wikipedia article covers all of it. Instead, I’m going to focus on creating it is using just JavaScript and the HTML5 canvas.&lt;/p&gt;
 
 &lt;h3 id=&quot;create-and-initialize-an-html5-canvas&quot;&gt;1. Create and Initialize an HTML5 Canvas&lt;/h3&gt;
@@ -332,7 +332,7 @@ Step 2: Repeat Step 1 for both the new branches
       </item>
     
       <item>
-        <title>Tesseract.js Tutorial: OCR with JavaScript</title>
+        <title>How to Use Tesseract.js, an OCR Engine for the Browser</title>
         <description>&lt;p&gt;Optical Character Recognition, often shortened to just OCR, has been around for a very long time. However, because OCR is a CPU-intensive task, it has been limited to native desktop applications or server-side programs. &lt;a href=&quot;https://github.com/naptha/tesseract.js&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Tesseract.js&lt;/a&gt; is a lightweight JavaScript library that tries to bring OCR to the browser. It is quite accurate, and supports well over a dozen languages.&lt;/p&gt;
 
 &lt;blockquote&gt;
