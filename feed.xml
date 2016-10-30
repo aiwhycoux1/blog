@@ -5,15 +5,15 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 31 Oct 2016 00:14:42 +0530</pubDate>
-    <lastBuildDate>Mon, 31 Oct 2016 00:14:42 +0530</lastBuildDate>
+    <pubDate>Mon, 31 Oct 2016 03:27:05 +0530</pubDate>
+    <lastBuildDate>Mon, 31 Oct 2016 03:27:05 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
         <title>Getting Started With NLP_Compromise</title>
-        <description>&lt;p&gt;Natural Language Processing, often shortened to just NLP, is becoming an important requirement in a lot of web apps. Fortunately, there are several JavaScript libraries that facilitate NLP. In this article, I’ll be talking about one such library, called &lt;a href=&quot;https://github.com/nlp-compromise/nlp_compromise&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;NLP_Compromise&lt;/a&gt;. It is fast, light-weight, and has a very intuitive API.&lt;/p&gt;
+        <description>&lt;p&gt;Natural Language Processing, often shortened to just NLP, is becoming increasingly popular these days. Fortunately, there are several JavaScript libraries that facilitate NLP. In this article, I’ll be talking about one such library, called &lt;a href=&quot;https://github.com/nlp-compromise/nlp_compromise&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;NLP_Compromise&lt;/a&gt;. It is fast, light-weight, and has a very intuitive API. It also enjoys a lot popularity among JavaScript developers.&lt;/p&gt;
 
-&lt;p&gt;NLP_Compromise is available on CDNJS. Therefore, you can start using it immediately by simply adding the following tag to your HTML document&lt;/p&gt;
+&lt;p&gt;NLP_Compromise is available on CDNJS. Therefore, you can start using it immediately by simply adding the following tag to your HTML document:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdnjs.cloudflare.com/ajax/libs/nlp_compromise/6.5.3/nlp_compromise.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -51,7 +51,7 @@
 
 &lt;span class=&quot;c1&quot;&gt;// Object {singular: &quot;lady&quot;, plural: &quot;ladies&quot;, normal: &quot;lady&quot;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;The same applies to adjectives, and adverbs. However, if you are interested in only a specific form, such as, say the superlative form of an adjective, there are intuitively named methods you can use.&lt;/p&gt;
+&lt;p&gt;The same applies to adjectives and adverbs. However, if you are interested in only a specific form, such as, say the superlative form of an adjective, there are intuitively named methods you can use.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;adjective&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;funny&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to_superlative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;      
@@ -92,7 +92,32 @@
 
 &lt;span class=&quot;c1&quot;&gt;// &quot;Caleb is fat and handsome&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Note that the pattern must be present in both the find and replace arguments.&lt;/p&gt;
+&lt;h3 id=&quot;pos-tagging&quot;&gt;POS Tagging&lt;/h3&gt;
+
+&lt;p&gt;If you are interested in simply categorizing all the words that are present in a block of text, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;text()&lt;/code&gt; method. It converts the text into an array of &lt;code class=&quot;highlighter-rouge&quot;&gt;sentences&lt;/code&gt;. Each sentence is further broken down into &lt;code class=&quot;highlighter-rouge&quot;&gt;terms&lt;/code&gt;. Each term has a &lt;code class=&quot;highlighter-rouge&quot;&gt;tag&lt;/code&gt; field, which tells you its part of speech.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Hello! This is an alien. It seems to have tentacles.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sentences&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sentences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sentences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;terms&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sentences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;terms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;terms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;terms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; -&amp;gt; &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;terms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/*
+Hello! -&amp;gt; Expression
+This -&amp;gt; Determiner
+is -&amp;gt; Copula
+an -&amp;gt; Determiner
+alien. -&amp;gt; Noun
+It -&amp;gt; Pronoun
+seems -&amp;gt; PresentTense
+to -&amp;gt; Preposition
+have -&amp;gt; Infinitive
+tentacles. -&amp;gt; Noun
+*/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;creating-random-sentences&quot;&gt;Creating Random Sentences&lt;/h3&gt;
 
