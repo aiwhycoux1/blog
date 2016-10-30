@@ -5,9 +5,198 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 25 Oct 2016 20:56:55 +0530</pubDate>
-    <lastBuildDate>Tue, 25 Oct 2016 20:56:55 +0530</lastBuildDate>
+    <pubDate>Mon, 31 Oct 2016 00:14:42 +0530</pubDate>
+    <lastBuildDate>Mon, 31 Oct 2016 00:14:42 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>Getting Started With NLP_Compromise</title>
+        <description>&lt;p&gt;Natural Language Processing, often shortened to just NLP, is becoming an important requirement in a lot of web apps. Fortunately, there are several JavaScript libraries that facilitate NLP. In this article, I’ll be talking about one such library, called &lt;a href=&quot;https://github.com/nlp-compromise/nlp_compromise&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;NLP_Compromise&lt;/a&gt;. It is fast, light-weight, and has a very intuitive API.&lt;/p&gt;
+
+&lt;p&gt;NLP_Compromise is available on CDNJS. Therefore, you can start using it immediately by simply adding the following tag to your HTML document&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdnjs.cloudflare.com/ajax/libs/nlp_compromise/6.5.3/nlp_compromise.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;To be able to easily access all the various classes and functions NLP_Compromise has, I suggest you get a reference to the &lt;code class=&quot;highlighter-rouge&quot;&gt;nlp_compromise&lt;/code&gt; object by adding the following code inside a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tag:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nlp_compromise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;At this point, you can start experimenting with the library.&lt;/p&gt;
+
+&lt;h3 id=&quot;conjugating-verbs&quot;&gt;Conjugating Verbs&lt;/h3&gt;
+
+&lt;p&gt;You can’t frame a grammatically correct sentence without conjugating your verbs. To conjugate a verb using NLP_Compromise, you must first initialize your verb using the &lt;code class=&quot;highlighter-rouge&quot;&gt;verb()&lt;/code&gt; method, and then call its &lt;code class=&quot;highlighter-rouge&quot;&gt;conjugate()&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;After conjugating the verb, you get an object that has all the conjugations of the verb.&lt;/p&gt;
+
+&lt;p&gt;Here’s an example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&quot;The past tense of make is &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;verb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;make&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;conjugate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;past&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// &quot;The past tense of make is made&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;singularplural&quot;&gt;Singular/Plural&lt;/h3&gt;
+
+&lt;p&gt;The English language has a lot of irregular plurals. Therefore, converting a noun to its plural or singular form is not a straight-forward task. That’s the reason why NLP_Compromise has a method called &lt;code class=&quot;highlighter-rouge&quot;&gt;all_forms()&lt;/code&gt;, which lets you easily determine the various forms of a noun:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;            
+    &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;noun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;lady&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;all_forms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Object {singular: &quot;lady&quot;, plural: &quot;ladies&quot;, normal: &quot;lady&quot;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The same applies to adjectives, and adverbs. However, if you are interested in only a specific form, such as, say the superlative form of an adjective, there are intuitively named methods you can use.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;adjective&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;funny&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to_superlative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;      
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// &quot;funniest&quot; &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;working-with-sentences&quot;&gt;Working With Sentences&lt;/h3&gt;
+
+&lt;p&gt;NLP_Compromise lets you handle an entire sentence at once. For instance, you can convert a statement in the present tense to one in the future tense by using the following code:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Alice is beautiful&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to_future&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;            
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// &quot;Alice will be beautiful&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I am sure you are beginning to realize how powerful this library is. But wait, there’s a lot more to it.&lt;/p&gt;
+
+&lt;p&gt;If you want to replace a specific part-of-speech, or POS, of a sentence with another word, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;replace()&lt;/code&gt; method. For example, here’s how you can replace an adjective with another:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Caleb is tall&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;[Adjective]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fat&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// &quot;Caleb is fat&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;If your sentence contains multiple words having the same POS, and you want to replace only one of them, you can include additional patterns in your call to the &lt;code class=&quot;highlighter-rouge&quot;&gt;replace()&lt;/code&gt; method. Here’s an example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Caleb is tall and handsome&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;is [Adjective]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;is fat&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// &quot;Caleb is fat and handsome&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Note that the pattern must be present in both the find and replace arguments.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-random-sentences&quot;&gt;Creating Random Sentences&lt;/h3&gt;
+
+&lt;p&gt;Let me now show you how you can generate random sentences by simply modifying a single sentence.&lt;/p&gt;
+
+&lt;p&gt;All the words that are available in the lexicon of NLP_Compromise can be accessed using its &lt;code class=&quot;highlighter-rouge&quot;&gt;lexicon()&lt;/code&gt; method. The structure of the object returned by the method looks like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hope&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Infinitive&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hoping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Gerund&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hopes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;PresentTense&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;As you can see, it contains a huge number of key-value pairs, where the key is a form of a verb, noun, adjective or adverb, and the value is the POS. Therefore, by using the words in the lexicon along with the &lt;code class=&quot;highlighter-rouge&quot;&gt;replace()&lt;/code&gt; method, you can generate random sentences.&lt;/p&gt;
+
+&lt;p&gt;For example, here’s how you generate ten random sentences by simply using random adjectives:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Kelly is weird&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;words&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lexicon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Get all words&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Generate a random number&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        
+        &lt;span class=&quot;c1&quot;&gt;// Print sentence only if randomly selected word&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// is an adjective&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lexicon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;randomNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Adjective&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                    &lt;span class=&quot;s2&quot;&gt;&quot;[Adjective]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;randomNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/*
+Kelly is adept
+Kelly is high
+Kelly is en route
+Kelly is able
+Kelly is eager
+Kelly is petite
+Kelly is sideable
+Kelly is confirmable
+Kelly is for keeps
+Kelly is undermineable
+*/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Of course, not all sentences make sense. But, I hope you get the idea.&lt;/p&gt;
+
+&lt;p&gt;Here’s another example that replaces a noun. It also randomizes the tense of the sentence.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Kelly wants to become a doctor&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;randomNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;wordPOS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lexicon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Print sentence only if randomly selected word&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// is an actor&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;wordPOS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Actor&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;                    
+            &lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&quot;a [Noun]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;noun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;word&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+            &lt;span class=&quot;c1&quot;&gt;// Randomly change tense&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to_past&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to_future&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/*
+Kelly wants to become a reviewer
+Kelly will want to become a runner
+Kelly wanted to become a giver
+Kelly wanted to become a hairdresser
+Kelly wanted to become an influencer
+Kelly wants to become a swimmer
+Kelly wants to become a security guard
+Kelly will want to become a programmer
+Kelly will want to become a rewarder
+Kelly wanted to become a decliner
+*/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;You now know how to use NLP_Compromise.js. The sentences it generates are usually correct, although you might encounter minor errors in sentences that have future and past tenses.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 26 Oct 2016 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2016/10/getting-started-with-nlp-compromise-js.html</link>
+        <guid isPermaLink="true">http://progur.com/2016/10/getting-started-with-nlp-compromise-js.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
     
       <item>
         <title>How to Create Fractal Trees Using JavaScript</title>
@@ -1180,156 +1369,6 @@ Jump Neuron: 98.24123037285819%
         <pubDate>Mon, 05 Sep 2016 00:00:00 +0530</pubDate>
         <link>http://progur.com/2016/09/how-to-create-and-use-neural-networks-in-javascript.html</link>
         <guid isPermaLink="true">http://progur.com/2016/09/how-to-create-and-use-neural-networks-in-javascript.html</guid>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Install and Use Facebook's Zstandard</title>
-        <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-
-&lt;p&gt;Recently, Facebook released version 1.0 of &lt;a href=&quot;https://github.com/facebook/zstd&quot;&gt;Zstandard&lt;/a&gt;, popularly known as just Zstd. It is an implementation of a new data compression algorithm developed by &lt;a href=&quot;https://github.com/Cyan4973&quot;&gt;Yann Collet&lt;/a&gt;, the same guy who developed LZ4 and xxHash. I believe that Zstandard might very well become the new de facto compression library of the future because it overcomes most of the limitations present in zlib, and offers markedly better compression ratios.&lt;/p&gt;
-
-&lt;p&gt;In this tutorial, I’ll be showing you how to install Zstd and use it both as a command line tool, and as a C library.&lt;/p&gt;
-
-&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
-
-&lt;p&gt;The source code of Zstandard is available on &lt;a href=&quot;https://github.com/facebook/zstd/releases/tag/v1.0.0&quot;&gt;GitHub&lt;/a&gt;. So, all you need to do is download it as a ZIP file. Once you have downloaded the file and extracted it, you must compile it. Doing so is easy if you are using Ubuntu. Just get inside the &lt;strong&gt;zstd-1.0.0&lt;/strong&gt; directory, and run &lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-cd zstd-1.0.0
-make install
-&lt;/pre&gt;
-
-&lt;p&gt;Note that if you want to install &lt;code class=&quot;highlighter-rouge&quot;&gt;zstd&lt;/code&gt; in a directory of your choice, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;PREFIX&lt;/code&gt; option. For example, if you want to install &lt;code class=&quot;highlighter-rouge&quot;&gt;zstd&lt;/code&gt; inside &lt;strong&gt;/tmp/zstd&lt;/strong&gt;, you would type in the following:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-cd zstd-1.0.0
-make install PREFIX=/tmp/zstd
-&lt;/pre&gt;
-
-&lt;p&gt;Of course, you would then have to add the zstd directory to your &lt;code class=&quot;highlighter-rouge&quot;&gt;PATH&lt;/code&gt; variable manually.&lt;/p&gt;
-
-&lt;p&gt;If everything went well during the compilation, you’ll now have a binary file called &lt;strong&gt;zstd&lt;/strong&gt;. To check if it is working, type in the following command:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-zstd --version
-&lt;/pre&gt;
-
-&lt;p&gt;You should see output that looks similar to this:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-*** zstd command line interface 32-bits v1.0.0, by Yann Collet ***
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;using-zstandard-as-a-compression-tool&quot;&gt;Using Zstandard as a Compression Tool&lt;/h3&gt;
-
-&lt;p&gt;Using Zstandard is easy. You simply pass a file name to it, and it compresses it, generating a new file with a &lt;code class=&quot;highlighter-rouge&quot;&gt;.zst&lt;/code&gt; extension.&lt;/p&gt;
-
-&lt;p&gt;For example, here’s how you would compress a file called &lt;strong&gt;myfile.txt&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-zstd myfile.txt
-&lt;/pre&gt;
-
-&lt;p&gt;To decompress a file, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt; option. Here’s how:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-zstd -d myfile.txt.zst
-&lt;/pre&gt;
-
-&lt;p&gt;Alternatively, you could use the &lt;code class=&quot;highlighter-rouge&quot;&gt;unzstd&lt;/code&gt; command.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-unzstd myfile.txt.zst
-&lt;/pre&gt;
-
-&lt;p&gt;Usually, you would want to compress more than just one file. However, you can’t pass a directory to &lt;code class=&quot;highlighter-rouge&quot;&gt;zstd&lt;/code&gt; directly. To overcome this limitation, you can simply use the &lt;code class=&quot;highlighter-rouge&quot;&gt;tar&lt;/code&gt; command along with &lt;code class=&quot;highlighter-rouge&quot;&gt;zstd&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-tar -cvf mydirectory.tar /mydirectory
-zstd mydirectory.tar
-&lt;/pre&gt;
-
-&lt;p&gt;Zstandard offeres 19 different levels of compression. The default level is 3. Here’s how you use a higher compression level:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-zstd -15 myfile.txt
-&lt;/pre&gt;
-
-&lt;p&gt;Of course, a higher compression level also means the time taken to compress is longer.&lt;/p&gt;
-
-&lt;h3 id=&quot;using-zstandard-as-a-library&quot;&gt;Using Zstandard as a Library&lt;/h3&gt;
-
-&lt;p&gt;Let me now show you how to use Zstandard in a C program. I’ll be using Ubuntu as my operating system. Therefore, we’ll be working with &lt;code class=&quot;highlighter-rouge&quot;&gt;gcc&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To be able to use Zstandard in your program, you must include the &lt;code class=&quot;highlighter-rouge&quot;&gt;zstd.h&lt;/code&gt; header file. To follow this tutorial, you will also need &lt;code class=&quot;highlighter-rouge&quot;&gt;stdio.h&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;stdlib.h&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;string.h&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-#include &amp;lt;stdio.h&amp;gt;
-#include &amp;lt;stdlib.h&amp;gt;
-#include &amp;lt;string.h&amp;gt;
-
-#include &amp;lt;zstd.h&amp;gt;
-
-int main() {
-
-}
-&lt;/pre&gt;
-
-&lt;p&gt;In this tutorial, I’ll be showing you how to compress a string. You can, however, use this knowledge to compress other forms of data too.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-char* my_data = &quot;aaaaaaabbbbbbbbbccccccccddddddddeeeeeeeefffffffffggggggggg&quot;;
-size_t size_of_data = strlen(my_data);
-&lt;/pre&gt;
-
-&lt;p&gt;We must now create a buffer for the compressed data, and also decide how big it should be. &lt;code class=&quot;highlighter-rouge&quot;&gt;zstd.h&lt;/code&gt; has a helper function called &lt;code class=&quot;highlighter-rouge&quot;&gt;ZSTD_compressBound()&lt;/code&gt; that lets you know what the buffer size would have to be in the worst case.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-size_t estimated_size_of_compressed_data = ZSTD_compressBound(size_of_data);
-void* compressed_data = malloc(estimated_size_of_compressed_data);
-&lt;/pre&gt;
-
-&lt;p&gt;To compress your data, you must call the &lt;code class=&quot;highlighter-rouge&quot;&gt;ZSTD_compress()&lt;/code&gt; function. It returns the actual size of the compressed data.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-size_t actual_size_of_compressed_data = 
-        ZSTD_compress(compressed_data, estimated_size_of_compressed_data, 
-            my_data, size_of_data, 19);
-&lt;/pre&gt;
-
-&lt;p&gt;Note that the last argument to the function is the compression level, which can range from 1(lowest) to 22(highest).&lt;/p&gt;
-
-&lt;p&gt;At this point, the &lt;code class=&quot;highlighter-rouge&quot;&gt;compressed_data&lt;/code&gt; buffer stores the data in a compressed format. You can easily write it to a file using &lt;code class=&quot;highlighter-rouge&quot;&gt;fwrite()&lt;/code&gt;. The output file must, of course, be opened in binary mode.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: cpp&quot;&gt;
-FILE *fp = fopen(&quot;/tmp/mydata.zst&quot;, &quot;wb&quot;);
-fwrite(compressed_data, actual_size_of_compressed_data, 1, fp);
-fclose(fp);
-&lt;/pre&gt;
-
-&lt;p&gt;The program is ready. To compile it, you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;gcc&lt;/code&gt; as follows:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-gcc myprogram.c -lzstd
-&lt;/pre&gt;
-
-&lt;p&gt;You can check if the compressed data can be decompressed by passing &lt;strong&gt;mydata.zst&lt;/strong&gt;, which is the output of our program, to &lt;code class=&quot;highlighter-rouge&quot;&gt;zstdcat&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-zstdcat /tmp/mydata.zst
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;You now know how to use Zstandard. Although we focused on using it using the C language only, Zstandard has bindings for several languages.&lt;/p&gt;
-</description>
-        <pubDate>Fri, 02 Sep 2016 00:00:00 +0530</pubDate>
-        <link>http://progur.com/2016/09/how-to-install-and-use-zstd-facebook.html</link>
-        <guid isPermaLink="true">http://progur.com/2016/09/how-to-install-and-use-zstd-facebook.html</guid>
         
         
         <category>Programming</category>
