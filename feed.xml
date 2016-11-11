@@ -5,13 +5,13 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 31 Oct 2016 03:27:05 +0530</pubDate>
-    <lastBuildDate>Mon, 31 Oct 2016 03:27:05 +0530</lastBuildDate>
+    <pubDate>Sat, 12 Nov 2016 02:03:49 +0530</pubDate>
+    <lastBuildDate>Sat, 12 Nov 2016 02:03:49 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
         <title>Getting Started With NLP_Compromise</title>
-        <description>&lt;p&gt;Natural Language Processing, often shortened to just NLP, is becoming increasingly popular these days. Fortunately, there are several JavaScript libraries that facilitate NLP. In this article, I’ll be talking about one such library, called &lt;a href=&quot;https://github.com/nlp-compromise/nlp_compromise&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;NLP_Compromise&lt;/a&gt;. It is fast, light-weight, and has a very intuitive API. It also enjoys a lot popularity among JavaScript developers.&lt;/p&gt;
+        <description>&lt;p&gt;Natural Language Processing, often shortened to just NLP, is becoming increasingly popular these days. Fortunately, there are several JavaScript libraries that facilitate NLP. In this tutorial, I’ll be talking about one such library, called &lt;a href=&quot;https://github.com/nlp-compromise/nlp_compromise&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;NLP_Compromise&lt;/a&gt;. It is fast, light-weight, and has a very intuitive API. It also enjoys a lot popularity among JavaScript developers.&lt;/p&gt;
 
 &lt;p&gt;NLP_Compromise is available on CDNJS. Therefore, you can start using it immediately by simply adding the following tag to your HTML document:&lt;/p&gt;
 
