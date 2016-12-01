@@ -5,9 +5,30 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 13 Nov 2016 05:43:36 +0530</pubDate>
-    <lastBuildDate>Sun, 13 Nov 2016 05:43:36 +0530</lastBuildDate>
+    <pubDate>Thu, 01 Dec 2016 06:13:31 +0530</pubDate>
+    <lastBuildDate>Thu, 01 Dec 2016 06:13:31 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>Creating Whiteboard Animations With jsWritingTool</title>
+        <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;Most of us are familiar with the handwritten animation effect, which can be seen in many Youtube videos—mostly videos that are explaining something. Creating such videos has always meant using tools that are quite expensive. Therefore, I decided to create a free tool that requires no registration and no downloads whatsoever. Of course, it isn’t as powerful as the commercial alternatives. However, I think it gets the job done, if you aren’t creating anything professional. It’s called &lt;a href=&quot;http://progur.com/animationtool/&quot;&gt;jsWritingTool&lt;/a&gt;, and all it needs is a browser.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block2/jswritingtool1.jpg&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;jsWritingTool&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ll be creating a Youtube video showing you, in detail, how to use it to create something meaningful soon. Until then, feel free to experiment with it. The tool does have its own &lt;strong&gt;Help&lt;/strong&gt; dialog, which you can use if you are confused.&lt;/p&gt;
+
+&lt;p&gt;So, please go ahead and give &lt;a href=&quot;http://progur.com/animationtool/&quot;&gt;jsWritingTool&lt;/a&gt; a spin. If you have any issues, leave a comment on this page.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 30 Nov 2016 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2016/11/introduction-jswritingtool-animations.html</link>
+        <guid isPermaLink="true">http://progur.com/2016/11/introduction-jswritingtool-animations.html</guid>
+        
+        
+        <category>Design</category>
+        
+      </item>
     
       <item>
         <title>How to Create an Imgur Client for Android</title>
@@ -1376,182 +1397,6 @@ Step 2: Repeat Step 1 for both the new branches
         <pubDate>Mon, 12 Sep 2016 00:00:00 +0530</pubDate>
         <link>http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html</link>
         <guid isPermaLink="true">http://progur.com/2016/09/how-to-hide-statusbar-navigationbar-android.html</guid>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Create Deep Neural Networks in JavaScript</title>
-        <description>&lt;p&gt;In my &lt;a href=&quot;/2016/09/how-to-create-and-use-neural-networks-in-javascript.html&quot;&gt;previous post&lt;/a&gt;, I showed you how to create a simple neural network that has only an input layer, and an output layer. By adding a few hidden layers between the input and output layers, you can create a deep neural network. Deep neural networks are usually far more powerful, and are capable of both supervised and unsupervised learning. In this tutorial, I’ll show you how to create a deep neural network with two hidden layers, and use it to perform yet another rather trivial task: decide what I should wear based on the temperature.&lt;/p&gt;
-
-&lt;h3 id=&quot;creating-the-deep-neural-network&quot;&gt;Creating the Deep Neural Network&lt;/h3&gt;
-
-&lt;p&gt;So, this time, I want to build a neural network that can take the temperature in Celsius as an input, and tell me what I should be wearing. Here’s the algorithm it should follow:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: ruby&quot;&gt;
-if TEMPERATURE &amp;lt;= 5°C
-    Suggest THICK JACKET
-
-if TEMPERATURE &amp;gt; 5°C and TEMPERATURE &amp;lt;= 15°C
-    Suggest SWEATER
-
-if TEMPERATURE &amp;gt; 15°C and TEMPERATURE &amp;lt;= 40°C
-    Suggest T-SHIRT
-
-if TEMPERATURE &amp;gt; 40°C
-    Suggest NOTHING 
-&lt;/pre&gt;
-
-&lt;p&gt;Now, you might be thinking we can simply use one neuron in the input layer for the temperature. Well, you can, however, your neural network’s accuracy would then be rather low. In this tutorial, we’re going to convert the temperature into a 7-digit binary form, and use seven neurons for the input layer.&lt;/p&gt;
-
-&lt;p&gt;You can use the following function to do the conversion:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: javascript&quot;&gt;
-function convertToBinaryArray(temperature) {
-    var tempInBinary = temperature.toString(2); // Convert to binary
-
-    // If it is more than 7 digits long, truncate
-    if(tempInBinary.length &amp;gt; 7)
-        return [1,1,1,1,1,1,1];
-
-    // If it less than 7 digits long, add zeroes
-    while(tempInBinary.length &amp;lt; 7) { 
-        tempInBinary = &quot;0&quot; + tempInBinary;
-    }
-
-    // Convert string to array
-    return tempInBinary.split(&quot;&quot;).map(function(i) {
-        return parseInt(i); }
-    );
-}
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;em&gt;Feel free to modify the function if you think you can make it shorter or more readable!&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;As for the output layer, four neurons will be enough(THICK JACKET, SWEATER, T-SHIRT, NOTHING). Additionally, we shall have 2 hidden layers with three neurons each.&lt;/p&gt;
-
-&lt;p&gt;Although you can create the layers individually, and connect them, Synaptic offers a class called &lt;code class=&quot;highlighter-rouge&quot;&gt;synaptic.Architect.Perceptron&lt;/code&gt; that lets you build complex networks in just a few seconds. Here’s how you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;synaptic.Architect.Perceptron&lt;/code&gt; to create the deep neural network:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: javascript&quot;&gt;
-var myDeepNetwork = new synaptic.Architect.Perceptron(
-    7, // Input layer with 7 neurons
-    3, // First hidden layer with 3 neurons
-    3, // Second hidden layer with 3 neurons
-    4 // Output layer with 4 neurons
-);
-&lt;/pre&gt;
-
-&lt;p&gt;Our neural network is now ready!&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;If you want to, you can also call this deep neural network a &lt;strong&gt;Multi-Layer Perceptron(MLP)&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;creating-the-training-data&quot;&gt;Creating the Training Data&lt;/h3&gt;
-
-&lt;p&gt;We can now create a loop to generate our training data.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: javascript&quot;&gt;
-var trainingData = [];
-
-for(var i = 1;i &amp;lt; 75; i++) {
-    var input = convertToBinaryArray(i); // Input layer
-    var output = [0,0,0,0]; // Undecided state of output layer
-
-    if(i &amp;lt;= 5)
-        output = [1,0,0,0]; // THICK JACKET
-    else if(i &amp;gt; 5 &amp;amp;&amp;amp; i &amp;lt;= 15)
-        output = [0,1,0,0]; // SWEATER
-    else if(i &amp;gt; 15 &amp;amp;&amp;amp; i &amp;lt;= 40)
-        output = [0,0,1,0]; // T-SHIRT
-    else
-        output = [0,0,0,1]; // NOTHING
-
-    trainingData.push({
-        input: input,
-        output: output
-    });
-}
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;em&gt;Note that in the real world, you would not have to write any code to generate the data. You would simply pick the data up from somewhere. You would, however, still have to write code to convert it into input and output arrays.&lt;/em&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;training-the-neural-network&quot;&gt;Training the Neural Network&lt;/h3&gt;
-
-&lt;p&gt;Synaptic has a class called &lt;code class=&quot;highlighter-rouge&quot;&gt;synaptic.Trainer&lt;/code&gt; that allows you to train your neural network using just one method called &lt;code class=&quot;highlighter-rouge&quot;&gt;train()&lt;/code&gt;. Let’s use that now.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: javascript&quot;&gt;
-var myTrainer = new synaptic.Trainer(myDeepNetwork); // Create trainer
-myTrainer.train(trainingData {
-    rate: 0.1,
-    iterations: 10000,
-    shuffle: true
-}); // Train with training data
-&lt;/pre&gt;
-
-&lt;p&gt;As you can see, you can pass the learning rate, number of iterations and other configurations details directly to the &lt;code class=&quot;highlighter-rouge&quot;&gt;train()&lt;/code&gt; method.&lt;/p&gt;
-
-&lt;h3 id=&quot;using-the-neural-network&quot;&gt;Using the Neural Network&lt;/h3&gt;
-
-&lt;p&gt;Our neural network is trained and ready to be used. Let’s call its &lt;code class=&quot;highlighter-rouge&quot;&gt;activate()&lt;/code&gt; method for the temperature 11°C, and see what it recommends.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: javascript&quot;&gt;
-var cTemp = convertToBinaryArray(11);
-var recommendations = myDeepNetwork.activate(cTemp);
-
-// Log neuron outputs
-console.log(&quot;THICK JACKET neuron: &quot; + (recommendations[0] * 100) + &quot;%&quot;);
-console.log(&quot;SWEATER neuron: &quot; + (recommendations[1] * 100) + &quot;%&quot;);
-console.log(&quot;T-SHIRT neuron: &quot; + (recommendations[2] * 100) + &quot;%&quot;);
-console.log(&quot;NOTHING neuron: &quot; + (recommendations[3] * 100) + &quot;%&quot;);
-&lt;/pre&gt;
-
-&lt;p&gt;Here’s the output I got:&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-THICK JACKET neuron: 1.187852121842318%
-SWEATER neuron: 99.04285103672623%
-T-SHIRT neuron: 0.19623392618093957%
-NOTHING neuron: 0.2812308783464911%
-&lt;/pre&gt;
-
-&lt;p&gt;As you can see, for 11°C, the SWEATER neuron is firing with &amp;gt;99% confidence, while all other neurons have less than 2% confidence.&lt;/p&gt;
-
-&lt;p&gt;Let us now see what it says for 32°C.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-THICK JACKET neuron: 0.5111861782203928%
-SWEATER neuron: 0.00020342986269563567%
-T-SHIRT neuron: 87.58129843432297%
-NOTHING neuron: 0.17906434966864235%
-&lt;/pre&gt;
-
-&lt;p&gt;The neural network has the right answer again. This time, the T-SHIRT neuron is firing with the highest confidence.&lt;/p&gt;
-
-&lt;p&gt;What about a border condition, like 5°C.&lt;/p&gt;
-
-&lt;pre class=&quot;brush: bash&quot;&gt;
-THICK JACKET neuron: 71.57886740905687%
-SWEATER neuron: 19.97632896204967%
-T-SHIRT neuron: 0.5732055868587239%
-NOTHING neuron: 0.044105602954815616%
-&lt;/pre&gt;
-
-&lt;p&gt;The neural network now shows 71% confidence for THICK JACKET and ~20% confidence for SWEATER. Nevertheless, because THICK JACKET has the highest value, it is still correct.&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;You now know how to construct and use deep neural networks. Feel free to experiment with different values for the learning rates, number of hidden layers, and other such configurations details of the neural network.&lt;/p&gt;
-
-&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/2016/09/how-to-create-and-use-neural-networks-in-javascript.html&quot;&gt;How to Create Simple Neural Networks in JavaScript&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 07 Sep 2016 00:00:00 +0530</pubDate>
-        <link>http://progur.com/2016/09/how-to-create-deep-neural-networks-in-javascript.html</link>
-        <guid isPermaLink="true">http://progur.com/2016/09/how-to-create-deep-neural-networks-in-javascript.html</guid>
         
         
         <category>Programming</category>
