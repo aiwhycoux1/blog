@@ -5,15 +5,15 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 07 Dec 2016 09:14:02 +0530</pubDate>
-    <lastBuildDate>Wed, 07 Dec 2016 09:14:02 +0530</lastBuildDate>
+    <pubDate>Wed, 07 Dec 2016 09:23:08 +0530</pubDate>
+    <lastBuildDate>Wed, 07 Dec 2016 09:23:08 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
         <title>Displaying GIFs and Large Images in Android Apps Using Facebook Fresco</title>
         <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 
-&lt;p&gt;Handling large images in Android apps has always been a little tricky. With &lt;a href=&quot;https://api.imgur.com/endpoints&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Facebook Fresco&lt;/a&gt;, however, you can add huge images to your app, including animated GIFs and WebP files, without having to worry about memory and size issues. In this tutorial, I’m going to help you get started with it.&lt;/p&gt;
+&lt;p&gt;Handling large images in Android apps has always been a little tricky. With &lt;a href=&quot;http://frescolib.org/&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Facebook Fresco&lt;/a&gt;, however, you can add huge images to your app, including animated GIFs and WebP files, without having to worry about memory and size issues. In this tutorial, I’m going to help you get started with it.&lt;/p&gt;
 
 &lt;h3 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h3&gt;
 
@@ -36,7 +36,7 @@
 &lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.facebook.fresco:animated-webp:0.13.0'&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.facebook.fresco:webpsupport:0.13.0'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Fresco needs one more configuration step. It must be initialized as soons as your app starts. More precisely, you must initialize Fresco inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;onCreate()&lt;/code&gt; method of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Application&lt;/code&gt; class.&lt;/p&gt;
+&lt;p&gt;Fresco needs one more configuration step. It must be initialized as soon as your app starts. More precisely, you must initialize Fresco inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;onCreate()&lt;/code&gt; method of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Application&lt;/code&gt; class.&lt;/p&gt;
 
 &lt;p&gt;Here’s how you would do it:&lt;/p&gt;
 
@@ -60,7 +60,7 @@
 
 &lt;h3 id=&quot;displaying-a-large-jpeg-image&quot;&gt;2. Displaying A Large JPEG Image&lt;/h3&gt;
 
-&lt;p&gt;Let us now add a &lt;code class=&quot;highlighter-rouge&quot;&gt;SimpleDraweeView&lt;/code&gt; widget to our layout. This is the widget inside which we will be displaying the image.&lt;/p&gt;
+&lt;p&gt;Let us now add a &lt;code class=&quot;highlighter-rouge&quot;&gt;SimpleDraweeView&lt;/code&gt; widget to our layout. This is the widget inside which we will be displaying the image. It can handle images of several different formats.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;com.facebook.drawee.view.SimpleDraweeView&lt;/span&gt;
         &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;480dp&quot;&lt;/span&gt;
@@ -69,7 +69,7 @@
 
 &lt;p&gt;Note how I have specified actual numbers instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;wrap_content&lt;/code&gt; for the width and height of the widget. This is important for Fresco to work correctly.&lt;/p&gt;
 
-&lt;p&gt;Now that we have our widget, let’s write some Java code to display a JPEG image inside it. Well, it doesn’t take more than a couple of lines of code.&lt;/p&gt;
+&lt;p&gt;Now that we have our widget, let’s write some Java code to display a JPEG image inside it. Well, it takes just two lines of code.&lt;/p&gt;
 
 &lt;p&gt;First, initialize the widget using &lt;code class=&quot;highlighter-rouge&quot;&gt;findViewById()&lt;/code&gt;.&lt;/p&gt;
 
@@ -90,7 +90,7 @@
 
 &lt;h3 id=&quot;displaying-an-animated-gif&quot;&gt;3. Displaying an Animated GIF&lt;/h3&gt;
 
-&lt;p&gt;Displaying an animated GIF takes a little more work. If you try using the &lt;code class=&quot;highlighter-rouge&quot;&gt;setImageURI()&lt;/code&gt; method to display an animated GIF, you would up seeing its first frame only.&lt;/p&gt;
+&lt;p&gt;Displaying an animated GIF takes a little more work. If you try using the &lt;code class=&quot;highlighter-rouge&quot;&gt;setImageURI()&lt;/code&gt; method to display an animated GIF, you would end up seeing its first frame only.&lt;/p&gt;
 
 &lt;p&gt;To display GIFs, you must create a &lt;code class=&quot;highlighter-rouge&quot;&gt;DraweeController&lt;/code&gt; object first and use it to load the GIF.&lt;/p&gt;
 
@@ -108,7 +108,7 @@
 
 &lt;span class=&quot;n&quot;&gt;myDraweeView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Run the app again to see you animated GIF playing.&lt;/p&gt;
+&lt;p&gt;Run the app again to see your animated GIF playing.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/block2/fresco2.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;fresco animated GIF&quot; /&gt;&lt;/p&gt;
 

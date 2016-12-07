@@ -85,7 +85,7 @@
                     <div class="post-actual-content">
                         <h3 id="introduction">Introduction</h3>
 
-<p>Handling large images in Android apps has always been a little tricky. With <a href="https://api.imgur.com/endpoints" target="_blank" rel="nofollow">Facebook Fresco</a>, however, you can add huge images to your app, including animated GIFs and WebP files, without having to worry about memory and size issues. In this tutorial, I’m going to help you get started with it.</p>
+<p>Handling large images in Android apps has always been a little tricky. With <a href="http://frescolib.org/" target="_blank" rel="nofollow">Facebook Fresco</a>, however, you can add huge images to your app, including animated GIFs and WebP files, without having to worry about memory and size issues. In this tutorial, I’m going to help you get started with it.</p>
 
 <h3 id="prerequisites">Prerequisites</h3>
 
@@ -108,7 +108,7 @@
 <span class="n">compile</span> <span class="s1">'com.facebook.fresco:animated-webp:0.13.0'</span>
 <span class="n">compile</span> <span class="s1">'com.facebook.fresco:webpsupport:0.13.0'</span></code></pre></figure>
 
-<p>Fresco needs one more configuration step. It must be initialized as soons as your app starts. More precisely, you must initialize Fresco inside the <code class="highlighter-rouge">onCreate()</code> method of the <code class="highlighter-rouge">Application</code> class.</p>
+<p>Fresco needs one more configuration step. It must be initialized as soon as your app starts. More precisely, you must initialize Fresco inside the <code class="highlighter-rouge">onCreate()</code> method of the <code class="highlighter-rouge">Application</code> class.</p>
 
 <p>Here’s how you would do it:</p>
 
@@ -132,7 +132,7 @@
 
 <h3 id="displaying-a-large-jpeg-image">2. Displaying A Large JPEG Image</h3>
 
-<p>Let us now add a <code class="highlighter-rouge">SimpleDraweeView</code> widget to our layout. This is the widget inside which we will be displaying the image.</p>
+<p>Let us now add a <code class="highlighter-rouge">SimpleDraweeView</code> widget to our layout. This is the widget inside which we will be displaying the image. It can handle images of several different formats.</p>
 
 <figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;com.facebook.drawee.view.SimpleDraweeView</span>
         <span class="na">android:layout_width=</span><span class="s">"480dp"</span>
@@ -141,7 +141,7 @@
 
 <p>Note how I have specified actual numbers instead of <code class="highlighter-rouge">wrap_content</code> for the width and height of the widget. This is important for Fresco to work correctly.</p>
 
-<p>Now that we have our widget, let’s write some Java code to display a JPEG image inside it. Well, it doesn’t take more than a couple of lines of code.</p>
+<p>Now that we have our widget, let’s write some Java code to display a JPEG image inside it. Well, it takes just two lines of code.</p>
 
 <p>First, initialize the widget using <code class="highlighter-rouge">findViewById()</code>.</p>
 
@@ -162,7 +162,7 @@
 
 <h3 id="displaying-an-animated-gif">3. Displaying an Animated GIF</h3>
 
-<p>Displaying an animated GIF takes a little more work. If you try using the <code class="highlighter-rouge">setImageURI()</code> method to display an animated GIF, you would up seeing its first frame only.</p>
+<p>Displaying an animated GIF takes a little more work. If you try using the <code class="highlighter-rouge">setImageURI()</code> method to display an animated GIF, you would end up seeing its first frame only.</p>
 
 <p>To display GIFs, you must create a <code class="highlighter-rouge">DraweeController</code> object first and use it to load the GIF.</p>
 
@@ -180,7 +180,7 @@
 
 <span class="n">myDraweeView</span><span class="o">.</span><span class="na">setController</span><span class="o">(</span><span class="n">controller</span><span class="o">);</span></code></pre></figure>
 
-<p>Run the app again to see you animated GIF playing.</p>
+<p>Run the app again to see your animated GIF playing.</p>
 
 <p><img src="/assets/block2/fresco2.png" class="img-responsive center-block img-thumbnail" alt="fresco animated GIF" /></p>
 
