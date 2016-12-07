@@ -87,13 +87,13 @@
 
 <h3 id="installation">Installation</h3>
 
-<p>You really don’t need to install anything. Synaptic is available on CDNJS, which means, you must simply add the following code to your HTML page:</p>
+<p>You really don’t need to install anything. Synaptic is available on CDNJS, which means, you can simply add the following code to your HTML page:</p>
 
 <pre class="brush: javascript">
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/synaptic/1.0.8/synaptic.min.js"&gt;&lt;/script&gt;
 </pre>
 
-<p>Additionally, let’s add Underscore.js, because we will be needing some its very handy array-related methods.</p>
+<p>Additionally, let’s add Underscore.js, because we will be needing some of its very handy array-related methods.</p>
 
 <pre class="brush: javascript">
 &lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"&gt;&lt;/script&gt;
@@ -130,7 +130,7 @@ input.project(output); // Connect input to output
 
 <h3 id="training-the-neural-network">Training the Neural Network</h3>
 
-<p>Our neural network is ready to be trained. So, let’s start creating our training data. It’s going to be two arrays, one for the input, and one for the output. As you might have guessed, input will have two values, and output will have three values. The values must always range from 0 to 1. In this tutorial, we shall stick with exactly 0 and 1.</p>
+<p>Our neural network is ready to be trained. So, let’s start creating our training data. It’s going to be two arrays: one for the input, and one for the output. As you might have guessed, input will have two values, and output will have three values. The values must always range from 0 to 1. In this tutorial, we shall stick with exactly 0 and 1.</p>
 
 <p>The first element of the input array will be 1 if you are clapping, and 0 otherwise. Similarly, the second element will be 1 if you are whistling, and 0 otherwise.</p>
 
@@ -148,7 +148,7 @@ var trainingData = [
 
 <p>It looks simple, but spend some time to fully understand the training data’s arrays. Almost every machine learning framework needs training data, and understanding how to create and format that data is extremely important.</p>
 
-<p>Before we proceed any further, we should decide how impressionable our neural network should be. In other words, we must give it a <strong>learning rate</strong>. A very low learning rate will make the neural network a slow, but very good learner. On the other hand, a very high learning rate will make it learn quickly, but also very erratically. For now, let’s say the learning rate is 0.4.</p>
+<p>Before we proceed any further, we should decide how impressionable our neural network should be. In other words, we must give it a <strong>learning rate</strong>. A very low learning rate will usually make the neural network a slow, but very good learner. On the other hand, a very high learning rate will make it learn quickly, but also very erratically. For now, let’s say the learning rate is 0.4.</p>
 
 <p>We can now send the <code class="highlighter-rouge">input</code> data to the input layer of our network using the <code class="highlighter-rouge">activate()</code> method. And then, we should call the <code class="highlighter-rouge">propagate()</code> method on the output layer to help the neural network adjust its configuration. The <code class="highlighter-rouge">propagate()</code> method needs the <code class="highlighter-rouge">output</code> data as its input.</p>
 
@@ -164,7 +164,7 @@ function train() {
 }
 </pre>
 
-<p>Just like humans, neural networks don’t learn to do things the right way after training just once. Well, they kinda do, but their accuracy will be low. To improve their accuracy levels, they need to be trained repeatedly. Therefore, let’s train our neural network about 1000 times, and also shuffle the order of the <code class="highlighter-rouge">trainingData</code> each time.</p>
+<p>Just like humans, neural networks don’t learn to do things the right way after training just once. Well, they kinda do, but their accuracy will be extremely low. To improve their accuracy levels, they need to be trained repeatedly. Therefore, let’s train our neural network about 1000 times, and also shuffle the order of the <code class="highlighter-rouge">trainingData</code> each time.</p>
 
 <pre class="brush: javascript">
 function retrain() {
