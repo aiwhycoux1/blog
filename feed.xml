@@ -5,8 +5,8 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 09 Dec 2016 07:04:55 +0530</pubDate>
-    <lastBuildDate>Fri, 09 Dec 2016 07:04:55 +0530</lastBuildDate>
+    <pubDate>Fri, 09 Dec 2016 07:06:09 +0530</pubDate>
+    <lastBuildDate>Fri, 09 Dec 2016 07:06:09 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
@@ -54,7 +54,7 @@ npm install natural --save&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Let us now enhance our app to display a list all the definitions available, along with all the synonyms. To do so, we can loop through the &lt;code class=&quot;highlighter-rouge&quot;&gt;details&lt;/code&gt; array using &lt;code class=&quot;highlighter-rouge&quot;&gt;forEach&lt;/code&gt;. Let’s also indicate the part of speech of the word this time, using the &lt;code class=&quot;highlighter-rouge&quot;&gt;pos&lt;/code&gt; field, because the definition differs based on it.&lt;/p&gt;
 
-&lt;p&gt;WordNet has example sentences for most words. Therefore, let’s also display all the example sentences associated with the input word. To do so, we can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;exp&lt;/code&gt; field, which is an array.&lt;/p&gt;
+&lt;p&gt;WordNet has example sentences for most words. Therefore, let’s also display all the example sentences associated with the input word. To do so, we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;exp&lt;/code&gt; field, which is an array.&lt;/p&gt;
 
 &lt;p&gt;Accordingly, update your code so that it looks like this:&lt;/p&gt;
 
@@ -73,7 +73,7 @@ npm install natural --save&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;At this point, go ahead and run the app. Make sure you pass a valid word to it.&lt;/p&gt;
+&lt;p&gt;Our dictionary application is ready. So, go ahead and run the app. Make sure you pass a valid word to it.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;node index.js fashionable
 &lt;/code&gt;&lt;/pre&gt;
@@ -106,7 +106,7 @@ EXAMPLE: a fashionable cafe
 
 &lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
 
-&lt;p&gt;You now know how to use WordNet in a Node.js application. Although we created only a very simple dictionary today, I’m sure you can use the skills you learned today to easily create more complex applications.&lt;/p&gt;
+&lt;p&gt;You now know how to use WordNet in a Node.js application. Although we created only a very simple dictionary today, I’m sure you can use the skills you learned to easily create more complex applications.&lt;/p&gt;
 
 &lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
 

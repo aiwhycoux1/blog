@@ -126,7 +126,7 @@ npm install natural --save</code></pre></figure>
 
 <p>Let us now enhance our app to display a list all the definitions available, along with all the synonyms. To do so, we can loop through the <code class="highlighter-rouge">details</code> array using <code class="highlighter-rouge">forEach</code>. Let’s also indicate the part of speech of the word this time, using the <code class="highlighter-rouge">pos</code> field, because the definition differs based on it.</p>
 
-<p>WordNet has example sentences for most words. Therefore, let’s also display all the example sentences associated with the input word. To do so, we can use the <code class="highlighter-rouge">exp</code> field, which is an array.</p>
+<p>WordNet has example sentences for most words. Therefore, let’s also display all the example sentences associated with the input word. To do so, we use the <code class="highlighter-rouge">exp</code> field, which is an array.</p>
 
 <p>Accordingly, update your code so that it looks like this:</p>
 
@@ -145,7 +145,7 @@ npm install natural --save</code></pre></figure>
     <span class="p">});</span>
 <span class="p">});</span></code></pre></figure>
 
-<p>At this point, go ahead and run the app. Make sure you pass a valid word to it.</p>
+<p>Our dictionary application is ready. So, go ahead and run the app. Make sure you pass a valid word to it.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>node index.js fashionable
 </code></pre>
@@ -178,7 +178,7 @@ EXAMPLE: a fashionable cafe
 
 <h3 id="conclusion">Conclusion</h3>
 
-<p>You now know how to use WordNet in a Node.js application. Although we created only a very simple dictionary today, I’m sure you can use the skills you learned today to easily create more complex applications.</p>
+<p>You now know how to use WordNet in a Node.js application. Although we created only a very simple dictionary today, I’m sure you can use the skills you learned to easily create more complex applications.</p>
 
 <h4 id="related-reading">Related Reading</h4>
 
