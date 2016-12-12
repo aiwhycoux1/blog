@@ -5,9 +5,104 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 09 Dec 2016 07:06:09 +0530</pubDate>
-    <lastBuildDate>Fri, 09 Dec 2016 07:06:09 +0530</lastBuildDate>
+    <pubDate>Mon, 12 Dec 2016 21:56:53 +0530</pubDate>
+    <lastBuildDate>Mon, 12 Dec 2016 21:56:53 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>How to Create 8-bit Music on Android</title>
+        <description>&lt;p&gt;8-bit music has been around for several decades now. Although not as popular as it was back in the 80s, it still is used in some games. There’s also a very active, though small, community of 8-bit music producers today. Creating such music takes just a few lines of code if you use the classes offered by the Android SDK. Because I am no music producer, in this tutorial, I’ll just be showing you how to generate musical frequencies programmatically. You can always string multiple frequencies together to generate some beautiful 8-bit tune.&lt;/p&gt;
+
+&lt;h3 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h3&gt;
+
+&lt;p&gt;To be able to follow this tutorial, you’re going to need the latest version of Android Studio and an emulator running Android 4.0.4 or higher.&lt;/p&gt;
+
+&lt;h3 id=&quot;generating-a-frequency&quot;&gt;Generating a Frequency&lt;/h3&gt;
+
+&lt;p&gt;Let us now create a method that accepts a frequency and a duration as its inputs and generates a sound of the given frequency that lasts for the given duration.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generateSound&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frequency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;duration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;We’ll be using pulse-code modulation, or PCM for short, to create the sound. In simpler terms, we’ll be generating a sine wave and sampling it a fixed number of times per second.&lt;/p&gt;
+
+&lt;p&gt;Additionally, because we are interested only in 8-bit sounds, we’ll have to make sure that the value of each sample can be represented by a single &lt;code class=&quot;highlighter-rouge&quot;&gt;byte&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Keeping the above details in mind, we’ll be generating &lt;code class=&quot;highlighter-rouge&quot;&gt;sampleRate * duration&lt;/code&gt; samples. Here’s the code to do that:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sampleRate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;44100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Feel free to change this&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sampleRate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;duration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PI&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frequency&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sampleRate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+            &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Note that we are using a simple sine wave. If you don’t understand the formula, I suggest you refer to &lt;a href=&quot;https://en.wikipedia.org/wiki/Sine_wave&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;this page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now that we have the sound data, we can pass it to an &lt;code class=&quot;highlighter-rouge&quot;&gt;AudioTrack&lt;/code&gt; object to actually hear the sound. To initialize the &lt;code class=&quot;highlighter-rouge&quot;&gt;AudioTrack&lt;/code&gt; instance, you can use its constructor, which accepts a few very obvious arguments.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;AudioTrack&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;track&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AudioTrack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AudioManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;STREAM_MUSIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sampleRate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;AudioFormat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CHANNEL_OUT_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;AudioFormat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ENCODING_PCM_8BIT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;AudioTrack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MODE_STATIC&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;To let the &lt;code class=&quot;highlighter-rouge&quot;&gt;AudioTrack&lt;/code&gt; instance know that we want to play the sound that’s contained in the &lt;code class=&quot;highlighter-rouge&quot;&gt;soundData&lt;/code&gt; array, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;write()&lt;/code&gt; method. Finally, call &lt;code class=&quot;highlighter-rouge&quot;&gt;play()&lt;/code&gt; to start playing the sound.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;track&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;track&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;play&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Go ahead and try to test the method now. Here’s a sample call to the &lt;code class=&quot;highlighter-rouge&quot;&gt;generateSound()&lt;/code&gt; method that generates a tone of 440 Hz for 15 seconds.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;generateSound&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;440&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;At this point, if you run your app, you should be able to hear the sound.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Warning: If you are wearing headphones and are using an emulator, lower the volume to protect your ears.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;adding-harmonics&quot;&gt;Adding Harmonics&lt;/h3&gt;
+
+&lt;p&gt;The sound we just generated is way too simple. Usually, you can improve the quality of the sound, and make it feel a little more realistic by adding harmonics to the wave. A harmonic is nothing but the same sine wave having a frequency which is a multiple of the original frequency.&lt;/p&gt;
+
+&lt;p&gt;Let us now add two harmonics to our wave. The first harmonic will have frequency which is 2x the original frequency. Similarly, the second harmonic’s frequency will be 4x the original frequency. Furthermore, let the amplitudes of the harmonics be lower than 1, say 0.5 and 0.25.&lt;/p&gt;
+
+&lt;p&gt;Here’s the updated code to generate the samples:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;originalWave&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PI&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frequency&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sampleRate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;harmonic1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PI&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frequency&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sampleRate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;harmonic2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.25&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;PI&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frequency&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sampleRate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Add all the waves&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;originalWave&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;harmonic1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;harmonic2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;soundData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;If you run the app now, you should hear a slightly different sound.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;You now know how to create 8-bit sounds using the Android SDK. You can now ahead and experiment with different frequencies and harmonics, and also try modifying the waveform.&lt;/p&gt;
+
+&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/2016/12/display-gifs-webps-with-facebook-fresco.html&quot;&gt;Displaying Large Images in Android Apps Using Facebook Fresco&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 11 Dec 2016 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2016/12/how-to-create-8-bit-music-on-android.html</link>
+        <guid isPermaLink="true">http://progur.com/2016/12/how-to-create-8-bit-music-on-android.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
     
       <item>
         <title>How to Use WordNet in Node.js Applications</title>
@@ -1316,109 +1411,6 @@ Step 2: Repeat Step 1 for both the new branches
         <pubDate>Mon, 03 Oct 2016 00:00:00 +0530</pubDate>
         <link>http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html</link>
         <guid isPermaLink="true">http://progur.com/2016/10/how-to-use-reddit-oauth2-in-android-apps.html</guid>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Create a Reddit Bot Using PRAW4 In 5 Minutes</title>
-        <description>&lt;p&gt;Whether you like it or not, a significant number of Reddit users are bots. Usually, they perform just two tasks: they look for comments that match a few well-defined criteria and then automatically reply to them. Creating such bots takes less than 5 minutes if you know how to use Python.&lt;/p&gt;
-
-&lt;p&gt;In this tutorial, I’ll show you how to use the new and very powerful PRAW 4 Python package to create a Reddit bot that can not only look for comments containing a specific word in a given subreddit, but also automatically reply to such comments with a predefined message.&lt;/p&gt;
-
-&lt;p&gt;For the sake of a clear example, we’ll be looking for the word &lt;strong&gt;Mars&lt;/strong&gt; in the comments of the &lt;a href=&quot;https://reddit.com/r/space&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;r/space&lt;/a&gt; subreddit. The canned reply will be &lt;strong&gt;Why no love for Titan?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;setup&quot;&gt;Setup&lt;/h3&gt;
-
-&lt;p&gt;Let’s start by installing the PRAW 4 package. The easiest way to do so is to use Python pip. If you don’t have it, here’s how you can get it on Ubuntu 14.04:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo apt-get install python3-pip&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;With &lt;code class=&quot;highlighter-rouge&quot;&gt;pip3&lt;/code&gt;, you can install PRAW using the following command:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;pip3 install --user --upgrade https://github.com/praw-dev/praw/archive/praw4.zip&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;At this point, you can start using PRAW 4.&lt;/p&gt;
-
-&lt;h3 id=&quot;registering-the-bot&quot;&gt;Registering the Bot&lt;/h3&gt;
-
-&lt;p&gt;All Reddit bots must be registered with Reddit. Therefore, log in to Reddit using a new account, or an account you already have, and click on the &lt;strong&gt;preferences&lt;/strong&gt; link.&lt;/p&gt;
-
-&lt;p&gt;Next, click on the &lt;strong&gt;apps&lt;/strong&gt; tab.&lt;/p&gt;
-
-&lt;p&gt;Here, click on the &lt;strong&gt;create an app…&lt;/strong&gt; button. You’ll now see a form asking for various details about the application.&lt;/p&gt;
-
-&lt;p&gt;Give a unique name and meaningful description to the application, and select &lt;strong&gt;script&lt;/strong&gt;. The &lt;strong&gt;about url&lt;/strong&gt; and &lt;strong&gt;redirect uri&lt;/strong&gt; fields are not necessary for a script-based bot. Therefore, you can specify any URL. I’ll use &lt;strong&gt;example.com&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block1/reddit3.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;app registration form&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once you press the &lt;strong&gt;create app&lt;/strong&gt; button, your bot will be registered and you will be able to see its client ID and client secret. Make a note of them because you’ll be needing them next.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block1/reddit1.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;app registration complete&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;creating-the-bot&quot;&gt;Creating the Bot&lt;/h3&gt;
-
-&lt;p&gt;Create a new file called &lt;strong&gt;mybot.py&lt;/strong&gt; and open it using your favorite code editor. The first thing you need to do inside it is import the PRAW package using the following statement:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;praw&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;You can now create an instance of your bot using the &lt;code class=&quot;highlighter-rouge&quot;&gt;praw.Reddit&lt;/code&gt; class. To its constructor, you must pass a meaningful user-agent, the client id, the client secret, your Reddit account’s username, and its password. Note that the Reddit account you use here is the same as the one you used while registering the bot.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;bot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;praw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Reddit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_agent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MySimpleBot v0.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                  &lt;span class=&quot;n&quot;&gt;client_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'abcdefGHIJKLO123--'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                  &lt;span class=&quot;n&quot;&gt;client_secret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'12345678901abcdefgh-_'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                  &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'demo_user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                  &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'demo_password'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The bot is now ready to be used.&lt;/p&gt;
-
-&lt;p&gt;To point it to a specific subreddit, you must use the &lt;code class=&quot;highlighter-rouge&quot;&gt;subreddit()&lt;/code&gt; method. Here’s how you point it to the &lt;a href=&quot;https://reddit.com/r/space&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;r/space&lt;/a&gt; subreddit.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;subreddit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subreddit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'space'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;PRAW4 makes it very easy for you to continuously monitor a subreddit for new posts and comments. All you need to do is make use of the &lt;code class=&quot;highlighter-rouge&quot;&gt;stream&lt;/code&gt; object. By using &lt;code class=&quot;highlighter-rouge&quot;&gt;stream&lt;/code&gt;, you don’t have to create any loop, or bother about Reddit’s rate limits. PRAW 4 handles it all for you automatically.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subreddit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Once you have the &lt;code class=&quot;highlighter-rouge&quot;&gt;comments&lt;/code&gt; generator, you can create a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop to analyze each item it returns. For now, let us just extract the comment’s &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;author&lt;/code&gt; fields.&lt;/p&gt;
-
-&lt;p&gt;Once you are sure that the &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; contains the keyword &lt;strong&gt;Mars&lt;/strong&gt;, you can call the &lt;code class=&quot;highlighter-rouge&quot;&gt;reply()&lt;/code&gt; method of the &lt;code class=&quot;highlighter-rouge&quot;&gt;comment&lt;/code&gt; object to send a canned reply. Here’s how you would do that:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Fetch body&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;author&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Fetch author&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'mars'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;# Generate a message&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Why no love for Titan, u/{0} ?&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Send message&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;That’s all you need to do. Save the file, and exit your code editor. From the command line, you can run the bot using the following command:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;python3 mybot.py&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Note that the script will never exit, unless you press &lt;strong&gt;Ctrl+C&lt;/strong&gt;. That’s because it is continuously fetching new comments, analyzing them, and replying to them.&lt;/p&gt;
-
-&lt;p&gt;You can, of course, take a look at its replies directly on Reddit.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block1/reddit2.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;bot replies&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;In this tutorial, you learned how to create a Reddit bot using PRAW 4. For best results, I suggest you use a Reddit account that is at least a week old for your bot. Otherwise, Reddit might be restricting it considerably.&lt;/p&gt;
-
-&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/2016/10/how-to-use-reddit-oauth2-in-android-apps.html&quot;&gt;How to Use Reddit OAuth 2.0 In Android Apps&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/2016/11/create-imgur-client-android.html&quot;&gt;How to Create an Imgur Client for Android&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 28 Sep 2016 00:00:00 +0530</pubDate>
-        <link>http://progur.com/2016/09/how-to-create-reddit-bot-using-praw4.html</link>
-        <guid isPermaLink="true">http://progur.com/2016/09/how-to-create-reddit-bot-using-praw4.html</guid>
         
         
         <category>Programming</category>
