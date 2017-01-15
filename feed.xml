@@ -5,13 +5,15 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 14 Jan 2017 15:18:17 +0530</pubDate>
-    <lastBuildDate>Sat, 14 Jan 2017 15:18:17 +0530</lastBuildDate>
+    <pubDate>Sun, 15 Jan 2017 13:28:07 +0530</pubDate>
+    <lastBuildDate>Sun, 15 Jan 2017 13:28:07 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
         <title>How to Use Deeplearning4J in Android Apps</title>
-        <description>&lt;p&gt;Usually, training a neural network is a task meant for powerful computers having multiple GPUs. But what if you want to do it on your humble Android phone or tablet? Well, it’s definitely possible. Considering an average Android device’s specifications, however, it will most likely be quite slow. In this quick tutorial, I’ll show you how to use &lt;a href=&quot;https://github.com/deeplearning4j/deeplearning4j&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Deeplearning4J&lt;/a&gt;, a popular Java-based deep learning library, to create and train a neural network on an Android device.&lt;/p&gt;
+        <description>&lt;p&gt;Generally speaking, training a neural network is a task best suited for powerful computers with multiple GPUs. But what if you want to do it on your humble Android phone or tablet? Well, it’s definitely possible. Considering an average Android device’s specifications, however, it will most likely be quite slow. If that’s not a problem for you, keep reading.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, I’ll show you how to use &lt;a href=&quot;https://github.com/deeplearning4j/deeplearning4j&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Deeplearning4J&lt;/a&gt;, a popular Java-based deep learning library, to create and train a neural network on an Android device.&lt;/p&gt;
 
 &lt;h3 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h3&gt;
 
