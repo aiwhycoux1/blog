@@ -5,8 +5,8 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 Jan 2017 10:11:21 +0530</pubDate>
-    <lastBuildDate>Wed, 18 Jan 2017 10:11:21 +0530</lastBuildDate>
+    <pubDate>Wed, 18 Jan 2017 11:47:16 +0530</pubDate>
+    <lastBuildDate>Wed, 18 Jan 2017 11:47:16 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
     
       <item>
@@ -75,7 +75,7 @@
 
 &lt;h3 id=&quot;creating-a-neural-network&quot;&gt;Creating a Neural Network&lt;/h3&gt;
 
-&lt;p&gt;DL4J has a very intuitive API. Let us now use it to create a simple multi-layer perceptron with hidden layers. It will take two input values, and spit out one output value. To create the layers, we’ll use the &lt;code class=&quot;highlighter-rouge&quot;&gt;DenseLayer&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OutputLayer&lt;/code&gt; classes. Accordingly, add the following code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;createAndUseNetwork()&lt;/code&gt; method you created in the previous step:&lt;/p&gt;
+&lt;p&gt;DL4J has a very intuitive API. Let us now use it to create a simple multi-layer perceptron with hidden layers. It will take two input values, and spit out two output values. To create the layers, we’ll use the &lt;code class=&quot;highlighter-rouge&quot;&gt;DenseLayer&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OutputLayer&lt;/code&gt; classes. Accordingly, add the following code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;createAndUseNetwork()&lt;/code&gt; method you created in the previous step:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;DenseLayer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inputLayer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DenseLayer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;nIn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
@@ -96,7 +96,7 @@
         &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;SOFTMAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Note that you must set the activation function of the output layer to &lt;code class=&quot;highlighter-rouge&quot;&gt;SOFTMAX&lt;/code&gt; for the network to work correctly.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SOFTMAX&lt;/code&gt; is one of the many activation functions offered by DL4J. For now, we’ll be using it for the output layer.&lt;/p&gt;
 
 &lt;p&gt;Now that our layers are ready, let’s create a &lt;code class=&quot;highlighter-rouge&quot;&gt;NeuralNetConfiguration.Builder&lt;/code&gt; object to configure our neural network.&lt;/p&gt;
 
@@ -135,7 +135,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Looking at just the first column of the expected outputs section, you can probably tell that our neural network will behave like an XOR gate. If you are wondering why the expected outputs section has a second column, it’s because our neural network has two output neurons for it to be trained quickly. In my experience, a single output neuron took too many iterations to train.&lt;/p&gt;
+&lt;p&gt;Looking at just the first column of the expected outputs section, you can probably tell that our neural network will behave like an XOR gate. If you are wondering why the expected outputs section has a second column, it’s because our neural network has two output neurons for it to be trained quickly. I’ve found that using a single output neuron takes too many iterations to train.&lt;/p&gt;
 
 &lt;p&gt;The training data has four samples, and you must mention it in your code.&lt;/p&gt;
 
