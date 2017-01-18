@@ -83,7 +83,9 @@
                     <div class="post-meta">Written by Ashraff Hathibelagal &bull; 14 January 2017</div>
                     <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Programming </span></p>
                     <div class="post-actual-content">
-                        <p>Generally speaking, training a neural network is a task best suited for powerful computers with multiple GPUs. But what if you want to do it on your humble Android phone or tablet? Well, it’s definitely possible. Considering an average Android device’s specifications, however, it will most likely be quite slow. If that’s not a problem for you, keep reading.</p>
+                        <p><em>Note: This tutorial was updated on 18th January 2017.</em></p>
+
+<p>Generally speaking, training a neural network is a task best suited for powerful computers with multiple GPUs. But what if you want to do it on your humble Android phone or tablet? Well, it’s definitely possible. Considering an average Android device’s specifications, however, it will most likely be quite slow. If that’s not a problem for you, keep reading.</p>
 
 <p>In this tutorial, I’ll show you how to use <a href="https://github.com/deeplearning4j/deeplearning4j" target="_blank" rel="nofollow">Deeplearning4J</a>, a popular Java-based deep learning library, to create and train a neural network on an Android device.</p>
 
@@ -128,7 +130,7 @@
 
 <h3 id="starting-an-asynchronous-task">Starting an Asynchronous Task</h3>
 
-<p>Training a neural network is CPU-intensive, which is why you wouldn’t want to do it in your application’s UI thread. I’m not too sure if DL4J trains its networks asynchronously by default. Just to be safe, I’ll spawn a separate thread now using the <code class="highlighter-rouge">AsyncTask</code> class.</p>
+<p>Training a neural network is CPU-intensive, which is why you wouldn’t want to do it in your application’s UI thread. DL4J does not train its networks asynchronously by default. Therefore, you must spawn a separate thread now using the <code class="highlighter-rouge">AsyncTask</code> class.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">AsyncTask</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
     <span class="nd">@Override</span>
@@ -161,17 +163,20 @@
 
 <span class="n">OutputLayer</span> <span class="n">outputLayer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OutputLayer</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
         <span class="o">.</span><span class="na">nIn</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">nOut</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">nOut</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
         <span class="o">.</span><span class="na">name</span><span class="o">(</span><span class="s">"Output"</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">activation</span><span class="o">(</span><span class="n">Activation</span><span class="o">.</span><span class="na">SOFTMAX</span><span class="o">)</span>
         <span class="o">.</span><span class="na">build</span><span class="o">();</span></code></pre></figure>
+
+<p>Note that you must set the activation function of the output layer to <code class="highlighter-rouge">SOFTMAX</code> for the network to work correctly.</p>
 
 <p>Now that our layers are ready, let’s create a <code class="highlighter-rouge">NeuralNetConfiguration.Builder</code> object to configure our neural network.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">NeuralNetConfiguration</span><span class="o">.</span><span class="na">Builder</span> <span class="n">nncBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NeuralNetConfiguration</span><span class="o">.</span><span class="na">Builder</span><span class="o">();</span>
-<span class="n">nncBuilder</span><span class="o">.</span><span class="na">iterations</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
-<span class="n">nncBuilder</span><span class="o">.</span><span class="na">learningRate</span><span class="o">(</span><span class="mf">0.01</span><span class="o">);</span></code></pre></figure>
+<span class="n">nncBuilder</span><span class="o">.</span><span class="na">iterations</span><span class="o">(</span><span class="mi">60000</span><span class="o">);</span>
+<span class="n">nncBuilder</span><span class="o">.</span><span class="na">learningRate</span><span class="o">(</span><span class="mf">0.1</span><span class="o">);</span></code></pre></figure>
 
-<p>In the above code, I’ve set the values of two important parameters: learning rate and number of iterations. Feel free to change those values.</p>
+<p>In the above code, I’ve set the values of two important parameters: learning rate and number of iterations. Feel free to change those values. In my experience, more iterations and lower learning rates tend to produce better results.</p>
 
 <p>We must now create a <code class="highlighter-rouge">NeuralNetConfiguration.ListBuilder</code> object to actually connect our layers and specify their order.</p>
 
@@ -195,14 +200,16 @@
 
 <div class="highlighter-rouge"><pre class="highlight"><code>INPUTS      EXPECTED OUTPUTS
 ------      ----------------
-0,0         0
-0,1         1
-1,0         1
-1,1         0
+0 0         0 1
+0 1         1 0
+1 0         1 0
+1 1         0 1
 </code></pre>
 </div>
 
-<p>As you might have guessed, our neural network will behave like an XOR gate. The training data has four samples, and you must mention it in your code.</p>
+<p>Looking at just the first column of the expected outputs section, you can probably tell that our neural network will behave like an XOR gate. If you are wondering why the expected outputs section has a second column, it’s because our neural network has two output neurons for it to be trained quickly. In my experience, a single output neuron took too many iterations to train.</p>
+
+<p>The training data has four samples, and you must mention it in your code.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_SAMPLES</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span></code></pre></figure>
 
@@ -213,27 +220,31 @@
 
 <p>Note that the number of columns in the inputs array is equal to the number of neurons in the input layer. Similarly, the number of columns in the outputs array is equal to the number of neurons in the output layer.</p>
 
-<p>Filling those arrays with the training data is easy. Just use the <code class="highlighter-rouge">putScalar()</code> method:</p>
+<p>Filling those arrays with the training data is easy. Just think of them as two matrices and use the <code class="highlighter-rouge">putScalar()</code> method to put the right values in the right indices:</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// If 0,0 show 0</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
 <span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
 
 <span class="c1">// If 0,1 show 1</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
 <span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
 
 <span class="c1">// If 1,0 show 1</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">2</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
 <span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">2</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
 
 <span class="c1">// If 1,1 show 0</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">3</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
 <span class="n">trainingInputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">3</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
-<span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">3</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span></code></pre></figure>
+<span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">3</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">trainingOutputs</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">3</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span></code></pre></figure>
 
 <p>We won’t be using the <code class="highlighter-rouge">INDArray</code> objects directly. Instead, we’ll convert them into a <code class="highlighter-rouge">DataSet</code>.</p>
 
@@ -243,7 +254,30 @@
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">myNetwork</span><span class="o">.</span><span class="na">fit</span><span class="o">(</span><span class="n">myData</span><span class="o">);</span></code></pre></figure>
 
+<p>Be patient while the <code class="highlighter-rouge">fit()</code> method runs. You might have to wait several minutes for it to complete.</p>
+
 <p>And that’s all there is to it. Your neural network is ready to be used.</p>
+
+<h2 id="using-the-neural-network">Using the Neural Network</h2>
+
+<p>To use the neural network you just trained, you must use its <code class="highlighter-rouge">output()</code> method, which takes an <code class="highlighter-rouge">INDArray</code> as its only argument. As you might have guessed, the <code class="highlighter-rouge">INDArray</code> will contain your input values.</p>
+
+<p>The following code shows you how to fetch the output for the inputs [1,1]:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// Create input</span>
+<span class="n">INDArray</span> <span class="n">actualInput</span> <span class="o">=</span> <span class="n">Nd4j</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">);</span>
+<span class="n">actualInput</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">actualInput</span><span class="o">.</span><span class="na">putScalar</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">},</span> <span class="mi">1</span><span class="o">);</span>
+
+<span class="c1">// Generate output</span>
+<span class="n">INDArray</span> <span class="n">actualOutput</span> <span class="o">=</span> <span class="n">myNetwork</span><span class="o">.</span><span class="na">output</span><span class="o">(</span><span class="n">actualInput</span><span class="o">);</span>
+<span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"myNetwork Output"</span><span class="o">,</span> <span class="n">actualOutput</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span></code></pre></figure>
+
+<p>If your network’s trained correctly, you should see that the contents of the output <code class="highlighter-rouge">INDArray</code> object are [0,1]. You can check the output in <code class="highlighter-rouge">logcat</code>. It should look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>01-18 09:33:34.052  3236  3249 D myNetwork Output: [0.00, 1.00]
+</code></pre>
+</div>
 
 <h3 id="conclusion">Conclusion</h3>
 
