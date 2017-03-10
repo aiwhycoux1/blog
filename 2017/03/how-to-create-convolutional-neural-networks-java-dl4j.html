@@ -201,7 +201,7 @@
 
 <p>Note that you are free to choose other values for the kernel sizes, the strides, and the paddings. But, I suggest you use <code class="highlighter-rouge">RELU</code> as the activation function for all the convolution layers, and <code class="highlighter-rouge">SOFTMAX</code> for the output layer. As for the subsampling layers, <code class="highlighter-rouge">MAX</code> is the most often used pooling type.</p>
 
-<p>Also make sure you always pass <code class="highlighter-rouge">3</code> to the first convolution layer’s <code class="highlighter-rouge">nIn()</code> method. This is important because all our input images have 3 channels: red, green, and blue.</p>
+<p>Also make sure you always pass <code class="highlighter-rouge">3</code> to the first convolution layer’s <code class="highlighter-rouge">nIn()</code> method. This is important because all our input images have 3 channels.</p>
 
 <p>We must now create a <code class="highlighter-rouge">MultiLayerConfiguration</code> object specifying the configuration details of our neural network. Using it, we can also arrange our layers in the correct order.</p>
 
