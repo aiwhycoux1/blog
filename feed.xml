@@ -5,9 +5,129 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 15 Mar 2017 21:51:23 +0530</pubDate>
-    <lastBuildDate>Wed, 15 Mar 2017 21:51:23 +0530</lastBuildDate>
+    <pubDate>Thu, 23 Mar 2017 22:18:54 +0530</pubDate>
+    <lastBuildDate>Thu, 23 Mar 2017 22:18:54 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>How to Create Animated Shaders With ShaderToy</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://www.shadertoy.com/new&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;ShaderToy&lt;/a&gt; is a very handy tool that lets you create shaders inside your browser. It offers an easy-to-use interface where you can type in your GLSL code and watch it run immediately. You can also record your runs as WebM movies and share them on YouTube and other such websites.&lt;/p&gt;
+
+&lt;p&gt;Creating beautiful graphics with GLSL, however, is not an easy task. In fact, creating even simple geometric shapes involves a good amount of math, and requires a slightly different way of thinking. In this tutorial, I’ll show you how to use ShaderToy to create two circles and also animate them.&lt;/p&gt;
+
+&lt;h3 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h3&gt;
+
+&lt;p&gt;To be able to follow along, all you need is a browser that supports WebGL. Of course, if your computer is very old, I suggest you also make sure that it has a graphics card that supports OpenGL 2.0 or higher.&lt;/p&gt;
+
+&lt;h3 id=&quot;drawing-a-circle&quot;&gt;Drawing a Circle&lt;/h3&gt;
+
+&lt;p&gt;GLSL has no built-in function that lets you draw a circle, or any other geometric shape. In other words, you must always use math–and a little common sense–to draw anything with GLSL.&lt;/p&gt;
+
+&lt;p&gt;But first, you must understand that the output of your GLSL program is the color of just one pixel. In ShaderToy, that color, by default, is represented by the &lt;code class=&quot;highlighter-rouge&quot;&gt;fragColor&lt;/code&gt; variable. The program runs thousands of times to color all the pixels that are present in ShaderToy’s preview window. By using the &lt;code class=&quot;highlighter-rouge&quot;&gt;fragCoord&lt;/code&gt; variable, you can determine the position of the current pixel.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;code class=&quot;highlighter-rouge&quot;&gt;fragCoord&lt;/code&gt; variable directly, however, is cumbersome because you can’t be sure about what it’s values will be on different screens. To make sure that the coordinates of your pixels fall in the range (0,0) to (1,1), you must divide &lt;code class=&quot;highlighter-rouge&quot;&gt;fragCoord&lt;/code&gt; by &lt;code class=&quot;highlighter-rouge&quot;&gt;iResolution&lt;/code&gt;. As you might have guessed, &lt;code class=&quot;highlighter-rouge&quot;&gt;iResolution&lt;/code&gt; is a variable containing the resolution of the preview window–or your monitor in full screen mode. Accordingly, make sure that the &lt;code class=&quot;highlighter-rouge&quot;&gt;mainImage()&lt;/code&gt; function has the following line:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragCoord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iResolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now, to actually draw a circle, you must remember that all points inside a circle are at a distance that is less than or equal to the radius of the circle. Let’s say that radius is 0.3.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Next, you must decide where the center of the circle should be. I’m going to use (0.4, 0.5) as the center. Although you can use two &lt;code class=&quot;highlighter-rouge&quot;&gt;float&lt;/code&gt; variables to hold the x and y coordinates seperately, using a &lt;code class=&quot;highlighter-rouge&quot;&gt;vec2&lt;/code&gt; is easier, and more intuitive.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;At this point, we can calculate the distance of the current pixel from the center of the circle using a GLSL built-in function called &lt;code class=&quot;highlighter-rouge&quot;&gt;distance()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;If the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;d&lt;/code&gt; is greater than &lt;code class=&quot;highlighter-rouge&quot;&gt;radius&lt;/code&gt;, let’s set &lt;code class=&quot;highlighter-rouge&quot;&gt;fragColor&lt;/code&gt; to black. Otherwise, let’s set it to be red, the color of the circle.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fragColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Black
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fragColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Red
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;If you run your program now, you’ll see that we’ve created an ellipse instead of a circle. That’s because our preview window is a rectangle instead of a square. To correct this problem, we must multiply the x-coordinates of the pixels with the aspect ratio of the window. The following code shows you how–make sure you add it immediately after the calculation of &lt;code class=&quot;highlighter-rouge&quot;&gt;uv&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aspectRatio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iResolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iResolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aspectRatio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And now, you should be able to see a perfect circle.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block2/shadertoy1.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;ShaderToy circle jagged&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Notice that the edges of the circle are jagged. To make them smoother, we can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;smoothstep()&lt;/code&gt; function. Because the &lt;code class=&quot;highlighter-rouge&quot;&gt;smoothstep()&lt;/code&gt; function has a built-in if-statement, you can remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; statement in your program, and replace it with the following lines.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;smoothstep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;    
+&lt;span class=&quot;n&quot;&gt;fragColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;You should now be able to see a much smoother circle. That’s cool, isn’t it?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block2/shadertoy1b.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;ShaderToy circle smooth&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;drawing-another-circle&quot;&gt;Drawing Another Circle&lt;/h3&gt;
+
+&lt;p&gt;What if you want to draw another circle, one with a different color? Well, you just have one &lt;code class=&quot;highlighter-rouge&quot;&gt;fragColor&lt;/code&gt; variable. You must make do with it alone. Fortunately, doing so is not too difficult.&lt;/p&gt;
+
+&lt;p&gt;Create another circle using the following lines (add them before you set the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;fragColor&lt;/code&gt;):&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondRadius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondCenter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;secondCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;smoothstep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;secondRadius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondRadius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Of course, the code is a little repetitive, but ignore that for now. We’re still learning the ropes.&lt;/p&gt;
+
+&lt;p&gt;To render the second circle along with the first circle, we need to create two &lt;code class=&quot;highlighter-rouge&quot;&gt;vec4&lt;/code&gt; variables, and add them. Each &lt;code class=&quot;highlighter-rouge&quot;&gt;vec4&lt;/code&gt; variable will contain the color of each circle. Let the second circle be green.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;greenColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vec4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;greenColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;You can now assign the &lt;code class=&quot;highlighter-rouge&quot;&gt;sum&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;fragColor&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;fragColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Run the program again to see the two circles.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block2/shadertoy2.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;ShaderToy circles&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I hope you found that easy.&lt;/p&gt;
+
+&lt;h3 id=&quot;animating-the-circles&quot;&gt;Animating the Circles&lt;/h3&gt;
+
+&lt;p&gt;Animating our circles will be far easier than creating them. I mean, you just have to modify their centers based on some parameter. What could that parameter be? Well, ShaderToy offers a variable called &lt;code class=&quot;highlighter-rouge&quot;&gt;iFrame&lt;/code&gt;, containing the current frame of your animation.&lt;/p&gt;
+
+&lt;p&gt;There are many different approaches to do this, but, for now, let’s say our animation has 400 frames. By dividing &lt;code class=&quot;highlighter-rouge&quot;&gt;iFrame&lt;/code&gt; by 400, we get a value between 0 and 1. We can then add/subtract that value to/from the x-coordinates of our circles’ centers. Here’s how:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;center&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondCenter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Run the code now to see your circles moving.&lt;/p&gt;
+
+&lt;video src=&quot;/assets/block2/shadertoyanim.webm&quot; controls=&quot;&quot;&gt;&lt;/video&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;You now know how to create shaders using ShaderToy. The shader we created today was extremely simple, but it is animated, and non-trivial. In future tutorials, we’ll creating something more complicated.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 23 Mar 2017 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2017/03/how-to-create-animated-shaders-in-shadertoy.html</link>
+        <guid isPermaLink="true">http://progur.com/2017/03/how-to-create-animated-shaders-in-shadertoy.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
     
       <item>
         <title>How to Create Convolutional Neural Networks Using Java and DL4J</title>
@@ -1477,131 +1597,6 @@ EXAMPLE: a fashionable cafe
         <pubDate>Fri, 09 Dec 2016 00:00:00 +0530</pubDate>
         <link>http://progur.com/2016/12/how-to-use-wordnet-in-nodejs-applications.html</link>
         <guid isPermaLink="true">http://progur.com/2016/12/how-to-use-wordnet-in-nodejs-applications.html</guid>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>Displaying GIFs and Large Images in Android Apps Using Facebook Fresco</title>
-        <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-
-&lt;p&gt;Handling large images in Android apps has always been a little tricky. With &lt;a href=&quot;http://frescolib.org/&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Facebook Fresco&lt;/a&gt;, however, you can add huge images to your app, including animated GIFs and WebP files, without having to worry about memory and size issues. In this tutorial, I’m going to help you get started with it.&lt;/p&gt;
-
-&lt;h3 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h3&gt;
-
-&lt;p&gt;To follow along, you’ll need the following:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The latest version of Android Studio&lt;/li&gt;
-  &lt;li&gt;An Android device or emulator running API level 15 or higher&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;configure-your-project&quot;&gt;1. Configure Your Project&lt;/h3&gt;
-
-&lt;p&gt;To be able to use Fresco in your project, you must add it as a &lt;code class=&quot;highlighter-rouge&quot;&gt;compile&lt;/code&gt; dependency in the app module’s &lt;strong&gt;build.gradle&lt;/strong&gt; file.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.facebook.fresco:fresco:0.13.0'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;By default, Fresco doesn’t support animated GIFs or WebP files. If you want to handle those formats, you must add the following &lt;code class=&quot;highlighter-rouge&quot;&gt;compile&lt;/code&gt; dependencies:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.facebook.fresco:animated-gif:0.13.0'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.facebook.fresco:animated-webp:0.13.0'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'com.facebook.fresco:webpsupport:0.13.0'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Fresco needs one more configuration step. It must be initialized as soon as your app starts. More precisely, you must initialize Fresco inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;onCreate()&lt;/code&gt; method of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Application&lt;/code&gt; class.&lt;/p&gt;
-
-&lt;p&gt;Here’s how you would do it:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FrescoApp&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Application&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Fresco&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;You must, of course, also add a &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; attribute to the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;application&amp;gt;&lt;/code&gt; tag in your manifest file to mention this new class.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;application android:name=&quot;.FrescoApp&quot; ....
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Oh, and while you are there, request for the &lt;code class=&quot;highlighter-rouge&quot;&gt;INTERNET&lt;/code&gt; permission as well, because we’ll be loading images from the Internet.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;uses-permission&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;android.permission.INTERNET&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;displaying-a-large-jpeg-image&quot;&gt;2. Displaying a Large JPEG Image&lt;/h3&gt;
-
-&lt;p&gt;Let us now add a &lt;code class=&quot;highlighter-rouge&quot;&gt;SimpleDraweeView&lt;/code&gt; widget to our layout. This is the widget inside which we will be displaying the image. It can handle images of several different formats.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;com.facebook.drawee.view.SimpleDraweeView&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;480dp&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;320dp&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@+id/my_drawee_view&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Note how I have specified actual numbers instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;wrap_content&lt;/code&gt; for the width and height of the widget. This is important for Fresco to work correctly.&lt;/p&gt;
-
-&lt;p&gt;Now that we have our widget, let’s write some Java code to display a JPEG image inside it. Well, it takes just two lines of code.&lt;/p&gt;
-
-&lt;p&gt;First, initialize the widget using &lt;code class=&quot;highlighter-rouge&quot;&gt;findViewById()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;SimpleDraweeView&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myDraweeView&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SimpleDraweeView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;my_drawee_view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Next, call its &lt;code class=&quot;highlighter-rouge&quot;&gt;setImageURI()&lt;/code&gt; method and pass a URL to it, which points to your large JPEG file. If you don’t know where to find such images, the &lt;a href=&quot;https://reddit.com/r/space&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;space&lt;/a&gt; subreddit is a good place to start.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;myDraweeView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setImageURI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Uri&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&quot;http://apod.nasa.gov/apod/image/1610/ivan_iss_3032.jpg&quot;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And that’s it. If you run the app now, you should be able to see the large image.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/fresco1.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;fresco large JPEG&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;displaying-an-animated-gif&quot;&gt;3. Displaying an Animated GIF&lt;/h3&gt;
-
-&lt;p&gt;Displaying an animated GIF takes a little more work. If you try using the &lt;code class=&quot;highlighter-rouge&quot;&gt;setImageURI()&lt;/code&gt; method to display an animated GIF, you would end up seeing its first frame only.&lt;/p&gt;
-
-&lt;p&gt;To display GIFs, you must create a &lt;code class=&quot;highlighter-rouge&quot;&gt;DraweeController&lt;/code&gt; object first and use it to load the GIF.&lt;/p&gt;
-
-&lt;p&gt;First create a builder for the &lt;code class=&quot;highlighter-rouge&quot;&gt;DraweeController&lt;/code&gt; using the &lt;code class=&quot;highlighter-rouge&quot;&gt;Fresco.newDraweeControllerBuilder()&lt;/code&gt; method. Next, call its &lt;code class=&quot;highlighter-rouge&quot;&gt;setUri()&lt;/code&gt; method to specify the URL you want to load. The &lt;a href=&quot;https://reddit.com/r/reactiongifs&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;reactiongifs&lt;/a&gt; subreddit is a good place to find animated GIFs.&lt;/p&gt;
-
-&lt;p&gt;You must also remember to pass &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; to its &lt;code class=&quot;highlighter-rouge&quot;&gt;setAutoPlayAnimations()&lt;/code&gt; method, to make sure that the GIF starts playing as soon as it is loaded. Finally, call the &lt;code class=&quot;highlighter-rouge&quot;&gt;build()&lt;/code&gt; method to generate the &lt;code class=&quot;highlighter-rouge&quot;&gt;DraweeController&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once generated, you can assign the &lt;code class=&quot;highlighter-rouge&quot;&gt;DraweeController&lt;/code&gt; object to the &lt;code class=&quot;highlighter-rouge&quot;&gt;SimpleDraweeView&lt;/code&gt; widget.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;DraweeController&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Fresco&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;newDraweeControllerBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setUri&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://i.imgur.com/jLBIIZg.gif&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setAutoPlayAnimations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;myDraweeView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Run the app again to see your animated GIF playing.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/fresco2.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;fresco animated GIF&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Displaying an animated WebP file is just as easy. All you need to do is point the &lt;code class=&quot;highlighter-rouge&quot;&gt;DraweeController&lt;/code&gt; to its URL.&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;In this tutorial, you learned how to use Facebook Fresco to manage large image files. I’ll be writing more tutorials about this library because it has a lot more to offer. Stay tuned!&lt;/p&gt;
-
-&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/2016/10/how-to-use-reddit-oauth2-in-android-apps.html&quot;&gt;How to Use Reddit OAuth 2.0 In Android Apps&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/2016/11/create-imgur-client-android.html&quot;&gt;How to Create an Imgur Client for Android&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 07 Dec 2016 00:00:00 +0530</pubDate>
-        <link>http://progur.com/2016/12/display-gifs-webps-with-facebook-fresco.html</link>
-        <guid isPermaLink="true">http://progur.com/2016/12/display-gifs-webps-with-facebook-fresco.html</guid>
         
         
         <category>Programming</category>
