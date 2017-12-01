@@ -5,9 +5,72 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 29 Nov 2017 03:08:58 +0530</pubDate>
-    <lastBuildDate>Wed, 29 Nov 2017 03:08:58 +0530</lastBuildDate>
+    <pubDate>Fri, 01 Dec 2017 05:52:10 +0530</pubDate>
+    <lastBuildDate>Fri, 01 Dec 2017 05:52:10 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>How to Create a Custom Lock Screen for Android (Part I)</title>
+        <description>&lt;p&gt;The lock screen apps you find on Google Play, such as Microsoft’s Next Lock Screen, are not true lock screens. They are just apps that &lt;strong&gt;look&lt;/strong&gt; like lock screens. Now don’t get me wrong. They are very useful productivity apps, providing lots of short cuts and quick info widgets. The problem is that they don’t offer any real security. Additionally, most of them are quite unstable, running as services that use the &lt;code class=&quot;highlighter-rouge&quot;&gt;SYSTEM_ALERT_WINDOW&lt;/code&gt; permission to draw themselves–or create overlays–over other apps, effectively &lt;em&gt;simulating&lt;/em&gt; a lock screen. Sooner or later, they will break due to changes in the Android platform. In fact, many of them already break on devices running Android Oreo or higher because they aren’t able to draw over the status bar anymore.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, such pseudo lock screens won’t work correctly on devices that have PIN or pattern security enabled. If you try to use them on such devices, you’ll actually end up with two lock screens: your device’s original lock screen, plus the pseudo lock screen. Again, let me stress on the fact that if you are creating a lock screen only for productivity purposes, you’re not going to have any major problems. But, if you want to offer security as well, a pseudo lock screen will just not cut it.&lt;/p&gt;
+
+&lt;p&gt;Many pseudo lock screens also double up as accessibility services. Why? Because if they don’t, they won’t be able to display notifications on devices running older versions of Android. Recently, Google Play announced that this behavior is not allowed. As a result, these lock screens will soon have to change to become notification services. But that would mean that they won’t run on older devices!&lt;/p&gt;
+
+&lt;p&gt;Well, now that you know the problems and disadvantages of creating a pseudo lock screen, let’s get to what this post is really about: system-level lock screens. A system-level lock screen is a true lock screen, and can be highly secure. It can offer PIN, pattern, password, and fingerprint-based security. It can count the number of failed attempts and, if necessary, actually lock a user out. It can’t be simply stopped or uninstalled to gain access to a device.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, a system-level lock screen is not something you can publish on Google Play. As its name suggests, it is a system app, which must be packaged along with an Android ROM. Alternatively, on rooted devices, it can be installed in the &lt;strong&gt;/system/priv-app&lt;/strong&gt; directory and signed with the same key that was used to sign the Android ROM.&lt;/p&gt;
+
+&lt;p&gt;Creating a system-level lock screen from scratch is very hard, and will definitely take you months of effort. And there’s no documentation for it whatsoever. There aren’t even any open source projects you can refer to, except for AOSP itself, which, as you might already know, has miles and miles of code.&lt;/p&gt;
+
+&lt;p&gt;The easier option is to modify the existing lock screen of AOSP to give it new looks and functionality. Even that is easier said than done because the lock screen code is mildly coupled with several different parts of the Android platform. In this series of tutorials, I’ll be talking about how the AOSP lock screen works, what its components are, and how it can be customized. I too am still learning about the lock screen, so I’ll be updating this series as and when I learn something new that’s worth sharing.&lt;/p&gt;
+
+&lt;h3 id=&quot;understanding-the-keyguard&quot;&gt;Understanding the Keyguard&lt;/h3&gt;
+
+&lt;p&gt;Almost all the code related to the AOSP lock screen is present in the &lt;code class=&quot;highlighter-rouge&quot;&gt;com.android.keyguard&lt;/code&gt; package. A little bit of it is also present in the &lt;code class=&quot;highlighter-rouge&quot;&gt;com.android.systemui&lt;/code&gt; package, but we’ll get to that later.&lt;/p&gt;
+
+&lt;p&gt;For now, let’s focus on just the looks of the keyguard, though I’ll talk about functionality too soon. In any case, if you are creating a custom lock screen for your ROM, chances are, you’re probably more interested in changing its looks than its functionality.&lt;/p&gt;
+
+&lt;p&gt;To make the lives of OEMs easy, the AOSP keyguard is very flexible when it comes to looks. In other words, most of its colors and dimensions are neatly placed inside XML files, instead of Java code. As a result, you can create a Substratum or RRO theme for it and dramatically change its looks. If you already have a rooted device and want to support devices running Android Marshmallow and higher, an RRO theme is your best bet. Just create overlays for the SystemUI and Keyguard packages, place them in the &lt;strong&gt;vendor/overlay&lt;/strong&gt; directory, and you’re done. No need to deal with any code at all! Take a look at this &lt;a href=&quot;https://github.com/hathibelagal/RROTutorial&quot;&gt;repository&lt;/a&gt; if you want to see what a simple RRO theme looks like.&lt;/p&gt;
+
+&lt;h4 id=&quot;important-xml-files&quot;&gt;Important XML files&lt;/h4&gt;
+
+&lt;p&gt;You can change several details about the lock screen by simply modifying the &lt;strong&gt;colors.xml&lt;/strong&gt; and &lt;strong&gt;dimens.xml&lt;/strong&gt; files of the Keyguard and SystemUI packages. To be able to do that though, you must understand several layout XML files.&lt;/p&gt;
+
+&lt;p&gt;Let me now point you to some of the most important layout XML files you’ll need to work with to specify the looks of your custom lock screen:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;keyguard_status_view.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This file is present in the &lt;strong&gt;res/layout&lt;/strong&gt; folder of the Keyguard package. It contains the &lt;code class=&quot;highlighter-rouge&quot;&gt;TextClock&lt;/code&gt; widget responsible for showing the time on the lock screen. You can modify this file to change the color and font of the time, and even its position. It also contains a &lt;code class=&quot;highlighter-rouge&quot;&gt;TextView&lt;/code&gt; widget to show the owner information.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;keyguard_status_area.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This file too is present in the &lt;strong&gt;res/layout&lt;/strong&gt; folder of the Keyguard package. It contains the &lt;code class=&quot;highlighter-rouge&quot;&gt;TextClock&lt;/code&gt; widget that displays the date. Again, use this to change the font/color/position of the date. It also contains a &lt;code class=&quot;highlighter-rouge&quot;&gt;TextView&lt;/code&gt; widget to display alarm information.&lt;/p&gt;
+
+&lt;p&gt;This layout is actually embedded inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;keyguard_status_view&lt;/code&gt; layout. As a result, both the &lt;code class=&quot;highlighter-rouge&quot;&gt;TextClock&lt;/code&gt; widgets are actually inside a &lt;code class=&quot;highlighter-rouge&quot;&gt;LinearLayout&lt;/code&gt; widget whose orientation is vertical.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;keyguard_bottom_area.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This file is present in the &lt;strong&gt;res/layout&lt;/strong&gt; folder of the SystemUI package. The bottom of the lock screen displays some informational text–such as “Charging” and “Swipe up to unlock”–and also shortcuts to open the camera and other apps. The UI for all that actually belongs to the SystemUI package, and is defined in this file.&lt;/p&gt;
+
+&lt;p&gt;It contains a &lt;code class=&quot;highlighter-rouge&quot;&gt;KeyguardIndicationTextView&lt;/code&gt; widget to display the informational text. If you want to change the looks of that text, you must modify this widget.&lt;/p&gt;
+
+&lt;p&gt;The lock screen shortcuts are created using custom &lt;code class=&quot;highlighter-rouge&quot;&gt;KeyguardAffordanceView&lt;/code&gt; widgets, which are based on the &lt;code class=&quot;highlighter-rouge&quot;&gt;ImageView&lt;/code&gt; class. They can display an image, and create the growing circle animation when touched. This file contains two such widgets, one on the left and another on the right.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;keyguard_status_bar.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This file too is present in the &lt;strong&gt;res/layout&lt;/strong&gt; folder of the SystemUI package. It is responsible for displaying the icons in the status bar and the carrier text. You can modify this file if you want to change the looks of, say the battery indicator. But, there’s a lot more to this file. It includes a few layouts, which in turn include several other layouts. I haven’t fully understood all of those layouts, so I’ll be writing more about this file soon.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Part II coming soon…&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 01 Dec 2017 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2017/12/create-custom-lock-screen-android.html</link>
+        <guid isPermaLink="true">http://progur.com/2017/12/create-custom-lock-screen-android.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
     
       <item>
         <title>The Pros and Cons of Using Flutter for Android App Development</title>
@@ -29,6 +92,9 @@
     &lt;p&gt;With Flutter, you don’t have to deal with XML files for creating your layouts. You define both the looks and functionality of your app using Dart alone. What’s more, you can take advantage of a number of modern layout widgets that almost work like templates. For instance, you can use a &lt;code class=&quot;highlighter-rouge&quot;&gt;ListTile&lt;/code&gt; widget to easily create a list item containing an icon and one, two, or three lines of text. Or you could use the &lt;code class=&quot;highlighter-rouge&quot;&gt;Scaffold&lt;/code&gt; widget to define the overall structure of your app, including the app bar, the drawer, and the bottom sheets.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
+    &lt;p&gt;Flutter apps can easily take advantage of a growing collection of Dart libraries. Thanks to those libraries, performing most tasks in Flutter requires very few lines of code.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
     &lt;p&gt;Lastly, Flutter allows you to develop apps for both Android and iOS. It has widgets whose looks conform to the design guidelines of both the platforms. In other words, you can use Material Design widgets in your Android apps and Cupertino widgets for iOS apps.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -44,6 +110,9 @@
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;It will take you a few days to become comfortable with Flutter’s layouts. Adding paddings, margins, and setting other layout attributes is not very intuitive at first. Additionally, you’ll have to spend time understanding box constraints.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The APK of a Flutter app will almost always be considerably larger than that of a native app. I have found that even trivial Flutter apps are at least 6-7 MB in size.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1278,201 +1347,6 @@ touch App.vue&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         <pubDate>Wed, 15 Feb 2017 00:00:00 +0530</pubDate>
         <link>http://progur.com/2017/02/create-component-vue-2-tutorial.html</link>
         <guid isPermaLink="true">http://progur.com/2017/02/create-component-vue-2-tutorial.html</guid>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Generate Mandelbrot Set Fractals in JavaScript</title>
-        <description>&lt;p&gt;After reading about the Mandelbrot set, I’ve found myself a brand new hobby: generating fractal images. If you don’t know what the Mandelbrot set is, you can think of it as just a bunch of complex numbers. Those numbers, however, can be used to generate colorful, alien patterns that can truly leave you spellbound. In fact, images of the Mandelbrot set can be so detailed that you can stare at them for hours and still keep finding interesting and unique patterns.&lt;/p&gt;
-
-&lt;p&gt;In this tutorial, I’ll show you how to generate the Mandelbrot set using just JavaScript, and plot it on a canvas.&lt;/p&gt;
-
-&lt;h3 id=&quot;setup&quot;&gt;Setup&lt;/h3&gt;
-
-&lt;p&gt;Create a new HTML document and add the following boilerplate code to it:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If it’s not obvious already, we’ll be writing all the JavaScript code inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tag.&lt;/p&gt;
-
-&lt;p&gt;Create and initialize a new canvas now, whose width and height are both &lt;strong&gt;600 px&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Create Canvas&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myCanvas&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;canvas&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;myCanvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;myCanvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;myCanvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myCanvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2d&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Start drawing&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;a-little-bit-of-theory&quot;&gt;A Little Bit of Theory&lt;/h3&gt;
-
-&lt;p&gt;At this point, we can start working on the Mandelbrot set. It’s a very simple set that consists of complex numbers. How do you decide if a complex number belongs to the set? Well, you first try using it in the following equation:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Z = C*C + C // C is the complex number
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;You then use the result in the following equation:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Z' = Z * Z + C // Z is the previous result and C is the
-                  // same complex number
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;You repeat the above step again:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Z'' = Z' * Z' + C // Z' is the previous result and C is the
-                  // same complex number
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Keep repeating the above steps dozens of times. If the result never exceeds a small fixed value, say 5 or 10, you can assume that the complex number belongs to the Mandelbrot set. Conversely, if the result exceeds the fixed value, and becomes a large number, you can be sure that the complex number doesn’t belong to the set.&lt;/p&gt;
-
-&lt;h3 id=&quot;implementation&quot;&gt;Implementation&lt;/h3&gt;
-
-&lt;p&gt;You might now be wondering how do I choose the value of the complex number? Well, that depends on what you want to do with the Mandelbrot set. If you want to generate a fractal image with it, you can use the X and Y co-ordinates of points on your HTML5 canvas as the real and imaginary components of the complex number:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;C = X + iY
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;However, you can’t use the X and Y co-ordinates directly. I mean, you can, but you’d end up with an image of the Mandelbrot set that is so far zoomed out that it would barely be visible. By dividing the coordinates by a large value, you zoom in to the image.&lt;/p&gt;
-
-&lt;p&gt;Furthermore, you can move around the fractal by subtracting small numbers from the coordinates.&lt;/p&gt;
-
-&lt;p&gt;Accordingly, you can add the following code to your file:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;checkIfBelongsToMandelbrotSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// TO DO&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;magnificationFactor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;panX&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;panY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myCanvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myCanvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-       &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;belongsToSet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 
-            &lt;span class=&quot;nx&quot;&gt;checkIfBelongsToMandelbrotSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;magnificationFactor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;panX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-                                          &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;magnificationFactor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;panY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-       &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;belongsToSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fillRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Draw a black pixel&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;                
-   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; 
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Of course, we must define the &lt;code class=&quot;highlighter-rouge&quot;&gt;checkIfBelongsToMandelbrotSet()&lt;/code&gt; function now, which returns a &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; value. Here’s the code you can add to it:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;c1&quot;&gt;// Calculate the real and imaginary components of the result&lt;/span&gt;
-     &lt;span class=&quot;c1&quot;&gt;// separately&lt;/span&gt;
-     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempRealComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt;
-                             &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt;
-                             &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempImaginaryComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt;
-                             &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-     &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempRealComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-     &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempImaginaryComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// In the Mandelbrot set&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Not in the set&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If you run the code now, you’d see something like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/mandelbrot_bw1.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Mandelbrot set in HTML5 canvas&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;A very weird image indeed, but not unexpected. That’s what the Mandelbrot set fractal looks like when you are zoomed in. By changing the values of the &lt;code class=&quot;highlighter-rouge&quot;&gt;magnificationFactor&lt;/code&gt; to 200, the &lt;code class=&quot;highlighter-rouge&quot;&gt;panX&lt;/code&gt; to 2 and &lt;code class=&quot;highlighter-rouge&quot;&gt;panY&lt;/code&gt; to 1.5, you’ll see this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/mandelbrot_bw2.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Mandelbrot set in HTML5 canvas&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If you’ve seen the Mandelbrot set fractal earlier, the above image might seem familiar. But there’s still a lot of noise in it. By increasing the number of iterations in the &lt;code class=&quot;highlighter-rouge&quot;&gt;checkIfBelongsToMandelbrotSet()&lt;/code&gt; function to about 100, you’ll generate the following image, which looks much better:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/mandelbrot_bw3.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Mandelbrot set in HTML5 canvas&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;How about adding some color now? To do so, we must change our &lt;code class=&quot;highlighter-rouge&quot;&gt;checkIfBelongsToMandelbrotSet()&lt;/code&gt; function such that it returns a number instead of a boolean value. For now, let’s return a number based on the number of iterations it takes to exceed our limit:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;checkIfBelongsToMandelbrotSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;maxIterations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;maxIterations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempRealComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt;
-                                 &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt;
-                                 &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempImaginaryComponent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt;
-                                 &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-         &lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempRealComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-         &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tempImaginaryComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-         &lt;span class=&quot;c1&quot;&gt;// Return a number as a percentage&lt;/span&gt;
-         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;realComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;imaginaryComponentOfResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;maxIterations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// Return zero if in set        &lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;          &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;You must also update the rendering logic to use the color. The easiest way to do so is to use the CSS &lt;code class=&quot;highlighter-rouge&quot;&gt;hsl()&lt;/code&gt; function:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;belongsToSet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fillStyle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'#000'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fillRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Draw a black pixel&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fillStyle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'hsl(0, 100%, '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;belongsToSet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'%)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fillRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Draw a colorful pixel&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If you refresh your page, you should this now:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/mandelbrot_bw4.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Mandelbrot set in HTML5 canvas&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If that’s not impressive enough, try zooming in with the following values:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;magnificationFactor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2900&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;panX&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;panY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;You’ll get something like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/mandelbrot_bw5.jpg&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Mandelbrot set in HTML5 canvas&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;You can keep zooming in until you hit the precision limit of JavaScript’s variables. However, you must remember to increase the number of iterations in the &lt;code class=&quot;highlighter-rouge&quot;&gt;checkIfBelongsToMandelbrotSet()&lt;/code&gt; function proportionately. Otherwise, the patterns in the fractal won’t be sharp and distinct. Here’s the same fractal as the above image, at 300 iterations.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/mandelbrot_bw7.jpg&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Mandelbrot set in HTML5 canvas&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;You now know how to create fractal images with the Mandelbrot set using just JavaScript and the HTML5 Canvas API. If you found anything confusing, or wrong, please tell me by leaving a comment.&lt;/p&gt;
-
-&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/2016/10/procedural-generation-create-koch-curve-javascript.html&quot;&gt;How to Create a Koch Curve Using JavaScript&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/2016/10/procedural-generation-create-fractal-trees-javascript.html&quot;&gt;How to Create Fractal Trees Using JavaScript&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 01 Feb 2017 00:00:00 +0530</pubDate>
-        <link>http://progur.com/2017/02/create-mandelbrot-fractal-javascript.html</link>
-        <guid isPermaLink="true">http://progur.com/2017/02/create-mandelbrot-fractal-javascript.html</guid>
         
         
         <category>Programming</category>
