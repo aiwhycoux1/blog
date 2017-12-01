@@ -5,9 +5,71 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 01 Dec 2017 06:51:09 +0530</pubDate>
-    <lastBuildDate>Fri, 01 Dec 2017 06:51:09 +0530</lastBuildDate>
+    <pubDate>Sat, 02 Dec 2017 05:15:59 +0530</pubDate>
+    <lastBuildDate>Sat, 02 Dec 2017 05:15:59 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>Best Hardware for Custom Android ROM Development</title>
+        <description>&lt;p&gt;Building Android from its source code is not for everyone. Why? Because it requires tons of patience and ungodly amounts of memory and processing power. Are you aware that the AOSP repository is, as of winter 2017, at least 31 GB, even if you run the &lt;code class=&quot;highlighter-rouge&quot;&gt;repo init&lt;/code&gt; command with the &lt;code class=&quot;highlighter-rouge&quot;&gt;--depth&lt;/code&gt; option set to &lt;strong&gt;1&lt;/strong&gt;? And did you know that the output of the build process is almost 8-9 GB? Well, now you do. So, do you think a run-of-the-mill laptop will be able to handle that kind of load? Let’s answer that question a little while later.&lt;/p&gt;
+
+&lt;p&gt;For now, let’s see what the recommended hardware configuration is for custom Android ROM development. To start, you’re going to need around 9-12 GB of RAM. AOSP uses the Jack toolchain for builds, which is a huge memory hog. Additionally it uses &lt;code class=&quot;highlighter-rouge&quot;&gt;javadoc&lt;/code&gt; extensively, which seems to sometimes consume 10-12 GB of memory all by itself.&lt;/p&gt;
+
+&lt;p&gt;Now, the problem is that Jack runs as a server, and once it consumes some memory, it doesn’t release it soon enough. That means, Jack and &lt;code class=&quot;highlighter-rouge&quot;&gt;javadoc&lt;/code&gt; can potentially run in parallel sometimes. When that happens, you will encounter memory allocation errors even with 10+ GB of RAM. You could add more RAM, but, in my opinion, that’s not always necessary. You have the option of using swap files. I recommend having anywhere from 6-8 GB of swap space available during builds.&lt;/p&gt;
+
+&lt;p&gt;Using an ordinary hard disk for swap space is okay, but using an SSD is way better because its latency would be much lesser. In fact, the SSD doesn’t have to just serve as swap space. It can double as the storage location for the compiler cache, dramatically improving build times. How big can the compiler cache? I have seen it grow to about 20 GB.&lt;/p&gt;
+
+&lt;p&gt;Lastly, you’ll need a good processor. Fortunately, good processors are not that rare. Most laptops have a quad core processor, and that’s good enough.&lt;/p&gt;
+
+&lt;p&gt;So, to sum it all up, for a smooth, quick, and error-free build, the system requirements are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;around 12 GB of DDR4 RAM&lt;/li&gt;
+  &lt;li&gt;around 100 GB of SSD space&lt;/li&gt;
+  &lt;li&gt;an Intel Quad Core i7 processor&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Are there any laptops that meet those requirements. Of course! Here are just a few you can find on Amazon:&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+amzn_assoc_placement = &quot;adunit0&quot;;
+amzn_assoc_search_bar = &quot;true&quot;;
+amzn_assoc_tracking_id = &quot;progur-20&quot;;
+amzn_assoc_ad_mode = &quot;manual&quot;;
+amzn_assoc_ad_type = &quot;smart&quot;;
+amzn_assoc_marketplace = &quot;amazon&quot;;
+amzn_assoc_region = &quot;US&quot;;
+amzn_assoc_title = &quot;Laptops for Android ROM Development&quot;;
+amzn_assoc_linkid = &quot;1468a67268d95f35ee446a290a1c73d3&quot;;
+amzn_assoc_asins = &quot;B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,B01N31CEWC,B071CZDSD7,B073XVCN9W&quot;;
+&lt;/script&gt;
+
+&lt;script src=&quot;//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Most of them are quite pricey. Yes, apparently $500 or more is what you need if you want to become a full time custom ROM developer. Anything less, and you’ll likely end up spending your days waiting for builds to complete, encountering weird errors–such as “Jack server connection timed out”, “communication error with Jack server” and “native memory allocation failed to allocate (X) bytes”–, and running &lt;code class=&quot;highlighter-rouge&quot;&gt;make clobber&lt;/code&gt; to clean stuff up and restart the build from scratch.&lt;/p&gt;
+
+&lt;h3 id=&quot;theres-hope&quot;&gt;There’s Hope&lt;/h3&gt;
+
+&lt;p&gt;Don’t get disheartened though if you don’t have such a laptop. If you really do have the patience, and I mean being ready for 20+ hour build times, let me assure you that you can build AOSP with even just 4 GB of RAM, an ordinary hard disk, and an Intel i3 processor. I used to do it until recently. Yes, all you need to do is allocate about 15 GB of hard disk space for swap and about 40 GB of hard disk space for &lt;code class=&quot;highlighter-rouge&quot;&gt;ccache&lt;/code&gt;. Once you do that, and you start the build, you might still encounter one or two hiccups in the form of “communication error with Jack server”. When you do, you can simply kill the Jack server and restart the build from where it stopped.&lt;/p&gt;
+
+&lt;p&gt;During the build, it might seem like it’s not working at all. You might see that your CPU usage is less than 1-2% and your memory usage is 99.5%, essentially making your laptop unusuable. But let it go on. At the end of 20 or so hours, you will have successfully built your ROM. But, obviously, you can’t do any meaningful development with that kind of build times. I mean, imagine making a small change in the code and waiting for 6-10 hours to test it. Oh, yes, if you didn’t already know, after a full build, subsequent builds will be much faster.&lt;/p&gt;
+
+&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/2017/12/create-custom-lock-screen-android.html&quot;&gt;How to Create a Custom Lock Screen for Android&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/2017/01/how-to-create-a-browser-app-for-android-with-crosswalk.html&quot;&gt;How to Create a Custom Browser for Android Using Crosswalk&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/2016/11/create-imgur-client-android.html&quot;&gt;How to Create an Imgur Client for Android&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 02 Dec 2017 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html</link>
+        <guid isPermaLink="true">http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html</guid>
+        
+        
+        <category>Development</category>
+        
+      </item>
     
       <item>
         <title>How to Create a Custom Lock Screen for Android (Part I)</title>
@@ -1193,168 +1255,6 @@ npm install -D vueify&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         <pubDate>Thu, 16 Feb 2017 00:00:00 +0530</pubDate>
         <link>http://progur.com/2017/02/how-to-create-vue-components-using-typescript-vueify.html</link>
         <guid isPermaLink="true">http://progur.com/2017/02/how-to-create-vue-components-using-typescript-vueify.html</guid>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Create a Component in Vue 2.1</title>
-        <description>&lt;p&gt;I’ve been using &lt;a href=&quot;https://vuejs.org/&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot;&gt;Vue.js&lt;/a&gt; for a while now, and recently thought it’s time I learned Vue 2.x. So, I decided to create a simple Reddit component—one that can display recent posts from any subreddit—using Vue 2.1. Why? Well, what better way to learn a framework than to create something interesting with it. In this tutorial, I’ve documented the steps that I took to create it.&lt;/p&gt;
-
-&lt;p&gt;To be able to follow this step-by-step tutorial, you’ll need:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Node.js v6.7.0 or higher&lt;/li&gt;
-  &lt;li&gt;A basic understanding of JavaScript&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;project-setup-using-vue-cli&quot;&gt;1. Project Setup Using Vue CLI&lt;/h3&gt;
-
-&lt;p&gt;Vue has a very handy CLI you can use to quickly set up a new project with all the right dependencies. Here’s how you can install it globally:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install -g vue-cli&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The CLI offers several starter templates. In this tutorial, we’ll be creating our project using a template based on Browserify and Vueify.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;vue init browserify-simple my-reddit-app
-&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;my-reddit-app&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Once the project has been generated, I suggest you install all its dependencies first.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;To fetch data from Reddit’s servers, we’ll be using Axios, a very powerful and easy-to-use HTTP client. Therefore, add it is as a dependency.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install -S axios&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;At this point, our project has been set up.&lt;/p&gt;
-
-&lt;h3 id=&quot;component-creation&quot;&gt;2. Component Creation&lt;/h3&gt;
-
-&lt;p&gt;If you enter the &lt;strong&gt;src&lt;/strong&gt; directory of your project, you’ll see that it already has two files. We’ll be writing most of our code inside &lt;strong&gt;App.vue&lt;/strong&gt;, a single file containing all the layout, logic, and styling of our app. It already contains some code we don’t need. Therefore, I suggest you empty its contents. Here’s an easy way to do so from the command-line:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;rm -f App.vue
-touch App.vue&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And now, open &lt;strong&gt;App.vue&lt;/strong&gt; using your favorite code editor.&lt;/p&gt;
-
-&lt;h4 id=&quot;step-1-create-the-layout&quot;&gt;Step 1: Create the Layout&lt;/h4&gt;
-
-&lt;p&gt;Our component’s layout is going to be very simple. It will contain one heading mentioning the name of a subreddit, and one unordered list containing all its posts.&lt;/p&gt;
-
-&lt;p&gt;Here’s the layout I’ll be using:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;template&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;reddit-list&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h3&amp;gt;&lt;/span&gt;Posts from /r/{{ subreddit }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post in posts&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-bind:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post.data.url&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; 
-                {{ post.data.title }}
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/template&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;As you can see, I’m using the mustache syntax for interpolating a few variables. I’m also using the &lt;code class=&quot;highlighter-rouge&quot;&gt;v-bind&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;v-for&lt;/code&gt; directives. The &lt;code class=&quot;highlighter-rouge&quot;&gt;v-for&lt;/code&gt; directive is, of course, being used to loop through all the posts of the subreddit. I’ve used the &lt;code class=&quot;highlighter-rouge&quot;&gt;v-bind&lt;/code&gt; directive to initialize the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;href&lt;/code&gt; because we can’t use mustache syntax inside an attribute.&lt;/p&gt;
-
-&lt;h4 id=&quot;step-2-add-styles&quot;&gt;Step 2: Add Styles&lt;/h4&gt;
-
-&lt;p&gt;Adding styles is optional. And really, there’s hardly anything new to learn here if you already know CSS.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;style&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;scoped&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nc&quot;&gt;.reddit-list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;font-family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sans-serif&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;500px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#f1f2f3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#ccc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;            
-    &lt;span class=&quot;nc&quot;&gt;.reddit-list&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;h3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;15px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;font-weight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;nc&quot;&gt;.reddit-list&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ul&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;13px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;list-style-type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;nc&quot;&gt;.reddit-list&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ul&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;li&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;margin-bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If you are wondering why the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;style&amp;gt;&lt;/code&gt; tag has a &lt;code class=&quot;highlighter-rouge&quot;&gt;scoped&lt;/code&gt; attribute, it is to ensure that the styles are applied to the component only, and not globally.&lt;/p&gt;
-
-&lt;h4 id=&quot;step-3-add-code&quot;&gt;Step 3: Add Code&lt;/h4&gt;
-
-&lt;p&gt;It’s now time to write some JavaScript code. Therefore, start by adding a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tag.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The first thing we’re going to do now is initialize Axios.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;axios&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'axios'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Next, we’re going to specify that the component shall have two properties: &lt;code class=&quot;highlighter-rouge&quot;&gt;subreddit&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;limit&lt;/code&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;subreddit&lt;/code&gt; will, of course, contain the name of a subreddit, and &lt;code class=&quot;highlighter-rouge&quot;&gt;limit&lt;/code&gt; will specify the number of posts to fetch.&lt;/p&gt;
-
-&lt;p&gt;The component shall also have an array of posts as its &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;We’ll be fetching the posts from Reddit once the component has been mounted. As you might’ve guessed, we’ll be using Axios’s &lt;code class=&quot;highlighter-rouge&quot;&gt;get()&lt;/code&gt; method to do so. Once the data has been fetched from Reddit’s servers, we’ll use it to initialize the &lt;code class=&quot;highlighter-rouge&quot;&gt;posts&lt;/code&gt; array.&lt;/p&gt;
-
-&lt;p&gt;Accordingly, add the following code:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kr&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;posts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'subreddit'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'limit'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;mounted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-       &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   
-       &lt;span class=&quot;nx&quot;&gt;axios&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;https://www.reddit.com/r/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;subreddit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/.json?limit=&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;limit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                  &lt;span class=&quot;nx&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;posts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;        
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The component is now ready to be used.&lt;/p&gt;
-
-&lt;h3 id=&quot;using-the-component&quot;&gt;3. Using the Component&lt;/h3&gt;
-
-&lt;p&gt;In the previous step, you saw that our component has two properties: &lt;code class=&quot;highlighter-rouge&quot;&gt;subreddit&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;limit&lt;/code&gt;. We need to set the values of those properties before we use the component. We can do that inside the &lt;strong&gt;main.js&lt;/strong&gt; file.&lt;/p&gt;
-
-&lt;p&gt;All you need to do is pass an extra JSON object while creating the component. Therefore, update the &lt;code class=&quot;highlighter-rouge&quot;&gt;render&lt;/code&gt; function so that it looks like this:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-actionscript&quot; data-lang=&quot;actionscript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;subreddit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'javascript'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;limit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And that’s it. You can now view your component in action by simply running the project.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm run dev&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The above command should automatically open a new browser window for you showing you the component.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/block2/vuecomponent.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;Vue 2.1 Component&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;In this tutorial, you learned how to, in a matter of minutes, create and use a simple component using Vue 2.1.&lt;/p&gt;
-
-&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/2017/02/how-to-create-vue-components-using-typescript-vueify.html&quot;&gt;How to Create Vue Components Using TypeScript and Vueify&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 15 Feb 2017 00:00:00 +0530</pubDate>
-        <link>http://progur.com/2017/02/create-component-vue-2-tutorial.html</link>
-        <guid isPermaLink="true">http://progur.com/2017/02/create-component-vue-2-tutorial.html</guid>
         
         
         <category>Programming</category>

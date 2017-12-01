@@ -22,15 +22,15 @@
     <![endif]-->
     
     <!-- Begin Jekyll SEO tag v2.0.0 -->
-<title>The Pros and Cons of Using Flutter for Android App Development - Progur!</title>
-<meta property="og:title" content="The Pros and Cons of Using Flutter for Android App Development" />
-<meta name="description" content="In this article, I’ll talk about why you should(or shouldn’t) use Flutter for your next Android app." />
-<meta property="og:description" content="In this article, I’ll talk about why you should(or shouldn’t) use Flutter for your next Android app." />
-<link rel="canonical" href="http://progur.com/2017/11/pros-and-cons-of-flutter-for-android.html" />
-<meta property="og:url" content="http://progur.com/2017/11/pros-and-cons-of-flutter-for-android.html" />
+<title>Best Hardware for Custom Android ROM Development - Progur!</title>
+<meta property="og:title" content="Best Hardware for Custom Android ROM Development" />
+<meta name="description" content="What are the hardware requirements for building Android Nougat and Oreo ROMs from source code? Loads of memory, an SSD, and a quad core processor." />
+<meta property="og:description" content="What are the hardware requirements for building Android Nougat and Oreo ROMs from source code? Loads of memory, an SSD, and a quad core processor." />
+<link rel="canonical" href="http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" />
+<meta property="og:url" content="http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" />
 <meta property="og:site_name" content="Progur!" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2017-11-26T00:00:00+05:30" />
+<meta property="article:published_time" content="2017-12-02T00:00:00+05:30" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@hathibel" />
 <meta name="twitter:creator" content="@hathibel" />
@@ -38,11 +38,11 @@
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
-    "headline": "The Pros and Cons of Using Flutter for Android App Development",
-    "datePublished": "2017-11-26T00:00:00+05:30",
-    "description": "In this article, I’ll talk about why you should(or shouldn’t) use Flutter for your next Android app.",
+    "headline": "Best Hardware for Custom Android ROM Development",
+    "datePublished": "2017-12-02T00:00:00+05:30",
+    "description": "What are the hardware requirements for building Android Nougat and Oreo ROMs from source code? Loads of memory, an SSD, and a quad core processor.",
     "logo": "http://progur.com/assets/logo.jpg",
-    "url": "http://progur.com/2017/11/pros-and-cons-of-flutter-for-android.html"
+    "url": "http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html"
   }
 </script>
 <!-- End Jekyll SEO tag -->
@@ -79,58 +79,63 @@
         <div class="col-md-12">
             <div>
                 <div>
-                    <h1 class="post-title">The Pros and Cons of Using Flutter for Android App Development</h1>
-                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 26 November 2017</div>
-                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Programming </span></p>
+                    <h1 class="post-title">Best Hardware for Custom Android ROM Development</h1>
+                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 02 December 2017</div>
+                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Development </span></p>
                     <div class="post-banner-ad">
                         <iframe src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=12&l=ur1&category=audible&banner=1C5G327FPA4S79WQ9Z82&f=ifr&lc=pf4&linkID=5cd4e8791cde1b1533ed492ce1c14119&t=progur-20&tracking_id=progur-20" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
                     </div>
                     <div class="post-actual-content">
-                        <p><a href="https://flutter.io">Flutter</a> is a rather unique app development framework from Google. It lets you use the Dart programming language–a very easy language for anyone who knows Java already–to create apps whose performance is identical to that of native apps. Should you use it develop your next big app? Well, to help you make that decision, let me talk about some of its pros and cons now.</p>
+                        <p>Building Android from its source code is not for everyone. Why? Because it requires tons of patience and ungodly amounts of memory and processing power. Are you aware that the AOSP repository is, as of winter 2017, at least 31 GB, even if you run the <code class="highlighter-rouge">repo init</code> command with the <code class="highlighter-rouge">--depth</code> option set to <strong>1</strong>? And did you know that the output of the build process is almost 8-9 GB? Well, now you do. So, do you think a run-of-the-mill laptop will be able to handle that kind of load? Let’s answer that question a little while later.</p>
 
-<h3 id="the-pros">The Pros</h3>
+<p>For now, let’s see what the recommended hardware configuration is for custom Android ROM development. To start, you’re going to need around 9-12 GB of RAM. AOSP uses the Jack toolchain for builds, which is a huge memory hog. Additionally it uses <code class="highlighter-rouge">javadoc</code> extensively, which seems to sometimes consume 10-12 GB of memory all by itself.</p>
 
-<ul>
-  <li>
-    <p>With Flutter, you can develop Android apps quickly, even on a relatively low-end machine. Last month, I was travelling and was carrying an old netbook with me, which has just 2GB of RAM and a dual core processor. Using the latest version of Android Studio on it is almost impossible. So, when one of my clients asked me to build a simple Android app for them, I decided to use Flutter. It was a good decision because I was able to build the app in no time using the Flutter CLI and <code class="highlighter-rouge">vi</code> as a code editor.</p>
-  </li>
-  <li>
-    <p>Flutter has a hot reload feature that let’s you instantly see the results of your code changes. This is much like Android Studio’s Instant Run feature, but considerably faster. This obviously lets you experiment with the looks of your app more freely.</p>
-  </li>
-  <li>
-    <p>It is a reactive framework. That means, when it’s used correctly, you won’t have worry about updating the contents of your user interface manually. Just update the variables in your state, and the UI will reflect the changes automatically.</p>
-  </li>
-  <li>
-    <p>With Flutter, you don’t have to deal with XML files for creating your layouts. You define both the looks and functionality of your app using Dart alone. What’s more, you can take advantage of a number of modern layout widgets that almost work like templates. For instance, you can use a <code class="highlighter-rouge">ListTile</code> widget to easily create a list item containing an icon and one, two, or three lines of text. Or you could use the <code class="highlighter-rouge">Scaffold</code> widget to define the overall structure of your app, including the app bar, the drawer, and the bottom sheets.</p>
-  </li>
-  <li>
-    <p>Flutter apps can easily take advantage of a growing collection of Dart libraries. Thanks to those libraries, performing most tasks in Flutter requires very few lines of code.</p>
-  </li>
-  <li>
-    <p>Lastly, Flutter allows you to develop apps for both Android and iOS. It has widgets whose looks conform to the design guidelines of both the platforms. In other words, you can use Material Design widgets in your Android apps and Cupertino widgets for iOS apps.</p>
-  </li>
-</ul>
+<p>Now, the problem is that Jack runs as a server, and once it consumes some memory, it doesn’t release it soon enough. That means, Jack and <code class="highlighter-rouge">javadoc</code> can potentially run in parallel sometimes. When that happens, you will encounter memory allocation errors even with 10+ GB of RAM. You could add more RAM, but, in my opinion, that’s not always necessary. You have the option of using swap files. I recommend having anywhere from 6-8 GB of swap space available during builds.</p>
 
-<h3 id="the-cons">The Cons</h3>
+<p>Using an ordinary hard disk for swap space is okay, but using an SSD is way better because its latency would be much lesser. In fact, the SSD doesn’t have to just serve as swap space. It can double as the storage location for the compiler cache, dramatically improving build times. How big can the compiler cache? I have seen it grow to about 20 GB.</p>
+
+<p>Lastly, you’ll need a good processor. Fortunately, good processors are not that rare. Most laptops have a quad core processor, and that’s good enough.</p>
+
+<p>So, to sum it all up, for a smooth, quick, and error-free build, the system requirements are:</p>
 
 <ul>
-  <li>
-    <p>Flutter is still an alpha release. I, for one, didn’t find anything unstable about it. But, if you plan to use it in a long-term project, it would be prudent to think twice before you choose Flutter.</p>
-  </li>
-  <li>
-    <p>Currently, Flutter doesn’t have a <code class="highlighter-rouge">WebView</code> widget. So, you can’t embed a <code class="highlighter-rouge">WebView</code> in your app’s view heirarchy. As of v0.0.17, if you want to display a web page in your app, you must use a plugin that launches a new activity containing just a <code class="highlighter-rouge">WebView</code> displaying your desired URL.</p>
-  </li>
-  <li>
-    <p>It will take you a few days to become comfortable with Flutter’s layouts. Adding paddings, margins, and setting other layout attributes is not very intuitive at first. Additionally, you’ll have to spend time understanding box constraints.</p>
-  </li>
-  <li>
-    <p>The APK of a Flutter app will almost always be considerably larger than that of a native app. I have found that even trivial Flutter apps are at least 6-7 MB in size.</p>
-  </li>
+  <li>around 12 GB of DDR4 RAM</li>
+  <li>around 100 GB of SSD space</li>
+  <li>an Intel Quad Core i7 processor</li>
 </ul>
 
-<h3 id="conclusion">Conclusion</h3>
+<p>Are there any laptops that meet those requirements. Of course! Here are just a few you can find on Amazon:</p>
 
-<p>Flutter is really worth a try. From my experiences, I can say that no other cross-platform framework available today can match its performance. You’ll be amazed at how responsive and smooth its scrolling and animations are. And if you want to see how a real Flutter app behaves, I suggest you try the <a href="https://github.com/hathibelagal/Plebeian">Plebeian Reddit client</a>, an app I created recently.</p>
+<script type="text/javascript">
+amzn_assoc_placement = "adunit0";
+amzn_assoc_search_bar = "true";
+amzn_assoc_tracking_id = "progur-20";
+amzn_assoc_ad_mode = "manual";
+amzn_assoc_ad_type = "smart";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_title = "Laptops for Android ROM Development";
+amzn_assoc_linkid = "1468a67268d95f35ee446a290a1c73d3";
+amzn_assoc_asins = "B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,B01N31CEWC,B071CZDSD7,B073XVCN9W";
+</script>
+
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+<p>Most of them are quite pricey. Yes, apparently $500 or more is what you need if you want to become a full time custom ROM developer. Anything less, and you’ll likely end up spending your days waiting for builds to complete, encountering weird errors–such as “Jack server connection timed out”, “communication error with Jack server” and “native memory allocation failed to allocate (X) bytes”–, and running <code class="highlighter-rouge">make clobber</code> to clean stuff up and restart the build from scratch.</p>
+
+<h3 id="theres-hope">There’s Hope</h3>
+
+<p>Don’t get disheartened though if you don’t have such a laptop. If you really do have the patience, and I mean being ready for 20+ hour build times, let me assure you that you can build AOSP with even just 4 GB of RAM, an ordinary hard disk, and an Intel i3 processor. I used to do it until recently. Yes, all you need to do is allocate about 15 GB of hard disk space for swap and about 40 GB of hard disk space for <code class="highlighter-rouge">ccache</code>. Once you do that, and you start the build, you might still encounter one or two hiccups in the form of “communication error with Jack server”. When you do, you can simply kill the Jack server and restart the build from where it stopped.</p>
+
+<p>During the build, it might seem like it’s not working at all. You might see that your CPU usage is less than 1-2% and your memory usage is 99.5%, essentially making your laptop unusuable. But let it go on. At the end of 20 or so hours, you will have successfully built your ROM. But, obviously, you can’t do any meaningful development with that kind of build times. I mean, imagine making a small change in the code and waiting for 6-10 hours to test it. Oh, yes, if you didn’t already know, after a full build, subsequent builds will be much faster.</p>
+
+<h4 id="related-reading">Related Reading</h4>
+
+<ul>
+  <li><a href="/2017/12/create-custom-lock-screen-android.html">How to Create a Custom Lock Screen for Android</a></li>
+  <li><a href="/2017/01/how-to-create-a-browser-app-for-android-with-crosswalk.html">How to Create a Custom Browser for Android Using Crosswalk</a></li>
+  <li><a href="/2016/11/create-imgur-client-android.html">How to Create an Imgur Client for Android</a></li>
+</ul>
 
                     </div>
 
@@ -145,13 +150,13 @@
                     <!-- Share -->
                     <div class="post-share">
                         <p>If you found this article useful, please share it with your friends and colleagues!</p>
-                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=The Pros and Cons of Using Flutter for Android App Development&url=http://progur.com/2017/11/pros-and-cons-of-flutter-for-android.html&via=hathibel" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=Best Hardware for Custom Android ROM Development&url=http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html&via=hathibel" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-twitter fa-lg"></i></a>
 
-                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2017/11/pros-and-cons-of-flutter-for-android.html" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-facebook fa-lg"></i></a>
                         
-                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2017/11/pros-and-cons-of-flutter-for-android.html" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus fa-lg"></i></a>
                     </div>
 
@@ -162,8 +167,8 @@
                           <div id="disqus_thread"></div>
                             <script>                                    
                                 var disqus_config = function () {
-                                    this.page.url = "http://progur.com/2017/11/pros-and-cons-of-flutter-for-android.html";
-                                    this.page.identifier = "/2017/11/pros-and-cons-of-flutter-for-android.html";
+                                    this.page.url = "http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html";
+                                    this.page.identifier = "/2017/12/hardware-requirements-custom-rom-development-android.html";
                                 };
                                 (function() {
                                     var d = document, s = d.createElement('script');
