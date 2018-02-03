@@ -5,9 +5,68 @@
     <description>Daily programming tutorials, tips, and news.</description>
     <link>http://progur.com/</link>
     <atom:link href="http://progur.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 02 Dec 2017 05:15:59 +0530</pubDate>
-    <lastBuildDate>Sat, 02 Dec 2017 05:15:59 +0530</lastBuildDate>
+    <pubDate>Sat, 03 Feb 2018 07:43:46 +0530</pubDate>
+    <lastBuildDate>Sat, 03 Feb 2018 07:43:46 +0530</lastBuildDate>
     <generator>Jekyll v3.2.0</generator>
+    
+      <item>
+        <title>How to Create a Custom Lock Screen for Android (Part II)</title>
+        <description>&lt;p&gt;In the &lt;a href=&quot;/2017/12/create-custom-lock-screen-android.html&quot;&gt;previous tutorial&lt;/a&gt;, I introduced you to a few important source files that belong to AOSP’s default lock screen and system UI. Today, let’s take a look at a few more of such files. You’ll see that many of these files contain highly-focused code and are designed to perform very specific actions. It does get a little frustrating to open a new class to understand every little detail, but I hope you can appreciate the modularity AOSP’s developers have achieved.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;super_status_bar.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As its name suggests, this is a very important part of both the lock screen and the status bar. It is the container for almost everything that’s displayed in both. Let us now take a look at some of the most important custom layout widgets it contains:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;BackDropView.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This widget is responsible for displaying the album art associated with any music file that’s playing on the device while it’s locked. As you might’ve seen, it displays the album art behind the notifications.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;ScrimView.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is the widget that renders the dim gray semi-transparent color that’s displayed on the lock screen and when the status bar is swiped down. It has an exclusion area on which the color is not drawn. The exclusion area is mainly behind the notifications.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;AlphaOptimizedView.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a view whose &lt;code class=&quot;highlighter-rouge&quot;&gt;hasOverlappingRendering&lt;/code&gt; function is set to false–a performance optimization. In essence, setting &lt;code class=&quot;highlighter-rouge&quot;&gt;hasOverlappingRendering&lt;/code&gt; to false prevents a view from creating a layer when its alpha is animating.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;status_bar_expanded.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This layout file is included in the &lt;strong&gt;super_status_bar.xml&lt;/strong&gt; file, and accounts for a large chunk of the lock screen’s layout, and, of course, the layout that’s rendered when you swipe down on the status bar. Yes, the same layout is used by both.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NotificationStackScrollLayout.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a custom layout widget that’s responsible for displaying the notifications. Because it has nearly 5000 lines of code, understanding it fully requires quite a lot of patience and effort. Additionally, this widget is very tightly coupled with other parts of the SystemUI package, and, as a result, cannot be used independently.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NotificationViewWrapper.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This class decides which layout XML file to use for a notification. The available options include media notification, big picture notification, and big text notification.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NotificationBackgroundView.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This widget actually draws the notification’s background, be it dimmed or normal. It seems to be used only on the lock screen.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;KeyguardAffordanceHelper.java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Don’t let the name fool you. This class belongs to the SystemUI package! Its name might sound weird, but this is the class that’s responsible for handling the shortcuts(for the camera and phone) on the lock screen. It also contains code to draw the white animated circle when the user touches those shortcuts. Of course, it uses the &lt;code class=&quot;highlighter-rouge&quot;&gt;ValueAnimator&lt;/code&gt; class extensively to manage the radius of the circle.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;To be continued…&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/2017/01/how-to-create-a-browser-app-for-android-with-crosswalk.html&quot;&gt;How to Create a Custom Browser for Android Using Crosswalk&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/2016/11/create-imgur-client-android.html&quot;&gt;How to Create an Imgur Client for Android&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/2016/10/how-to-use-reddit-oauth2-in-android-apps.html&quot;&gt;How to Use Reddit OAuth 2.0 In Android Apps&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 27 Dec 2017 00:00:00 +0530</pubDate>
+        <link>http://progur.com/2017/12/create-custom-lock-screen-android-2.html</link>
+        <guid isPermaLink="true">http://progur.com/2017/12/create-custom-lock-screen-android-2.html</guid>
+        
+        
+        <category>Programming</category>
+        
+      </item>
     
       <item>
         <title>Best Hardware for Custom Android ROM Development</title>
@@ -17,7 +76,7 @@
 
 &lt;p&gt;Now, the problem is that Jack runs as a server, and once it consumes some memory, it doesn’t release it soon enough. That means, Jack and &lt;code class=&quot;highlighter-rouge&quot;&gt;javadoc&lt;/code&gt; can potentially run in parallel sometimes. When that happens, you will encounter memory allocation errors even with 10+ GB of RAM. You could add more RAM, but, in my opinion, that’s not always necessary. You have the option of using swap files. I recommend having anywhere from 6-8 GB of swap space available during builds.&lt;/p&gt;
 
-&lt;p&gt;Using an ordinary hard disk for swap space is okay, but using an SSD is way better because its latency would be much lesser. In fact, the SSD doesn’t have to just serve as swap space. It can double as the storage location for the compiler cache, dramatically improving build times. How big can the compiler cache? I have seen it grow to about 20 GB.&lt;/p&gt;
+&lt;p&gt;Using an ordinary hard disk for swap space is okay, but using an SSD is way better because its latency would be much lesser. In fact, the SSD doesn’t have to just serve as swap space. It can double as the storage location for the compiler cache, dramatically improving build times. How big can the compiler cache be? I have seen it grow to about 20 GB. If I am building the ROM for multiple devices, it can easily reach 50 GB too.&lt;/p&gt;
 
 &lt;p&gt;Lastly, you’ll need a good processor. Fortunately, good processors are not that rare. Most laptops have a quad core processor, and that’s good enough.&lt;/p&gt;
 
@@ -46,13 +105,11 @@ amzn_assoc_asins = &quot;B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,
 
 &lt;script src=&quot;//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;Most of them are quite pricey. Yes, apparently $500 or more is what you need if you want to become a full time custom ROM developer. Anything less, and you’ll likely end up spending your days waiting for builds to complete, encountering weird errors–such as “Jack server connection timed out”, “communication error with Jack server” and “native memory allocation failed to allocate (X) bytes”–, and running &lt;code class=&quot;highlighter-rouge&quot;&gt;make clobber&lt;/code&gt; to clean stuff up and restart the build from scratch.&lt;/p&gt;
+&lt;p&gt;Most of them are quite pricey. Yes, apparently $500 or more is what you need if you want to become a full time custom ROM developer. Anything less, and you’ll likely end up spending your days waiting for builds to complete, encountering weird errors–such as “Jack server connection timed out”, “communication error with Jack server” and “native memory allocation failed to allocate (X) bytes”– and sometimes running &lt;code class=&quot;highlighter-rouge&quot;&gt;make clobber&lt;/code&gt; to clean stuff up and restart the build from scratch.&lt;/p&gt;
 
 &lt;h3 id=&quot;theres-hope&quot;&gt;There’s Hope&lt;/h3&gt;
 
-&lt;p&gt;Don’t get disheartened though if you don’t have such a laptop. If you really do have the patience, and I mean being ready for 20+ hour build times, let me assure you that you can build AOSP with even just 4 GB of RAM, an ordinary hard disk, and an Intel i3 processor. I used to do it until recently. Yes, all you need to do is allocate about 15 GB of hard disk space for swap and about 40 GB of hard disk space for &lt;code class=&quot;highlighter-rouge&quot;&gt;ccache&lt;/code&gt;. Once you do that, and you start the build, you might still encounter one or two hiccups in the form of “communication error with Jack server”. When you do, you can simply kill the Jack server and restart the build from where it stopped.&lt;/p&gt;
-
-&lt;p&gt;During the build, it might seem like it’s not working at all. You might see that your CPU usage is less than 1-2% and your memory usage is 99.5%, essentially making your laptop unusuable. But let it go on. At the end of 20 or so hours, you will have successfully built your ROM. But, obviously, you can’t do any meaningful development with that kind of build times. I mean, imagine making a small change in the code and waiting for 6-10 hours to test it. Oh, yes, if you didn’t already know, after a full build, subsequent builds will be much faster.&lt;/p&gt;
+&lt;p&gt;Don’t get disheartened though if you don’t have such a laptop. If you really do have the patience, and I mean being ready for 20+ hour build times, let me assure you that you can build AOSP with even just 4 GB of RAM, an ordinary hard disk, and an Intel i3 processor. I used to do it until recently. Yes, all you need to do is allocate about 15 GB of hard disk space for swap and about 40 GB of hard disk space for &lt;code class=&quot;highlighter-rouge&quot;&gt;ccache&lt;/code&gt;. Once you do that, and you start the build, you might still encounter one or two hiccups in the form of “communication errors with Jack server”. When you do, you can simply kill the Jack server and restart the build from where it stopped. During the build, you might see that your CPU usage is less than 1-2% and your memory usage is 99.5%, essentially making your laptop unusuable. But let it go on. At the end of 20 or so hours, you will have successfully built your ROM. But, obviously, you can’t do any meaningful development with that kind of build times. I mean, imagine making a small change in the code and waiting for 6-10 hours to test it. Oh, yes, if you didn’t already know, after a full build, subsequent builds will be much faster.&lt;/p&gt;
 
 &lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
 
@@ -80,6 +137,8 @@ amzn_assoc_asins = &quot;B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,
 &lt;p&gt;Many pseudo lock screens also double up as accessibility services. Why? Because if they don’t, they won’t be able to display notifications on devices running older versions of Android. Recently, Google Play announced that this behavior is not allowed. As a result, these lock screens will soon have to change to become notification services. But that would mean that they won’t run on older devices!&lt;/p&gt;
 
 &lt;p&gt;Well, now that you know the problems and disadvantages of creating a pseudo lock screen, let’s get to what this post is really about: system-level lock screens. A system-level lock screen is a true lock screen, and can be highly secure. It can offer PIN, pattern, password, and fingerprint-based security. It can count the number of failed attempts and, if necessary, actually lock a user out. It can’t be simply stopped or uninstalled to gain access to a device.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/block1/aosp_lockscreen.png&quot; class=&quot;img-responsive center-block img-thumbnail&quot; alt=&quot;AOSP default lock screen with notifications&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Unfortunately, a system-level lock screen is not something you can publish on Google Play. As its name suggests, it is a system app, which must be packaged along with an Android ROM. Alternatively, on rooted devices, it can be installed in the &lt;strong&gt;/system/priv-app&lt;/strong&gt; directory and signed with the same key that was used to sign the Android ROM.&lt;/p&gt;
 
@@ -123,7 +182,7 @@ amzn_assoc_asins = &quot;B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,
 
 &lt;p&gt;This file too is present in the &lt;strong&gt;res/layout&lt;/strong&gt; folder of the SystemUI package. It is responsible for displaying the icons in the status bar and the carrier text. You can modify this file if you want to change the looks of, say the battery indicator. But, there’s a lot more to this file. It includes a few layouts, which in turn include several other layouts. I haven’t fully understood all of those layouts, so I’ll be writing more about this file soon.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Part II coming soon…&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a href=&quot;/2017/12/create-custom-lock-screen-android-2.html&quot;&gt;Continue to Part II&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
 
@@ -1068,193 +1127,6 @@ ng serve --open&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         <pubDate>Fri, 10 Mar 2017 00:00:00 +0530</pubDate>
         <link>http://progur.com/2017/03/how-to-create-convolutional-neural-networks-java-dl4j.html</link>
         <guid isPermaLink="true">http://progur.com/2017/03/how-to-create-convolutional-neural-networks-java-dl4j.html</guid>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Create Vue Components Using TypeScript and Vueify</title>
-        <description>&lt;p&gt;TypeScript has become very popular these days, and I’m sure there are some of you who’d prefer using it while creating Vue components. In this tutorial, I’ll show you how to use TypeScript—along with vue-class-component, Browserify, and Vueify—to create a simple Vue 2.x component.&lt;/p&gt;
-
-&lt;p&gt;Note that we won’t be using any starter templates in this tutorial. In fact, we won’t be using Vue CLI at all. Instead, we’ll install everything we need manually, and also build our project manually. Why? Well, to gain a better understanding of how things work.&lt;/p&gt;
-
-&lt;h3 id=&quot;project-setup&quot;&gt;1. Project Setup&lt;/h3&gt;
-
-&lt;p&gt;Let’s start by creating a new directory for our project.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mkdir my-app &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;my-app&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;We can now generate a &lt;strong&gt;package.json&lt;/strong&gt; file for our project using &lt;code class=&quot;highlighter-rouge&quot;&gt;npm&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm init&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;To be able to use the TypeScript transpiler from the command-line, install it globally.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install -g typescript&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And now, install Vue and &lt;a href=&quot;https://github.com/vuejs/vue-class-component&quot;&gt;vue-class-component&lt;/a&gt;, a TypeScript decorator for Vue components, as your project’s dependencies.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install -S vue vue-class-component&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Additionally, you must install TypeScript definitions for &lt;code class=&quot;highlighter-rouge&quot;&gt;es6-promise&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install -S @types/es6-promise&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;create-a-component&quot;&gt;2. Create a Component&lt;/h3&gt;
-
-&lt;p&gt;Let us now create a simple component. We’ll do so by creating two files:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;touch dog.ts
-touch Dog.vue&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;As you might expect, &lt;strong&gt;dog.ts&lt;/strong&gt; is going to contain our component’s TypeScript code, and &lt;strong&gt;Dog.vue&lt;/strong&gt; will contain the layout.&lt;/p&gt;
-
-&lt;p&gt;First, open &lt;strong&gt;dog.ts&lt;/strong&gt; using your favorite code editor.&lt;/p&gt;
-
-&lt;p&gt;Inside it, import both &lt;code class=&quot;highlighter-rouge&quot;&gt;vue&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;vue-class-component&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'vue'&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'vue-class-component'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And now, create a new class called &lt;strong&gt;Dog&lt;/strong&gt;, which extends &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;. Additionally, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;@Component&lt;/code&gt; decoration to specify the properties of the component.&lt;/p&gt;
-
-&lt;p&gt;You must also mention the same properties as member variables of the class.&lt;/p&gt;
-
-&lt;p&gt;Any additional member variable you add will become the &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt; of the component.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;breed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;    
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Dog&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;breed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;number&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;
-
-    &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
-
-    &lt;span class=&quot;nx&quot;&gt;mounted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;I have a &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;breed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; 
-                           &lt;span class=&quot;s2&quot;&gt;&quot;. It is &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;age&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; years old.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;In the above code, you can see that &lt;code class=&quot;highlighter-rouge&quot;&gt;breed&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;age&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;owner&lt;/code&gt; are properties. And &lt;code class=&quot;highlighter-rouge&quot;&gt;description&lt;/code&gt; is part of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Dog&lt;/code&gt; component’s &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt;. Lastly, the &lt;code class=&quot;highlighter-rouge&quot;&gt;mounted()&lt;/code&gt; lifecycle method is being used to initialize the &lt;code class=&quot;highlighter-rouge&quot;&gt;description&lt;/code&gt; using the values of the &lt;code class=&quot;highlighter-rouge&quot;&gt;props&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;That’s all you need to add. Our component’s TypeScript code is ready. It was easy, wasn’t it?&lt;/p&gt;
-
-&lt;p&gt;Now, in the command-line, transpile the TypeScript file using &lt;code class=&quot;highlighter-rouge&quot;&gt;tsc&lt;/code&gt; to generate a JavaScript file. Don’t forget to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;--experimentalDecorators&lt;/code&gt; flag to the command.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;tsc dog.ts --experimentalDecorators&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If there are no errors, at this point, you’ll have a &lt;strong&gt;dog.js&lt;/strong&gt; file.&lt;/p&gt;
-
-&lt;p&gt;Let us now define our component’s layout inside the &lt;strong&gt;.vue&lt;/strong&gt; file. So, open &lt;strong&gt;Dog.vue&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Inside it, we’ll add some very basic HTML code. We’ll also use the mustache syntax to display some of our component’s properties and data.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;template&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h5&amp;gt;&lt;/span&gt;Message from {{ owner }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h5&amp;gt;&lt;/span&gt;
-		{{ description }}
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/template&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Additionally, to link the layout to our code, we must use a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tag. For now, point it to the generated &lt;strong&gt;dog.js&lt;/strong&gt; file.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;./dog.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Our component is now ready. To be able to use it, create a new file called &lt;strong&gt;start.js&lt;/strong&gt; and import both &lt;code class=&quot;highlighter-rouge&quot;&gt;vue&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Dog.vue&lt;/code&gt; inside it.&lt;/p&gt;
-
-&lt;p&gt;Next, use the constructor of &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt; to render a new &lt;code class=&quot;highlighter-rouge&quot;&gt;Dog&lt;/code&gt; element. You can use &lt;code class=&quot;highlighter-rouge&quot;&gt;props&lt;/code&gt; to specify the values of its properties.&lt;/p&gt;
-
-&lt;p&gt;Accordingly, add the following code to &lt;strong&gt;start.js&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'vue'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Dog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'./Dog.vue'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-   &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'#my-component-container'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-   &lt;span class=&quot;na&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Dog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;breed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;pug&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hathi&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}})&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Note that the &lt;code class=&quot;highlighter-rouge&quot;&gt;Dog&lt;/code&gt; element will be added to an HTML element whose id is &lt;code class=&quot;highlighter-rouge&quot;&gt;my-component-container&lt;/code&gt;. So, let us now create a new HTML page having it. I’m going to call the page &lt;strong&gt;start.html&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;my-component-container&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;build.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;You can see that the page is using a new script file called &lt;strong&gt;build.js&lt;/strong&gt;. We won’t be creating the file. Instead, we’ll be generating it by converting &lt;strong&gt;start.js&lt;/strong&gt; using Browserify and Vueify.&lt;/p&gt;
-
-&lt;p&gt;So, install &lt;code class=&quot;highlighter-rouge&quot;&gt;browserify&lt;/code&gt; globally, and &lt;code class=&quot;highlighter-rouge&quot;&gt;vueify&lt;/code&gt; as a dev dependency.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm install -g browserify
-npm install -D vueify&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;You can now pass &lt;strong&gt;start.js&lt;/strong&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;browserify&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;vueify&lt;/code&gt; to convert it into &lt;strong&gt;build.js&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;browserify -t vueify -e start.js -o build.js&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If you open &lt;strong&gt;start.html&lt;/strong&gt; using a browser, you should be able to see your component working.&lt;/p&gt;
-
-&lt;h3 id=&quot;configure-vueify&quot;&gt;3. Configure Vueify&lt;/h3&gt;
-
-&lt;p&gt;Transpiling the TypeScript file and using the generated JavaScript file in the component’s &lt;strong&gt;.vue&lt;/strong&gt; file isn’t optimal. I mean, you can, but it will slow you down. Fortunately, we can configure vueify to do it automatically for us.&lt;/p&gt;
-
-&lt;p&gt;So, create a new file called &lt;strong&gt;vue.config.js&lt;/strong&gt;. Inside it, add the following code:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;typescript&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
-    &lt;span class=&quot;na&quot;&gt;customCompilers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cb&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;transpileModule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
-                                &lt;span class=&quot;na&quot;&gt;compilerOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
-                                         &lt;span class=&quot;na&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ModuleKind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CommonJS&lt;/span&gt; 
-                                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-                         &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;cb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;outputText&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;            
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;As you can see, the above code adds a custom compiler for &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tags whose &lt;code class=&quot;highlighter-rouge&quot;&gt;lang&lt;/code&gt; attribute is &lt;strong&gt;ts&lt;/strong&gt;. It uses TypeScript’s Compiler API to convert TypeScript strings to JavaScript. More specifically, it uses the &lt;code class=&quot;highlighter-rouge&quot;&gt;transpileModule()&lt;/code&gt; method to do so. The return value of the &lt;code class=&quot;highlighter-rouge&quot;&gt;transpileModule()&lt;/code&gt; method is a JSON object containing two fields: &lt;code class=&quot;highlighter-rouge&quot;&gt;outputText&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;diagnostics&lt;/code&gt;. The &lt;code class=&quot;highlighter-rouge&quot;&gt;outputText&lt;/code&gt; field contains the transpiled JavaScript code, and we’ll be passing it to the callback function.&lt;/p&gt;
-
-&lt;p&gt;At this point, you can reopen &lt;strong&gt;Dog.vue&lt;/strong&gt; and change its &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tag to point to &lt;strong&gt;dog.ts&lt;/strong&gt; directly. Alternatively, you can copy all the contents of &lt;strong&gt;dog.ts&lt;/strong&gt; and paste them inside the tag.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;./dog.ts&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ts&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Lastly, run the following command to be able to use the TypeScript Compiler API in the project. Alternatively, you can install TypeScript as a dev dependency.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;npm link typescript&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And that’s all there is to it. You can run &lt;code class=&quot;highlighter-rouge&quot;&gt;browserify&lt;/code&gt; again, and you’ll see that the component still works just fine.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;browserify -t vueify -e start.js -o build.js&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;In this tutorial, you learned how to use &lt;code class=&quot;highlighter-rouge&quot;&gt;vue-class-component&lt;/code&gt;, TypeScript, Vueify, and Browserify in your Vue projects. You might think that’s a lot of work. But, I hope you now have a better understanding of how all of them work together.&lt;/p&gt;
-
-&lt;h4 id=&quot;related-reading&quot;&gt;Related Reading&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/2017/02/create-component-vue-2-tutorial.html&quot;&gt;How to Create a Component in Vue 2.1&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Thu, 16 Feb 2017 00:00:00 +0530</pubDate>
-        <link>http://progur.com/2017/02/how-to-create-vue-components-using-typescript-vueify.html</link>
-        <guid isPermaLink="true">http://progur.com/2017/02/how-to-create-vue-components-using-typescript-vueify.html</guid>
         
         
         <category>Programming</category>

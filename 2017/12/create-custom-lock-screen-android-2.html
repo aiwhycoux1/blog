@@ -22,15 +22,15 @@
     <![endif]-->
     
     <!-- Begin Jekyll SEO tag v2.0.0 -->
-<title>Best Hardware for Custom Android ROM Development - Progur!</title>
-<meta property="og:title" content="Best Hardware for Custom Android ROM Development" />
-<meta name="description" content="What are the hardware requirements for building Android Nougat and Oreo ROMs from source code? Loads of memory, an SSD, and a quad core processor." />
-<meta property="og:description" content="What are the hardware requirements for building Android Nougat and Oreo ROMs from source code? Loads of memory, an SSD, and a quad core processor." />
-<link rel="canonical" href="http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" />
-<meta property="og:url" content="http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" />
+<title>How to Create a Custom Lock Screen for Android (Part II) - Progur!</title>
+<meta property="og:title" content="How to Create a Custom Lock Screen for Android (Part II)" />
+<meta name="description" content="In this article, you’re going to learn about a few more important layout XML files and Java classes that are a part of the AOSP lock screen." />
+<meta property="og:description" content="In this article, you’re going to learn about a few more important layout XML files and Java classes that are a part of the AOSP lock screen." />
+<link rel="canonical" href="http://progur.com/2017/12/create-custom-lock-screen-android-2.html" />
+<meta property="og:url" content="http://progur.com/2017/12/create-custom-lock-screen-android-2.html" />
 <meta property="og:site_name" content="Progur!" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2017-12-02T00:00:00+05:30" />
+<meta property="article:published_time" content="2017-12-27T00:00:00+05:30" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@hathibel" />
 <meta name="twitter:creator" content="@hathibel" />
@@ -38,11 +38,11 @@
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
-    "headline": "Best Hardware for Custom Android ROM Development",
-    "datePublished": "2017-12-02T00:00:00+05:30",
-    "description": "What are the hardware requirements for building Android Nougat and Oreo ROMs from source code? Loads of memory, an SSD, and a quad core processor.",
+    "headline": "How to Create a Custom Lock Screen for Android (Part II)",
+    "datePublished": "2017-12-27T00:00:00+05:30",
+    "description": "In this article, you’re going to learn about a few more important layout XML files and Java classes that are a part of the AOSP lock screen.",
     "logo": "http://progur.com/assets/logo.jpg",
-    "url": "http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html"
+    "url": "http://progur.com/2017/12/create-custom-lock-screen-android-2.html"
   }
 </script>
 <!-- End Jekyll SEO tag -->
@@ -79,60 +79,59 @@
         <div class="col-md-12">
             <div>
                 <div>
-                    <h1 class="post-title">Best Hardware for Custom Android ROM Development</h1>
-                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 02 December 2017</div>
-                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Development </span></p>
+                    <h1 class="post-title">How to Create a Custom Lock Screen for Android (Part II)</h1>
+                    <div class="post-meta">Written by Ashraff Hathibelagal &bull; 27 December 2017</div>
+                    <p style="margin-bottom: 20px"><span class="label label-info"><i class="fa fa-tag"> </i> &nbsp; Programming </span></p>
                     <div class="post-banner-ad">
                         <iframe src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=12&l=ur1&category=audible&banner=1C5G327FPA4S79WQ9Z82&f=ifr&lc=pf4&linkID=5cd4e8791cde1b1533ed492ce1c14119&t=progur-20&tracking_id=progur-20" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
                     </div>
                     <div class="post-actual-content">
-                        <p>Building Android from its source code is not for everyone. Why? Because it requires tons of patience and ungodly amounts of memory and processing power. Are you aware that the AOSP repository is, as of winter 2017, at least 31 GB, even if you run the <code class="highlighter-rouge">repo init</code> command with the <code class="highlighter-rouge">--depth</code> option set to <strong>1</strong>? And did you know that the output of the build process is almost 8-9 GB? Well, now you do. So, do you think a run-of-the-mill laptop will be able to handle that kind of load? Let’s answer that question a little while later.</p>
+                        <p>In the <a href="/2017/12/create-custom-lock-screen-android.html">previous tutorial</a>, I introduced you to a few important source files that belong to AOSP’s default lock screen and system UI. Today, let’s take a look at a few more of such files. You’ll see that many of these files contain highly-focused code and are designed to perform very specific actions. It does get a little frustrating to open a new class to understand every little detail, but I hope you can appreciate the modularity AOSP’s developers have achieved.</p>
 
-<p>For now, let’s see what the recommended hardware configuration is for custom Android ROM development. To start, you’re going to need around 9-12 GB of RAM. AOSP uses the Jack toolchain for builds, which is a huge memory hog. Additionally it uses <code class="highlighter-rouge">javadoc</code> extensively, which seems to sometimes consume 10-12 GB of memory all by itself.</p>
+<p><strong>super_status_bar.xml</strong></p>
 
-<p>Now, the problem is that Jack runs as a server, and once it consumes some memory, it doesn’t release it soon enough. That means, Jack and <code class="highlighter-rouge">javadoc</code> can potentially run in parallel sometimes. When that happens, you will encounter memory allocation errors even with 10+ GB of RAM. You could add more RAM, but, in my opinion, that’s not always necessary. You have the option of using swap files. I recommend having anywhere from 6-8 GB of swap space available during builds.</p>
+<p>As its name suggests, this is a very important part of both the lock screen and the status bar. It is the container for almost everything that’s displayed in both. Let us now take a look at some of the most important custom layout widgets it contains:</p>
 
-<p>Using an ordinary hard disk for swap space is okay, but using an SSD is way better because its latency would be much lesser. In fact, the SSD doesn’t have to just serve as swap space. It can double as the storage location for the compiler cache, dramatically improving build times. How big can the compiler cache be? I have seen it grow to about 20 GB. If I am building the ROM for multiple devices, it can easily reach 50 GB too.</p>
+<p><strong>BackDropView.java</strong></p>
 
-<p>Lastly, you’ll need a good processor. Fortunately, good processors are not that rare. Most laptops have a quad core processor, and that’s good enough.</p>
+<p>This widget is responsible for displaying the album art associated with any music file that’s playing on the device while it’s locked. As you might’ve seen, it displays the album art behind the notifications.</p>
 
-<p>So, to sum it all up, for a smooth, quick, and error-free build, the system requirements are:</p>
+<p><strong>ScrimView.java</strong></p>
 
-<ul>
-  <li>around 12 GB of DDR4 RAM</li>
-  <li>around 100 GB of SSD space</li>
-  <li>an Intel Quad Core i7 processor</li>
-</ul>
+<p>This is the widget that renders the dim gray semi-transparent color that’s displayed on the lock screen and when the status bar is swiped down. It has an exclusion area on which the color is not drawn. The exclusion area is mainly behind the notifications.</p>
 
-<p>Are there any laptops that meet those requirements. Of course! Here are just a few you can find on Amazon:</p>
+<p><strong>AlphaOptimizedView.java</strong></p>
 
-<script type="text/javascript">
-amzn_assoc_placement = "adunit0";
-amzn_assoc_search_bar = "true";
-amzn_assoc_tracking_id = "progur-20";
-amzn_assoc_ad_mode = "manual";
-amzn_assoc_ad_type = "smart";
-amzn_assoc_marketplace = "amazon";
-amzn_assoc_region = "US";
-amzn_assoc_title = "Laptops for Android ROM Development";
-amzn_assoc_linkid = "1468a67268d95f35ee446a290a1c73d3";
-amzn_assoc_asins = "B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,B01N31CEWC,B071CZDSD7,B073XVCN9W";
-</script>
+<p>This is a view whose <code class="highlighter-rouge">hasOverlappingRendering</code> function is set to false–a performance optimization. In essence, setting <code class="highlighter-rouge">hasOverlappingRendering</code> to false prevents a view from creating a layer when its alpha is animating.</p>
 
-<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+<p><strong>status_bar_expanded.xml</strong></p>
 
-<p>Most of them are quite pricey. Yes, apparently $500 or more is what you need if you want to become a full time custom ROM developer. Anything less, and you’ll likely end up spending your days waiting for builds to complete, encountering weird errors–such as “Jack server connection timed out”, “communication error with Jack server” and “native memory allocation failed to allocate (X) bytes”– and sometimes running <code class="highlighter-rouge">make clobber</code> to clean stuff up and restart the build from scratch.</p>
+<p>This layout file is included in the <strong>super_status_bar.xml</strong> file, and accounts for a large chunk of the lock screen’s layout, and, of course, the layout that’s rendered when you swipe down on the status bar. Yes, the same layout is used by both.</p>
 
-<h3 id="theres-hope">There’s Hope</h3>
+<p><strong>NotificationStackScrollLayout.java</strong></p>
 
-<p>Don’t get disheartened though if you don’t have such a laptop. If you really do have the patience, and I mean being ready for 20+ hour build times, let me assure you that you can build AOSP with even just 4 GB of RAM, an ordinary hard disk, and an Intel i3 processor. I used to do it until recently. Yes, all you need to do is allocate about 15 GB of hard disk space for swap and about 40 GB of hard disk space for <code class="highlighter-rouge">ccache</code>. Once you do that, and you start the build, you might still encounter one or two hiccups in the form of “communication errors with Jack server”. When you do, you can simply kill the Jack server and restart the build from where it stopped. During the build, you might see that your CPU usage is less than 1-2% and your memory usage is 99.5%, essentially making your laptop unusuable. But let it go on. At the end of 20 or so hours, you will have successfully built your ROM. But, obviously, you can’t do any meaningful development with that kind of build times. I mean, imagine making a small change in the code and waiting for 6-10 hours to test it. Oh, yes, if you didn’t already know, after a full build, subsequent builds will be much faster.</p>
+<p>This is a custom layout widget that’s responsible for displaying the notifications. Because it has nearly 5000 lines of code, understanding it fully requires quite a lot of patience and effort. Additionally, this widget is very tightly coupled with other parts of the SystemUI package, and, as a result, cannot be used independently.</p>
+
+<p><strong>NotificationViewWrapper.java</strong></p>
+
+<p>This class decides which layout XML file to use for a notification. The available options include media notification, big picture notification, and big text notification.</p>
+
+<p><strong>NotificationBackgroundView.java</strong></p>
+
+<p>This widget actually draws the notification’s background, be it dimmed or normal. It seems to be used only on the lock screen.</p>
+
+<p><strong>KeyguardAffordanceHelper.java</strong></p>
+
+<p>Don’t let the name fool you. This class belongs to the SystemUI package! Its name might sound weird, but this is the class that’s responsible for handling the shortcuts(for the camera and phone) on the lock screen. It also contains code to draw the white animated circle when the user touches those shortcuts. Of course, it uses the <code class="highlighter-rouge">ValueAnimator</code> class extensively to manage the radius of the circle.</p>
+
+<p><em>To be continued…</em></p>
 
 <h4 id="related-reading">Related Reading</h4>
 
 <ul>
-  <li><a href="/2017/12/create-custom-lock-screen-android.html">How to Create a Custom Lock Screen for Android</a></li>
   <li><a href="/2017/01/how-to-create-a-browser-app-for-android-with-crosswalk.html">How to Create a Custom Browser for Android Using Crosswalk</a></li>
   <li><a href="/2016/11/create-imgur-client-android.html">How to Create an Imgur Client for Android</a></li>
+  <li><a href="/2016/10/how-to-use-reddit-oauth2-in-android-apps.html">How to Use Reddit OAuth 2.0 In Android Apps</a></li>
 </ul>
 
                     </div>
@@ -140,7 +139,19 @@ amzn_assoc_asins = "B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,B01N3
                     <!-- Affiliate links -->
                     <div class="post-affiliates">
                         
-                            <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=05bf80c0-f7ed-4826-9e55-1ee911da4f6c"></script>
+                            <script type="text/javascript">
+                            amzn_assoc_placement = "adunit0";
+                            amzn_assoc_search_bar = "true";
+                            amzn_assoc_tracking_id = "progur-20";
+                            amzn_assoc_ad_mode = "manual";
+                            amzn_assoc_ad_type = "smart";
+                            amzn_assoc_marketplace = "amazon";
+                            amzn_assoc_region = "US";
+                            amzn_assoc_title = "Shop Related Products";
+                            amzn_assoc_linkid = "6b7650e384633c5d230f7dd85c971ee5";
+                            amzn_assoc_asins = "B071VLZ9ZK,B01J6G4WB6,B00C893P8U,B00P8DRZWA,B01MRZFBBH,B01MXLZIDS,B01H3V07EW,B00LEAPLWW";
+                            </script>
+                            <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>                        
                         
                     </div>
                     <!-- End of affiliate links -->
@@ -148,13 +159,13 @@ amzn_assoc_asins = "B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,B01N3
                     <!-- Share -->
                     <div class="post-share">
                         <p>If you found this article useful, please share it with your friends and colleagues!</p>
-                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=Best Hardware for Custom Android ROM Development&url=http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html&via=hathibel" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#4099FF" target="_blank" href="https://twitter.com/intent/tweet?text=How to Create a Custom Lock Screen for Android (Part II)&url=http://progur.com/2017/12/create-custom-lock-screen-android-2.html&via=hathibel" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-twitter fa-lg"></i></a>
 
-                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#3b5998" target="_blank" href="https://facebook.com/sharer.php?u=http://progur.com/2017/12/create-custom-lock-screen-android-2.html" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600');return false;"><i class="fa fa-facebook fa-lg"></i></a>
                         
-                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html" onclick="javascript:window.open(this.href,
+                        <a class="btn btn-primary" style="background:#dd4b39" target="_blank" href="https://plus.google.com/share?url=http://progur.com/2017/12/create-custom-lock-screen-android-2.html" onclick="javascript:window.open(this.href,
   '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus fa-lg"></i></a>
                     </div>
 
@@ -165,8 +176,8 @@ amzn_assoc_asins = "B0769NDPT6,B01MRYN6DX,B01LD4MGOY,B06XW6XZ85,B07598SX6R,B01N3
                           <div id="disqus_thread"></div>
                             <script>                                    
                                 var disqus_config = function () {
-                                    this.page.url = "http://progur.com/2017/12/hardware-requirements-custom-rom-development-android.html";
-                                    this.page.identifier = "/2017/12/hardware-requirements-custom-rom-development-android.html";
+                                    this.page.url = "http://progur.com/2017/12/create-custom-lock-screen-android-2.html";
+                                    this.page.identifier = "/2017/12/create-custom-lock-screen-android-2.html";
                                 };
                                 (function() {
                                     var d = document, s = d.createElement('script');

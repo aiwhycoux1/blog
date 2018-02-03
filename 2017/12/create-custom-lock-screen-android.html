@@ -94,6 +94,8 @@
 
 <p>Well, now that you know the problems and disadvantages of creating a pseudo lock screen, let’s get to what this post is really about: system-level lock screens. A system-level lock screen is a true lock screen, and can be highly secure. It can offer PIN, pattern, password, and fingerprint-based security. It can count the number of failed attempts and, if necessary, actually lock a user out. It can’t be simply stopped or uninstalled to gain access to a device.</p>
 
+<p><img src="/assets/block1/aosp_lockscreen.png" class="img-responsive center-block img-thumbnail" alt="AOSP default lock screen with notifications" /></p>
+
 <p>Unfortunately, a system-level lock screen is not something you can publish on Google Play. As its name suggests, it is a system app, which must be packaged along with an Android ROM. Alternatively, on rooted devices, it can be installed in the <strong>/system/priv-app</strong> directory and signed with the same key that was used to sign the Android ROM.</p>
 
 <p>Creating a system-level lock screen from scratch is very hard, and will definitely take you months of effort. And there’s no documentation for it whatsoever. There aren’t even any open source projects you can refer to, except for AOSP itself, which, as you might already know, has miles and miles of code.</p>
@@ -136,7 +138,7 @@
 
 <p>This file too is present in the <strong>res/layout</strong> folder of the SystemUI package. It is responsible for displaying the icons in the status bar and the carrier text. You can modify this file if you want to change the looks of, say the battery indicator. But, there’s a lot more to this file. It includes a few layouts, which in turn include several other layouts. I haven’t fully understood all of those layouts, so I’ll be writing more about this file soon.</p>
 
-<p><em>Part II coming soon…</em></p>
+<p><em><a href="/2017/12/create-custom-lock-screen-android-2.html">Continue to Part II</a></em></p>
 
 <h4 id="related-reading">Related Reading</h4>
 
